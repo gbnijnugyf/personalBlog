@@ -5,7 +5,7 @@
 .menu-header{
     display: flex;
     flex-direction: row;
-    min-height: 20vh;
+    min-height: 8.5vh;
 
     
     Header{
@@ -18,23 +18,41 @@
         }
         .menu-header-left{
             border: 1px solid red;
-            li{
-                font-weight: 800;
-                width: 6.5em;
-            }
+            // li{
+            //     font-weight: 800;
+            //     width: 6.5em;
+            // }
             
         }
         .menu-header-right{
             border: 1px solid red;
-            li{
-                font-weight: 800;
-                width: 6.5em;
-            }
+            position: relative;
+            left: 35vw;
+            // li{
+            //     font-weight: 800;
+            //     width: 6.5em;
+            // }
             
         }
     }
 }
 
-.container-workPage{
-    // border: ;
+.container-detailPage{
+    border: 1px solid red;
+    height:  81vh;
+    width: 100vw;
+    // overflow-x: hidden;
+    .carousel {
+        div h3{
+            margin: 0;
+            color: #fff;
+            line-height: 30vh;
+            text-align: center;
+            background: #64c3db
+        }
+    }
+    
+    .teachPage{
+        color: black;
+    }
 }

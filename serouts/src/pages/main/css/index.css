@@ -10,7 +10,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  min-height: 20vh;
+  min-height: 8.5vh;
 }
 .menu-header Header {
   display: -webkit-box;
@@ -29,14 +29,24 @@
 .menu-header Header .menu-header-left {
   border: 1px solid red;
 }
-.menu-header Header .menu-header-left li {
-  font-weight: 800;
-  width: 6.5em;
-}
 .menu-header Header .menu-header-right {
   border: 1px solid red;
+  position: relative;
+  left: 35vw;
 }
-.menu-header Header .menu-header-right li {
-  font-weight: 800;
-  width: 6.5em;
+
+.container-detailPage {
+  border: 1px solid red;
+  height: 81vh;
+  width: 100vw;
+}
+.container-detailPage .carousel div h3 {
+  margin: 0;
+  color: #fff;
+  line-height: 30vh;
+  text-align: center;
+  background: #64c3db;
+}
+.container-detailPage .teachPage {
+  color: black;
 }

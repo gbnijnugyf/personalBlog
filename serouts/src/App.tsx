@@ -1,12 +1,8 @@
 // import React from 'react';
 // import logo from './logo.svg';
 import './css/App.css';
-import { Layout, Menu, MenuItemProps } from 'antd';
 import { Routers } from './routers/router';
-import { Content, Footer, Header } from 'antd/es/layout/layout';
-import Sider from 'antd/es/layout/Sider';
 import { useNavigate } from 'react-router-dom';
-import { menuHeaderProps } from './menu/menuProps';
 // import { Layout } from 'antd';
 // import { Content, Footer, Header } from 'antd/es/layout/layout';
 // import Sider from 'antd/es/layout/Sider';
