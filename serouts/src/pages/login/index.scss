@@ -1,0 +1,18 @@
+.Login-layout{
+    color: black;
+}
+
+.LoginPannel{
+    position: absolute;
+    top: 20vh;
+    right: 10vw;
+    // border: 1px solid black;
+    border-radius: 3%;
+    height: 50vh;
+    width: auto;
+    background-color: rgba(98, 222, 238, 0.1);
+
+    .ant-form{/*antd内部form标签class名*/
+        padding: 8%;
+    }
+}
