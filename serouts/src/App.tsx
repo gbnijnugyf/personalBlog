@@ -1,28 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { PageContainer, ProLayout } from "@ant-design/pro-layout";
-import { Layout } from 'antd';
+// import React from 'react';
+// import logo from './logo.svg';
+import './css/App.css';
+import { Layout, Menu, MenuItemProps } from 'antd';
+import { Routers } from './routers/router';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
+import { useNavigate } from 'react-router-dom';
+import { menuHeaderProps } from './menu/menuProps';
+// import { Layout } from 'antd';
+// import { Content, Footer, Header } from 'antd/es/layout/layout';
+// import Sider from 'antd/es/layout/Sider';
+
+function DevTools() {
+
+  return (
+    <div style={{ position: "absolute", zIndex: 9999 }}>
+      {/* <span>develop version</span> */}
+      <button
+        onClick={() => {
+          if (localStorage.getItem("token")) {
+            localStorage.removeItem("token");
+          } else {
+            localStorage.setItem("token", "123");
+          }
+          window.location.href = "/";
+        }}
+      >
+        {localStorage.getItem("token") ? "删除token" : "生成token"}
+      </button>
+    </div>
+  );
+}
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <div className="App">
+      <DevTools />
       <header className="App-header">
-        {/* <ProLayout> */}
-          <Layout className='layout'>
-            <Header>Header</Header>
-            <Layout>
-              <Sider>Sider</Sider>
-              <Content>Content</Content>
-            </Layout>
-            <Footer>Footer</Footer>
-          </Layout>
-        {/* </ProLayout> */}
-        fsdd
+        <Routers />
+
       </header>
-    </div>
+    </div >
   );
 }
 

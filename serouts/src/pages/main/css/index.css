@@ -1,0 +1,42 @@
+.container {
+  color: black;
+}
+
+.menu-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  min-height: 20vh;
+}
+.menu-header Header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100vw;
+}
+.menu-header Header img {
+  width: 25vw;
+  border: 1px solid red;
+}
+.menu-header Header .menu-header-left {
+  border: 1px solid red;
+}
+.menu-header Header .menu-header-left li {
+  font-weight: 800;
+  width: 6.5em;
+}
+.menu-header Header .menu-header-right {
+  border: 1px solid red;
+}
+.menu-header Header .menu-header-right li {
+  font-weight: 800;
+  width: 6.5em;
+}

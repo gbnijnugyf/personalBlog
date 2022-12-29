@@ -1,0 +1,40 @@
+.container{
+    color: black;
+}
+
+.menu-header{
+    display: flex;
+    flex-direction: row;
+    min-height: 20vh;
+
+    
+    Header{
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        img{
+            width: 25vw;
+            border: 1px solid red;
+        }
+        .menu-header-left{
+            border: 1px solid red;
+            li{
+                font-weight: 800;
+                width: 6.5em;
+            }
+            
+        }
+        .menu-header-right{
+            border: 1px solid red;
+            li{
+                font-weight: 800;
+                width: 6.5em;
+            }
+            
+        }
+    }
+}
+
+.container-workPage{
+    // border: ;
+}
