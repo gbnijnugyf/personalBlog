@@ -15,3 +15,15 @@
 .LoginPannel .ant-form { /*antd内部form标签class名*/
   padding: 8%;
 }
+
+.two-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.two-button .login-form-button {
+  margin-right: 20%;
+}

@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BellOutlined, HomeOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UserOutlined } from "@ant-design/icons"
+import { AppstoreOutlined, BellOutlined, CommentOutlined, HomeOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UserOutlined } from "@ant-design/icons"
 import { Avatar, Badge, Dropdown } from "antd"
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
@@ -91,12 +91,12 @@ export const menuHeaderPropsL = [
     {
         key: 'mylesson',
         icon: <AppstoreOutlined />,
-        label: "我的课程",
+        label: "我的秘密",
     },
     {
         key: 'experiment',
-        icon: <ToolOutlined />,
-        label: "线上实验信息",
+        icon: <CommentOutlined />,
+        label: "线上秘密分享",
     }
 ]
 export const menuHeaderPropsR = [
@@ -128,7 +128,7 @@ export const menuMainDetailSider = [
     {
         key: 'teach',
         icon: null,
-        label: "教务信息",
+        label: "成长探索",
         children: createInitMenu({
             frontPath: "teach",
             length: 3
@@ -137,13 +137,13 @@ export const menuMainDetailSider = [
     {
         key: 'science',
         icon: null,
-        label: "科研信息",
+        label: "恋爱经历",
         children: createInitMenu()
     },
     {
         key: 'profession',
         icon: null,
-        label: "专业信息",
+        label: "奇闻轶事",
         children:createInitMenu()
     }
 ]
