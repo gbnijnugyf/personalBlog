@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BellOutlined, CommentOutlined, HomeOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UserOutlined } from "@ant-design/icons"
+import { AppstoreOutlined, BellOutlined, CommentOutlined, HomeOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
 import { Avatar, Badge, Dropdown } from "antd"
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
@@ -89,12 +89,12 @@ export const menuHeaderPropsL = [
         label: "首页",
     },
     {
-        key: 'mylesson',
+        key: 'mysecret',
         icon: <AppstoreOutlined />,
         label: "我的秘密",
     },
     {
-        key: 'experiment',
+        key: 'secretshare',
         icon: <CommentOutlined />,
         label: "线上秘密分享",
     }
@@ -146,4 +146,22 @@ export const menuMainDetailSider = [
         label: "奇闻轶事",
         children:createInitMenu()
     }
+]
+
+export const menuPersonalSider = [
+    {
+        key: 'personalInfo',
+        icon: <UserOutlined />,
+        label: '个人信息',
+    },
+    {
+        key: 'setFriendsUser',
+        icon: <VideoCameraOutlined />,
+        label: '设置亲友账号',
+    },
+    {
+        key: '3',
+        icon: <UploadOutlined />,
+        label: 'nav 3',
+    },
 ]

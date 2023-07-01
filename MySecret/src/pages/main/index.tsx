@@ -13,27 +13,8 @@ export function MainPage() {
   },[])
   return (
     <>
-      {/* <PageContainer
-        extra={[
-          <Button key="3">Operating</Button>,
-          <Button key="2">Operating</Button>,
-          <Button key="1" type="primary">
-            Main Operating
-          </Button>,
-        ]}
-        footer={[
-          <Button key="4">reset</Button>,
-          <Button key="5" type="primary">submit</Button>
-        ]}
-        className="container"
-      >
-        fdsfads
-        <Outlet />
-      </PageContainer> */}
-
       <Layout>
         <div className="menu-header">
-
           <Header>
             <img />
             <Menu

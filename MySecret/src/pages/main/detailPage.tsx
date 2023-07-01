@@ -4,6 +4,7 @@ import Sider from "antd/es/layout/Sider"
 import { Outlet, useNavigate } from "react-router-dom";
 import { menuHeaderPropsL, menuMainDetailSider } from "../../menu/menuProps";
 import "./css/index.css"
+import { useEffect } from "react";
 
 export function Teach1Page() {
     return (
@@ -33,7 +34,8 @@ export function DetailPage() {
         token: { colorBgContainer },
     } = theme.useToken();
     const navigate = useNavigate();
-
+    useEffect(()=>navigate("./teach1"),[])
+    // navigate("./teach1")
     return (
         <>
             <div className="container-detailPage">
@@ -70,7 +72,7 @@ export function DetailPage() {
                             <Content style={{ padding: '0 2vw', minHeight: 280 }}><Outlet /></Content>
                         </Layout>
                     </Content>
-                    <Footer>教学云平台</Footer>
+                    <Footer>没有秘密长不大</Footer>
 
                 </Layout>
 
