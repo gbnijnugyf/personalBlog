@@ -1,5 +1,5 @@
-import Icon, { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Layout, Modal, Radio, Tabs } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, Layout, Modal, Tabs } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/index.css"
 import { CheckboxChangeEvent } from "antd/es/checkbox/Checkbox";

@@ -2,7 +2,7 @@
 // import logo from './logo.svg';
 import './css/App.css';
 import { Routers } from './routers/router';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 // import { Layout } from 'antd';
 // import { Content, Footer, Header } from 'antd/es/layout/layout';
 // import Sider from 'antd/es/layout/Sider';
@@ -29,7 +29,7 @@ function DevTools() {
 }
 
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <div className="App">

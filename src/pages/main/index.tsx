@@ -1,5 +1,5 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout, Menu, MenuProps } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -11,6 +11,12 @@ export function MainPage() {
   useEffect(()=>{
     navigate('detail');
   },[])
+
+  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
+
   return (
     <>
       <Layout>
@@ -26,6 +32,7 @@ export function MainPage() {
               className="menu-header-left"
             >
             </Menu>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
             <Menu
               theme="dark"
               mode="horizontal"

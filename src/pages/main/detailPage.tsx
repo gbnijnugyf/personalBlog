@@ -1,8 +1,8 @@
 import { Breadcrumb, Carousel, Menu, theme } from "antd"
-import Layout, { Content, Footer, Header } from "antd/es/layout/layout"
+import Layout, { Content, Footer } from "antd/es/layout/layout"
 import Sider from "antd/es/layout/Sider"
 import { Outlet, useNavigate } from "react-router-dom";
-import { menuHeaderPropsL, menuMainDetailSider } from "../../menu/menuProps";
+import { menuMainDetailSider } from "../../menu/menuProps";
 import "./css/index.css"
 import { useEffect } from "react";
 
@@ -29,12 +29,13 @@ export function Teach3Page() {
 }
 
 
+
 export function DetailPage() {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
     const navigate = useNavigate();
-    useEffect(()=>navigate("./teach1"),[])
+    useEffect(()=>navigate("./teach1"))
     // navigate("./teach1")
     return (
         <>
@@ -61,13 +62,14 @@ export function DetailPage() {
                             <Breadcrumb.Item>App</Breadcrumb.Item> */}
                         </Breadcrumb>
                         <Layout style={{ padding: '2% 0', background: colorBgContainer }}>
-                            <Sider style={{ background: colorBgContainer }} width={200}>
+                            <Sider style={{ background: colorBgContainer }} width={200} collapsible={true}>
                                 <Menu
                                     mode="inline"
                                     style={{ height: '100%' }}
                                     items={menuMainDetailSider}
                                     onClick={(props) => props.key.length !== 0 ? navigate(props.key) : null}
                                 />
+                               
                             </Sider>
                             <Content style={{ padding: '0 2vw', minHeight: 280 }}><Outlet /></Content>
                         </Layout>
