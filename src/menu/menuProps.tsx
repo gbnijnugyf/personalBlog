@@ -91,12 +91,12 @@ export const menuHeaderPropsL = [
     {
         key: 'mysecret',
         icon: <AppstoreOutlined />,
-        label: "我的秘密",
+        label: "踩过的坑",
     },
     {
         key: 'secretshare',
         icon: <CommentOutlined />,
-        label: "线上秘密分享",
+        label: "其他分享",
     }
 ]
 export const menuHeaderPropsR = [
@@ -128,7 +128,7 @@ export const menuMainDetailSider = [
     {
         key: 'teach',
         icon: null,
-        label: "成长探索",
+        label: "Cpp",
         children: createInitMenu({
             frontPath: "teach",
             length: 3
@@ -137,13 +137,13 @@ export const menuMainDetailSider = [
     {
         key: 'science',
         icon: null,
-        label: "恋爱经历",
+        label: "Java",
         children: createInitMenu()
     },
     {
         key: 'profession',
         icon: null,
-        label: "奇闻轶事",
+        label: "Goland",
         children:createInitMenu()
     }
 ]
@@ -157,7 +157,7 @@ export const menuPersonalSider = [
     {
         key: 'setFriendsUser',
         icon: <VideoCameraOutlined />,
-        label: '设置亲友账号',
+        label: '好友信息',
     },
     {
         key: '3',

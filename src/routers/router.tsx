@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import cookie from "react-cookies";
+// import cookie from "react-cookies";
 import {
   Navigate,
   Route,
@@ -7,7 +7,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { LoginPage } from "../pages/login";
+// import { LoginPage } from "../pages/login";
 import { MainPage } from "../pages/main";
 import { PersonalPage } from "../pages/personInfo";
 import { DetailPage, Teach1Page, Teach2Page, Teach3Page } from "../pages/main/detailPage";
@@ -16,24 +16,13 @@ export function Routers() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    console.log("in");
-    let token = cookie.load("jwt_token");
-    if (token) {
-      localStorage.setItem("token", token);
-      navigate("/main");
-    }
-    if (
-      !localStorage.getItem("token") &&
-      !location.pathname.startsWith("/login")
-    ) {
-      console.log("in1");
-      navigate("/login");
-    }
+      navigate("/main/detail");
+    
   }, [navigate, location]);
 
   return (
     <Routes>
-      <Route path="login/*" element={<LoginPage />}/>
+      {/* <Route path="login/*" element={<LoginPage />}/> */}
       <Route path="main/*" element={<MainPage />}>
         <Route path="detail/*" element={<DetailPage />} >
           <Route path="teach1" element={<Teach1Page />} />

@@ -33,14 +33,14 @@ export function MainPage() {
             >
             </Menu>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-            <Menu
+            {/* <Menu
               theme="dark"
               mode="horizontal"
               items={menuHeaderPropsR}
               onClick={(props) => props.key.length !== 0 ? navigate(props.key) : null}
               className="menu-header-right"
             >
-            </Menu>
+            </Menu> */}
 
           </Header>
         </div>
