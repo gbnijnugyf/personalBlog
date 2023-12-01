@@ -33,11 +33,10 @@ function App() {
 
   return (
     <div className="App">
-      <DevTools />
-      <header className="App-header">
+      {/* <header className="App-header"> */}
         <Routers />
 
-      </header>
+      {/* </header> */}
     </div >
   );
 }

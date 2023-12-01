@@ -6,7 +6,7 @@
 .LoginPannel {
   position: absolute;
   top: 20vh;
-  right: 15vw;
+  right: 10vw;
   border-radius: 3%;
   height: 50vh;
   width: auto;
@@ -17,12 +17,8 @@
 }
 
 .two-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .two-button .login-form-button {
   margin-right: 20%;

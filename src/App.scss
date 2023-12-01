@@ -1,19 +1,26 @@
 .App {
   text-align: center;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  // overflow: hidden;
+  max-width: 100vw;
   overflow-x: hidden;
-
+  min-height: 100vh;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-size: calc(10px + 2vmin);
+}
+.App::-webkit-scrollbar {
+  display: none;
 }
 
 .App-header {
-  background-color: #a1f3ec;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
+  // background-color: #a1f3ec;
+  // min-height: 100vh;
+  // width: 100vw;
+  // display: flex;
   font-size: calc(10px + 2vmin);
-  color: white;
-
-
-  
 }
 
 

@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BellOutlined, CommentOutlined, HomeOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
+import { AppstoreOutlined, BellOutlined, CommentOutlined, DiffOutlined, HomeOutlined, LinkOutlined, RadarChartOutlined, SearchOutlined, SettingOutlined, SmileOutlined, ToolOutlined, UnorderedListOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
 import { Avatar, Badge, Dropdown } from "antd"
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
@@ -82,23 +82,40 @@ const items: ItemType[] = [
 ]
 
 
-export const menuHeaderPropsL = [
+export const menuHeaderProps = [
     {
         key: 'detail',
         icon: <HomeOutlined />,
         label: "首页",
     },
     {
-        key: 'mysecret',
-        icon: <AppstoreOutlined />,
-        label: "踩过的坑",
+        key: 'classify',
+        icon: <UnorderedListOutlined />,
+        label: "分类",
     },
     {
-        key: 'secretshare',
-        icon: <CommentOutlined />,
-        label: "其他分享",
-    }
+        key: 'filed',
+        icon: <DiffOutlined />,
+        label: "归档",
+    },
+    {
+        key: 'about',
+        icon: <RadarChartOutlined />,
+        label: "关于",
+    },
+    {
+        key: 'friendLink',
+        icon: <LinkOutlined />,
+        label: "友情链接",
+    },
+    {
+        key: 'search',
+        icon: <SearchOutlined />,
+        label: "搜索",
+    },
+
 ]
+//首页，分类，归档，关于，友情链接，搜索
 export const menuHeaderPropsR = [
     {
         key: 'information',

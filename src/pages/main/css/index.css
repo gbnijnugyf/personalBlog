@@ -1,52 +1,31 @@
-.container {
-  color: black;
+@charset "UTF-8";
+.layout {
+  background-color: rgb(246, 240, 232);
 }
-
-.menu-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.layout .menu {
+  position: fixed;
+  height: 8%;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  min-height: 8.5vh;
+  align-items: center;
+  position: fixed;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(98, 235, 160, 0.8);
+  z-index: 1;
 }
-.menu-header Header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  width: 100vw;
-}
-.menu-header Header img {
-  width: 25vw;
-  border: 1px solid red;
-}
-.menu-header Header .menu-header-left {
-  border: 1px solid red;
-}
-.menu-header Header .menu-header-right {
-  border: 1px solid red;
+.layout .content {
+  margin-left: 15vw;
+  margin-top: 10vh;
+  width: 70vw;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   position: relative;
-  left: 35vw;
 }
-
-.container-detailPage {
-  border: 1px solid red;
-  height: 81vh;
-  width: 100vw;
+.layout .content ::after {
+  height: 5px; /* 设置阴影的高度 */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
 }
-.container-detailPage .carousel div h3 {
-  margin: 0;
-  color: #fff;
-  line-height: 30vh;
+.layout .footer {
   text-align: center;
-  background: #64c3db;
-}
-.container-detailPage .teachPage {
-  color: black;
+  background-color: rgb(246, 240, 232);
 }
