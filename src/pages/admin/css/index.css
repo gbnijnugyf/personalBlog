@@ -1,0 +1,15 @@
+.admin-layout {
+  background-color: rgb(246, 240, 232);
+  min-height: 100vh;
+}
+.admin-layout .menu {
+  position: fixed;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(98, 235, 160, 0.8);
+  z-index: 1;
+}

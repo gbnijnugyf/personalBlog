@@ -67,11 +67,11 @@ export const menuProps = {
   },
 };
 
-export const items: ItemType[] = [
+export const menuHeaderRItems: ItemType[] = [
   {
     key: "1",
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="/personal">
+      <a target="_blank" rel="noopener noreferrer" href="/admin/login">
         管理员登录
       </a>
     ),
@@ -79,7 +79,7 @@ export const items: ItemType[] = [
   {
     key: "2",
     label: (
-      <a rel="noopener noreferrer" href="/login">
+      <a rel="noopener noreferrer" href="/setting">
         设置
       </a>
     ),
@@ -137,7 +137,7 @@ export const menuHeaderPropsR = [
   {
     key: "setting",
     icon: (
-      <Dropdown menu={{ items }}>
+      <Dropdown menu={{ items: menuHeaderRItems }}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             Hover me

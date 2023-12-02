@@ -1,19 +1,13 @@
-import { PageContainer } from "@ant-design/pro-layout";
 import {
-  Breadcrumb,
-  Button,
   Dropdown,
   Layout,
   Menu,
-  MenuProps,
-  Space,
 } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { items, menuHeaderProps, menuHeaderPropsR } from "../../menu/menuProps";
+import { menuHeaderRItems, menuHeaderProps } from "../../menu/menuProps";
 import "./css/index.css";
-import { DownOutlined } from "@ant-design/icons";
 
 export function MainPage() {
   const navigate = useNavigate();
@@ -39,7 +33,7 @@ export function MainPage() {
               }
             }}
           />
-          <Dropdown menu={{ items }} className="menu-right">
+          <Dropdown menu={{ items: menuHeaderRItems }} className="menu-right">
             <a onClick={(e) => e.preventDefault()}>
               Setting
             </a>

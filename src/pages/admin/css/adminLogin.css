@@ -1,19 +1,17 @@
-@charset "UTF-8";
-.Login-layout {
-  color: black;
-}
-
 .LoginPannel {
   position: absolute;
   top: 20vh;
-  right: 10vw;
+  right: 37.5vw;
   border-radius: 3%;
   height: 50vh;
-  width: auto;
+  width: 25vw;
   background-color: rgba(98, 222, 238, 0.1);
 }
-.LoginPannel .ant-form { /*antd内部form标签class名*/
-  padding: 8%;
+
+.stud-login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
 }
 
 .two-button {
