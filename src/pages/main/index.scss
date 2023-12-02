@@ -1,6 +1,6 @@
 .layout {
   background-color: rgb(246, 240, 232);
-
+  min-height: 100vh;
   .menu {
     position: fixed;
     height: 8%;
@@ -11,11 +11,26 @@
     width: 100%;
     background-color: rgba(98, 235, 160, 0.8);
     z-index: 1;
+    justify-content: flex-end;
+    .menu-center {
+      display: flex;
+      background: none;
+      border-bottom: 0;
+      // background-color: rgba(98, 235, 160, 0.8);
+    }
+    .menu-right{
+      display: flex;
+      margin-left: 33vw;
+      background: none;
+      border-bottom: 0;
+      font-size: 50%;
+    }
   }
   .content {
     margin-left: 15vw;
     margin-top: 10vh;
     width: 70vw;
+    min-height: 80vh;
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     position: relative;

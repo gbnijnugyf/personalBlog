@@ -15,24 +15,21 @@ import { DetailPage, Teach1Page, Teach2Page, Teach3Page } from "../pages/main/de
 export function Routers() {
   const navigate = useNavigate();
   const location = useLocation();
-  useEffect(() => {
-      navigate("/main/detail");
+  // useEffect(() => {
+  //     navigate("/main/detail");
     
-  }, [navigate, location]);
+  // }, [navigate, location]);
 
   return (
     <Routes>
       {/* <Route path="login/*" element={<LoginPage />}/> */}
       <Route path="main/*" element={<MainPage />}>
-        <Route path="detail/*" element={<DetailPage />} >
-          <Route path="teach1" element={<Teach1Page />} />
-          <Route path="teach2" element={<Teach2Page />} />
-          <Route path="teach3" element={<Teach3Page />} />
-        </Route>
-        <Route path="mysecret" element={<></>} />
-        <Route path="secretshare" element={<></>} />
-        <Route path="information" element={<></>} />
-        <Route path="setting" element={<></>} />
+        <Route path="detail" element={<>首页</>} />
+        <Route path="classify" element={<>分类</>} />
+        <Route path="filed" element={<>归档</>} />
+        <Route path="about" element={<>关于</>} />
+        <Route path="friendLink" element={<>友情链接</>} />
+        <Route path="search" element={<>搜索</>} />
       </Route>
       <Route path="personal/*" element={<PersonalPage />} >
         <Route path="personalInfo" element={<Teach1Page />} />
@@ -40,7 +37,7 @@ export function Routers() {
         <Route path="3" element={<Teach3Page />} />
       </Route>
 
-      <Route
+      {/* <Route
         index
         element={
           <Navigate
@@ -52,7 +49,7 @@ export function Routers() {
             replace
           />
         }
-      />
+      /> */}
     </Routes>
   )
 }

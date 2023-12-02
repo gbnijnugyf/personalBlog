@@ -1,10 +1,19 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Breadcrumb, Button, Layout, Menu, MenuProps } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Layout,
+  Menu,
+  MenuProps,
+  Space,
+} from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { menuHeaderProps, menuHeaderPropsR } from "../../menu/menuProps";
+import { items, menuHeaderProps, menuHeaderPropsR } from "../../menu/menuProps";
 import "./css/index.css";
+import { DownOutlined } from "@ant-design/icons";
 
 export function MainPage() {
   const navigate = useNavigate();
@@ -12,76 +21,49 @@ export function MainPage() {
     navigate("detail");
   }, []);
 
-  const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
-
   return (
     <>
-      {/* <Layout>
-        <Header>
+      <Layout className="layout">
+        <Header className="menu">
           <Menu
-            theme="dark"
+            // theme="dark"
             mode="horizontal"
-            items={menuHeaderPropsL}
             defaultSelectedKeys={["detail"]}
-            onClick={(props) =>
-              props.key.length !== 0 ? navigate(props.key) : null
-            }
-          ></Menu>
+            items={menuHeaderProps}
+            className="menu-center"
+            onClick={(props) => {
+              if (props.key.length !== 0) {
+                console.log(props.key);
+
+                navigate(props.key, { replace: true });
+              }
+            }}
+          />
+          <Dropdown menu={{ items }} className="menu-right">
+            <a onClick={(e) => e.preventDefault()}>
+              Setting
+            </a>
+          </Dropdown>
+          {/* <Menu
+            mode="horizontal"
+            items={menuHeaderPropsR}
+            className="menu-right"
+            onClick={(props) => {
+              if (props.key.length !== 0) {
+                console.log(props.key);
+
+                navigate(props.key, { replace: true });
+              }
+            }}
+          /> */}
         </Header>
         <Content>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </Content>
-      </Layout> */}
-      <Layout className="layout">
-
-        <Menu
-          // theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["0"]}
-          items={menuHeaderProps}
-          className="menu"
-        />
-        <Content>
           <div className="content" style={{ background: "colorBgContainer" }}>
-            <br />
-            <br />
-            
+            <Outlet />
           </div>
         </Content>
-        <Footer className='footer' >
-          Ant Design ©2023 Created by Ant UED
+        <Footer className="footer">
+          Personal Blog ©2023 Created by gbnijnugyf
         </Footer>
       </Layout>
     </>
