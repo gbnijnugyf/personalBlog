@@ -1,0 +1,15 @@
+.article-layout {
+  display: flex;
+  width: 80%;
+  min-height: 50vh;
+  border: 1px solid red;
+}
+.article-layout .layout {
+  background-color: white;
+}
+.article-layout .content-md {
+  background-color: white;
+  display: inline;
+  overflow: auto;
+  font-size: medium;
+}

@@ -1,5 +1,5 @@
 import { Layout, Tabs } from "antd";
-import { Header } from "antd/es/layout/layout";
+import { Content, Header } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
 import "./css/index.css";
 
@@ -8,8 +8,9 @@ export function AdminMainPage() {
     <>
       <Layout className="admin-layout">
         <Header className="menu">个人博客后台管理</Header>
-
-        <Outlet />
+        <Content className="admin-content">
+          <Outlet />
+        </Content>
       </Layout>
     </>
   );

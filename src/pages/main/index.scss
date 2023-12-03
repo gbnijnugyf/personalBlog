@@ -47,7 +47,7 @@
 
 .container-detailPage {
   // border: 1px solid red;
-  height: 81vh;
+  height: 80vh;
   .my-carousel {
     // border: 1px solid red;
     .carousel-content {
@@ -63,9 +63,17 @@
         align-content: center;
         justify-content: space-around;
         .ant-card-cover {
-
+          margin-top: 1px;
           width: 100%;
           height: 60%;
+          border-bottom: 1px solid rgb(231, 227, 227);
+
+        }
+        .ant-card-text {
+          display: flex;
+          flex-direction: column;
+          // height: 40%;
+          margin-top: -10%;
         }
         .carousel-content-item {
           margin-left: 1%;
@@ -75,8 +83,8 @@
           width: 20%;
           display: flex;
           z-index: 0;
-          flex-direction: column
-
+          flex-direction: column;
+          overflow: hidden;
         }
       }
     }

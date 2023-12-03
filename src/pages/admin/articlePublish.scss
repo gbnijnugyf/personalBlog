@@ -1,0 +1,18 @@
+.article-layout {
+  .layout {
+    background-color: white
+  }
+  display: flex;
+  width: 80%;
+  min-height: 50vh;
+  // max-height: 80vh;
+  // overflow-y: scroll;
+  border: 1px solid red;
+
+  .content-md {
+    background-color: white;
+    display: inline;
+    overflow: auto;
+    font-size: medium;
+  }
+}

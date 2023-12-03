@@ -19,12 +19,13 @@ import {
 import { LoginPage } from "../pages/admin/adminLogin";
 import { loadavg } from "os";
 import { AdminMainPage } from "../pages/admin";
+import { ArticlePublishPage } from "../pages/admin/articlePublish";
 
 export function Routers() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    console.log(location.pathname)
+    console.log(location.pathname);
     if (!location.pathname.startsWith("/admin")) {
       navigate("/main/detail");
     }
@@ -34,7 +35,7 @@ export function Routers() {
     <Routes>
       {/* <Route path="login/*" element={<LoginPage />}/> */}
       <Route path="main/*" element={<MainPage />}>
-        <Route path="detail" element={<DetailPage/>} />
+        <Route path="detail" element={<DetailPage />} />
         <Route path="classify" element={<>分类</>} />
         <Route path="filed" element={<>归档</>} />
         <Route path="about" element={<>关于</>} />
@@ -47,7 +48,8 @@ export function Routers() {
         <Route path="3" element={<Teach3Page />} />
       </Route> */}
       <Route path="admin/*" element={<AdminMainPage />}>
-        <Route path="login" element={<LoginPage/>} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="article" element={<ArticlePublishPage />} />
       </Route>
       <Route path="setting" element={<>设置</>} />
       {/* <Route

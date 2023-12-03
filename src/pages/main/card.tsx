@@ -24,7 +24,11 @@ export function CardArray() {
             }
             onClick={() => console.log("1")}
           >
-            <Meta title="Europe Street beat" description="www.instagram.com" />
+            <p className="ant-card-text">
+              <div>Europe Street beat</div>
+              <div>Europe Street beat</div>
+            </p>
+            {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
           </Card>
           <div className="carousel-content-item">article</div>
           <div className="carousel-content-item">article</div>
