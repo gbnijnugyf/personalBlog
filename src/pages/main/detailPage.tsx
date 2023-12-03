@@ -1,10 +1,12 @@
-import { Breadcrumb, Carousel, Menu, theme } from "antd";
+import { Breadcrumb, Card, Carousel, Menu, theme } from "antd";
 import Layout, { Content, Footer } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { Outlet, useNavigate } from "react-router-dom";
 import { menuMainDetailSider } from "../../menu/menuProps";
 import "./css/index.css";
 import { useEffect } from "react";
+import Meta from "antd/es/card/Meta";
+import { CardArray } from "./card";
 
 export function Teach1Page() {
   return <div className="teachPage">Teach1Page</div>;
@@ -20,16 +22,15 @@ export function DetailPage() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const navigate = useNavigate();
-  useEffect(() => navigate("./teach1"));
-  // navigate("./teach1")
+
   return (
     <>
       <div className="container-detailPage">
-        <Carousel className="carousel" autoplay>
-          <div>
-            <h3>1</h3>
-          </div>
+        <Carousel className="my-carousel" >
+          <CardArray/>
+          <CardArray/>
+          <CardArray/>
+          <CardArray/>
           <div>
             <h3>2</h3>
           </div>
@@ -40,12 +41,10 @@ export function DetailPage() {
             <h3>4</h3>
           </div>
         </Carousel>
-        <Layout>
+        {/* <Layout>
           <Content style={{ padding: "0 5vw" }}>
             <Breadcrumb style={{ margin: "2vh 0" }}>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
-              {/* <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item> */}
             </Breadcrumb>
             <Layout style={{ padding: "2% 0", background: colorBgContainer }}>
               <Sider
@@ -76,7 +75,7 @@ export function DetailPage() {
               粤ICP备2023105609号
             </a>
           </Footer>
-        </Layout>
+        </Layout> */}
       </div>
     </>
   );

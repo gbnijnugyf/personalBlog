@@ -34,21 +34,20 @@ export function Routers() {
     <Routes>
       {/* <Route path="login/*" element={<LoginPage />}/> */}
       <Route path="main/*" element={<MainPage />}>
-        <Route path="detail" element={<>首页</>} />
+        <Route path="detail" element={<DetailPage/>} />
         <Route path="classify" element={<>分类</>} />
         <Route path="filed" element={<>归档</>} />
         <Route path="about" element={<>关于</>} />
         <Route path="friendLink" element={<>友情链接</>} />
         <Route path="search" element={<>搜索</>} />
       </Route>
-      <Route path="personal/*" element={<PersonalPage />}>
+      {/* <Route path="personal/*" element={<PersonalPage />}>
         <Route path="personalInfo" element={<Teach1Page />} />
         <Route path="setFriendsUser" element={<Teach2Page />} />
         <Route path="3" element={<Teach3Page />} />
-      </Route>
+      </Route> */}
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage/>} />
-        
       </Route>
       <Route path="setting" element={<>设置</>} />
       {/* <Route

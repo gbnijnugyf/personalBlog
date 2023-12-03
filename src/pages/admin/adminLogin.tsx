@@ -9,7 +9,7 @@ import { Header } from "antd/es/layout/layout";
 interface IOnFinishProps {
   password: string;
   remember: boolean;
-  personID: string;
+  username: string;
 }
 
 function PersonalLogin() {
@@ -17,7 +17,7 @@ function PersonalLogin() {
   const [value, setValue] = useState<IOnFinishProps>({
     password: "",
     remember: false,
-    personID: "",
+    username: "",
   });
 
   function onFinish() {
@@ -29,21 +29,21 @@ function PersonalLogin() {
     setValue({
       password: e.target.value,
       remember: value.remember,
-      personID: value.personID,
+      username: value.username,
     });
   }
   function onChangePersonID(e: React.ChangeEvent<HTMLInputElement>) {
     setValue({
       password: value.password,
       remember: value.remember,
-      personID: e.target.value,
+      username: e.target.value,
     });
   }
   function isRemember(e: CheckboxChangeEvent) {
     setValue({
       password: value.password,
       remember: e.target.checked,
-      personID: value.personID,
+      username: value.username,
     });
   }
   return (
@@ -86,6 +86,13 @@ function PersonalLogin() {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            onClick={()=>{
+              if(value.password !== undefined){
+                console.log(value)
+              }else{
+                console.log("222")
+              }
+            }}
           >
             登录
           </Button>
