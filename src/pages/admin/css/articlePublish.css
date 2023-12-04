@@ -1,15 +1,20 @@
 .article-layout {
-  display: flex;
-  width: 80%;
+  width: 100%;
   min-height: 50vh;
   border: 1px solid red;
 }
 .article-layout .layout {
   background-color: white;
 }
-.article-layout .content-md {
+.article-layout #content-md {
+  display: flex;
+  flex-direction: column;
+}
+.article-layout .left-sider {
   background-color: white;
-  display: inline;
-  overflow: auto;
-  font-size: medium;
+}
+.article-layout .left-sider .toc-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

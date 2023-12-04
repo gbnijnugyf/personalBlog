@@ -1,4 +1,4 @@
-import { Breadcrumb, Card, Carousel, Menu, theme } from "antd";
+import { Breadcrumb, Card, Carousel, Menu, theme, Image } from "antd";
 import Layout, { Content, Footer } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { Outlet, useNavigate } from "react-router-dom";

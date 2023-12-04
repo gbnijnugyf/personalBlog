@@ -7,8 +7,12 @@ import {
   NotificationOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
+import MarkNav from "markdown-navbar";
+import remarkGfm from "remark-gfm";
 import "./css/articlePublish.css";
+import "markdown-navbar/dist/navbar.css";
+import "github-markdown-css/github-markdown-light.css";
 
 export function ArticlePublishPage() {
   const [md, setMd] = useState("./test.md");
@@ -54,13 +58,19 @@ export function ArticlePublishPage() {
               items={items2}
             />
           </Sider>
+
           <Content>
-            <div className="content-md">
-              <Markdown children={md} />
+            <div className="markdown-body" id="content-md">
+              <ReactMarkdown children={md} remarkPlugins={[remarkGfm]} />
             </div>
           </Content>
+          <Sider className="left-sider">
+            <MarkNav className="toc-list" source={md} ordered={true} />
+          </Sider>
         </Layout>
+        
       </div>
+      
     </>
   );
 }
