@@ -4,7 +4,7 @@
 }
 .admin-layout .menu {
   position: fixed;
-  height: fit-content;
+  height: 8vh;
   display: flex;
   align-items: center;
   position: fixed;
@@ -15,7 +15,15 @@
 }
 .admin-layout .admin-content {
   display: flex;
-  margin: 10%;
+  margin-top: 8vh;
   justify-content: center;
   align-items: center;
+}
+
+.main-content-layout {
+  border: 1px solid red;
+  width: 50vw;
+  min-height: 92vh;
+  max-height: 92vh;
+  overflow-y: auto;
 }

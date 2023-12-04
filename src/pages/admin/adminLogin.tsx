@@ -2,163 +2,31 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Layout, Modal, Tabs } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/adminLogin.css";
-import { CheckboxChangeEvent } from "antd/es/checkbox/Checkbox";
 import { useState } from "react";
-import { Header } from "antd/es/layout/layout";
+import { ILoginProps } from "../../globe/inter";
+import { Service } from "../../globe/service";
 
-interface IOnFinishProps {
-  password: string;
-  remember: boolean;
-  username: string;
-}
-
-function PersonalLogin() {
-  //学生登录
-  const [value, setValue] = useState<IOnFinishProps>({
-    password: "",
-    remember: false,
-    username: "",
-  });
-
-  function onFinish() {
-    //点击登录，提交表单
-    console.log("Received values of form: ", value);
+function AdminLogin() {
+  //管理员登录
+  function onFinish(values: ILoginProps) {
+    if (values!==undefined){
+      console.log("1")
+    }else{
+      console.log("2")
+    }
+    console.log("Received values of form: ", values);
+    Service.adminLogin(values).then((res)=>{
+      if(res.data.data==='successful'){
+        
+      }
+    })
   }
 
-  function onChangePassword(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue({
-      password: e.target.value,
-      remember: value.remember,
-      username: value.username,
-    });
-  }
-  function onChangePersonID(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue({
-      password: value.password,
-      remember: value.remember,
-      username: e.target.value,
-    });
-  }
-  function isRemember(e: CheckboxChangeEvent) {
-    setValue({
-      password: value.password,
-      remember: e.target.checked,
-      username: value.username,
-    });
-  }
   return (
     <Form
       name="normal_login"
       className="stud-login-form"
       initialValues={{ remember: false }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="personID"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="请输入用户名"
-          onChange={onChangePersonID}
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="请输入密码"
-          onChange={onChangePassword}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" noStyle>
-          <Checkbox onChange={isRemember}>记住密码</Checkbox>
-        </Form.Item>
-      </Form.Item>
-
-      <Form.Item>
-        <div className="two-button">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-            onClick={()=>{
-              if(value.password !== undefined){
-                console.log(value)
-              }else{
-                console.log("222")
-              }
-            }}
-          >
-            登录
-          </Button>
-          <Temp />
-        </div>
-      </Form.Item>
-    </Form>
-  );
-}
-function FriendsLogin() {
-  //教师登录
-  function onFinish(values: IOnFinishProps) {
-    console.log("Received values of form: ", values);
-  }
-
-  return (
-    <Form
-      name="normal_login"
-      className="stud-login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="personID"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="请输入用户名"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="请输入密码"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" noStyle>
-          <Checkbox>记住密码</Checkbox>
-        </Form.Item>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          登录
-        </Button>
-      </Form.Item>
-    </Form>
-  );
-}
-function AdminLogin() {
-  //管理员登录
-  function onFinish(values: IOnFinishProps) {
-    console.log("Received values of form: ", values);
-  }
-
-  return (
-    <Form
-      name="normal_login"
-      className="stud-login-form"
-      initialValues={{ remember: true }}
       onFinish={onFinish}
     >
       <Form.Item
@@ -179,11 +47,6 @@ function AdminLogin() {
           type="password"
           placeholder="请输入密码"
         />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" noStyle>
-          <Checkbox>记住密码</Checkbox>
-        </Form.Item>
       </Form.Item>
 
       <Form.Item>
@@ -207,7 +70,7 @@ export function LoginPage() {
         onChange={callback}
         className="LoginPannel"
       >
-        <TabPane tab="管理员登录" key="3">
+        <TabPane tab="管理员登录" key="1">
           <AdminLogin />
         </TabPane>
       </Tabs>
@@ -235,7 +98,7 @@ function CollectionCreateForm({
   return (
     <Modal
       open={open}
-      title="开创你的秘密基地"
+      title="开创你的博客"
       okText="注册"
       cancelText="取消"
       onCancel={onCancel}

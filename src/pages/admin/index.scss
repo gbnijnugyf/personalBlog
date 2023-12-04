@@ -3,7 +3,7 @@
   min-height: 100vh;
   .menu {
     position: fixed;
-    height: fit-content;
+    height: 8vh;
     display: flex;
     align-items: center;
     position: fixed;
@@ -15,8 +15,17 @@
   .admin-content {
     display: flex;
     // height: 10%;
-    margin: 10%;
+    // margin: 10%;
+    margin-top: 8vh;
     justify-content: center;
     align-items: center;
   }
+}
+.main-content-layout{
+  // margin-top: 15vh;
+  border: 1px solid red;
+  width: 50vw;
+  min-height: 92vh;
+  max-height: 92vh;
+  overflow-y: auto;
 }

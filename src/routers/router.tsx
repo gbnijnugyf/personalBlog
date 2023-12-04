@@ -18,7 +18,7 @@ import {
 } from "../pages/main/detailPage";
 import { LoginPage } from "../pages/admin/adminLogin";
 import { loadavg } from "os";
-import { AdminMainPage } from "../pages/admin";
+import { AdminMainPage, MainContent } from "../pages/admin";
 import { ArticlePublishPage } from "../pages/admin/articlePublish";
 import { ArticlePage } from "../pages/main/articlePage";
 
@@ -42,7 +42,6 @@ export function Routers() {
         <Route path="about" element={<>关于</>} />
         <Route path="friendLink" element={<>友情链接</>} />
         <Route path="article" element={<ArticlePage />} />
-
       </Route>
       {/* <Route path="personal/*" element={<PersonalPage />}>
         <Route path="personalInfo" element={<Teach1Page />} />
@@ -51,7 +50,11 @@ export function Routers() {
       </Route> */}
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage />} />
-        <Route path="article" element={<ArticlePublishPage />} />
+        <Route path="main/*" element={<MainContent />}>
+          <Route path="article" element={<ArticlePublishPage />} />
+          <Route path="comment" element={<>评论管理</>} />
+          <Route path="3" element={<>nothing</>} />
+        </Route>
       </Route>
       <Route path="setting" element={<>设置</>} />
       {/* <Route

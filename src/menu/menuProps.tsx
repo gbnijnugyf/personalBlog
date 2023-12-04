@@ -174,16 +174,16 @@ export const menuMainDetailSider = [
   },
 ];
 
-export const menuPersonalSider = [
+export const menuAdminSider = [
   {
-    key: "personalInfo",
+    key: "article",
     icon: <UserOutlined />,
-    label: "个人信息",
+    label: "文章管理",
   },
   {
-    key: "setFriendsUser",
+    key: "comment",
     icon: <VideoCameraOutlined />,
-    label: "好友信息",
+    label: "评论管理",
   },
   {
     key: "3",

@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { menuPersonalSider } from '../../menu/menuProps';
 
 const { Header, Sider, Content } = Layout;
 
@@ -29,7 +28,7 @@ export function PersonalPage() {
                     mode="inline"
                     style={{ height: '100%' }}
                     defaultSelectedKeys={['personalInfo']}
-                    items={menuPersonalSider}
+                    // items={menuPersonalSider}
                     onClick={(props) => props.key.length !== 0 ? navigate(props.key) : null}
                 />
             </Sider>
