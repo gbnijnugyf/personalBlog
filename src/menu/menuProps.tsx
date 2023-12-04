@@ -126,11 +126,11 @@ export const menuHeaderProps = [
     icon: <LinkOutlined />,
     label: "友情链接",
   },
-  {
-    key: "search",
-    icon: <SearchOutlined />,
-    label: "搜索",
-  },
+  // {
+  //   key: "search",
+  //   icon: <SearchOutlined />,
+  //   label: "搜索",
+  // },
 ];
 //首页，分类，归档，关于，友情链接，搜索
 export const menuHeaderPropsR = [

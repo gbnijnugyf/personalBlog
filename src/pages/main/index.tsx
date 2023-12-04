@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { menuHeaderRItems, menuHeaderProps } from "../../menu/menuProps";
 import "./css/index.css";
+import { SearchTest1 } from "./search";
 
 export function MainPage() {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ export function MainPage() {
               }
             }}
           />
+          {/* <MySearch /> */}
+          <SearchTest1 />
           <Dropdown menu={{ items: menuHeaderRItems }} className="menu-right">
             <a onClick={(e) => e.preventDefault()}>
               Setting

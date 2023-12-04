@@ -1,61 +1,55 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { parse } from "url";
-import { ILoginProps } from "./inter";
-const BASEURL = "localhost:3000";
+import { BASEURL, ILoginProps, ISearchProps } from "./inter";
 
-interface IGlobalResponse<T> {
+// 返回响应中data的类型
+export interface IGlobalResponse<T> {
   data: T;
   msg: string;
   status: number;
 }
+interface IPostSpeechText {
+  text: string
+}
+function appendParams2Path(
+  path: string,
+  paramsRaw: string | URLSearchParams | string[][] | Record<string, string>
+) {
+  const params = new URLSearchParams(paramsRaw);
+  return `${path}?${params.toString()}`;
+}
+
 async function GlobalAxios<T = any, D = any>(
-  method: "post",
-  url: string,
-  data: D
-): Promise<AxiosResponse<IGlobalResponse<T>, any>>;
-async function GlobalAxios<T = any>(
-  method: "get" | "delete",
-  url: string
-): Promise<AxiosResponse<IGlobalResponse<T>, any>>;
-async function GlobalAxios<T = any, D = any>(
-  method: "get" | "post" | "delete",
+  method: "post" | "get" | "delete",
   url: string,
   data?: D
 ): Promise<AxiosResponse<IGlobalResponse<T>, any>> {
+
+
   let config: AxiosRequestConfig<D> = {};
   config.baseURL = BASEURL;
-  config.headers = { token: localStorage.getItem("token") || "" };
 
-  const parsedURL = parse(url);
-  const params = new URLSearchParams(parsedURL.query || "");
-  url = parsedURL.pathname || "";
+  const parsedURL = new URL(BASEURL + url);
+  //   const parsedURL = parse(url);
+
+  const params = new URLSearchParams(parsedURL.searchParams || "");
+  //   url = parsedURL.pathname || "";
   config.params = params;
 
   let response;
   if (method === "post") {
+    //axios将data自动序列化为json格式
     response = await axios[method]<IGlobalResponse<T>>(url, data, config);
   } else {
     params.set("time", new Date().getTime().toString());
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
 
-  // TODO: have bug, check later
+
   if (response.statusText === "OK") {
     return response;
-  } else if (response.status === -2) {
+  } else {
     alert(response.data.msg);
-    localStorage.removeItem("token");
-
-    // 重定向到根目录，重新登录
-    let redirectpos = window.location.href;
-    redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
-    // window.location.href(redirectpos)
-    window.location.href = redirectpos;
-  } else if (response.data.status !== 0) {
-    alert(response.data.msg);
-    return response;
   }
-
   return response;
 }
 export const Service = {
@@ -73,5 +67,11 @@ export const Service = {
   },
   adminLogin(props: ILoginProps) {
     return GlobalAxios<string>("post", "/admin/login", props);
+  },
+  userSearch(props: string) {
+    return GlobalAxios<ISearchProps>(
+      "get",
+      appendParams2Path("/main/search", { word: props })
+    );
   },
 };
