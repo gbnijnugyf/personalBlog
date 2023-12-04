@@ -4,9 +4,11 @@ import Sider from "antd/es/layout/Sider";
 import { Outlet, useNavigate } from "react-router-dom";
 import { menuMainDetailSider } from "../../menu/menuProps";
 import "./css/index.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Meta from "antd/es/card/Meta";
 import { CardArray } from "./card";
+import { Service } from "../../globe/service";
+import { IArticleList } from "../../globe/inter";
 
 export function Teach1Page() {
   return <div className="teachPage">Teach1Page</div>;
@@ -19,63 +21,50 @@ export function Teach3Page() {
 }
 
 export function DetailPage() {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  // const {
+  //   token: { colorBgContainer },
+  // } = theme.useToken();
+  const [cardArr, setCardArr] = useState<IArticleList[][]>([]);
+  const maxNum = 8; //单页
+
+  //将文章列表转换为一组columns个的二维数组
+  function convertTo2DArray(arr: any[], columns: number): any[][] {
+    const result: any[][] = [];
+    const rows = Math.ceil(arr.length / columns);
+
+    for (let i = 0; i < rows; i++) {
+      const row = arr.slice(i * columns, (i + 1) * columns);
+      result.push(row);
+    }
+
+    return result;
+  }
+
+  useEffect(() => {
+    Service.getArticleList().then((res) => {
+      // console.log(res.data.data)
+      const dataArr = convertTo2DArray(res.data.data, maxNum);
+      console.log(dataArr);
+      setCardArr(dataArr);
+    });
+  }, []);
 
   return (
     <>
       <div className="container-detailPage">
-        <Carousel className="my-carousel" >
-          <CardArray/>
-          <CardArray/>
-          <CardArray/>
-          <CardArray/>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
+        <Carousel className="my-carousel">
+          {cardArr.length > 0 ? (
+            cardArr.map((pageArr) => {
+              return (
+                <>
+                  <CardArray list={pageArr} />
+                </>
+              );
+            })
+          ) : (
+            <p>暂无可见文章</p>
+          )}
         </Carousel>
-        {/* <Layout>
-          <Content style={{ padding: "0 5vw" }}>
-            <Breadcrumb style={{ margin: "2vh 0" }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-            </Breadcrumb>
-            <Layout style={{ padding: "2% 0", background: colorBgContainer }}>
-              <Sider
-                style={{ background: colorBgContainer }}
-                width={200}
-                collapsible={true}
-              >
-                <Menu
-                  mode="inline"
-                  style={{ height: "100%" }}
-                  items={menuMainDetailSider}
-                  onClick={(props) =>
-                    props.key.length !== 0 ? navigate(props.key) : null
-                  }
-                />
-              </Sider>
-              <Content style={{ padding: "0 2vw", minHeight: 280 }}>
-                <Outlet />
-              </Content>
-            </Layout>
-          </Content>
-          <Footer>
-            个人技术分享<br/>
-            <a style={{marginRight:"10px"}} href="https://beian.miit.gov.cn/" rel="noreferrer" target="_blank">
-            备案号
-            </a>
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">
-              粤ICP备2023105609号
-            </a>
-          </Footer>
-        </Layout> */}
       </div>
     </>
   );

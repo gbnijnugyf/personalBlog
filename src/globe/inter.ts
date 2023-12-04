@@ -13,3 +13,9 @@ export type ISearchProps = {
   title: string;
   ID: string;
 }[];
+
+export interface IArticleList {
+  title: string;
+  ID: string;
+  cover: string;
+}

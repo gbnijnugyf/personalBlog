@@ -1,12 +1,8 @@
-import React, { useMemo, useRef, useState } from "react";
-import debounce from "lodash/debounce";
-import { Select, Spin } from "antd";
+import React, { useState } from "react";
+import { Select } from "antd";
 import type { SelectProps } from "antd/es/select";
 import { SearchOutlined } from "@ant-design/icons";
-import { BASEURL } from "../../globe/inter";
 import { Service } from "../../globe/service";
-import qs from "qs";
-import jsonp from "fetch-jsonp";
 
 
 let timeout: ReturnType<typeof setTimeout> | null;
@@ -20,12 +16,6 @@ const fetch = (value: string, callback: Function) => {
   currentValue = value;
   console.log(value);
   const fake = () => {
-    const str = qs.stringify({
-      code: "utf-8",
-      q: value,
-    });
-    // const url = BASEURL + "/main/search";
-    // const urlWithQuery = url + "?word=" + value;
     Service.userSearch(value).then((res) => {
       // console.log(res);
       if (currentValue === value) {
@@ -39,37 +29,6 @@ const fetch = (value: string, callback: Function) => {
         callback(dataArr);
       }
     });
-    // jsonp(urlWithQuery)
-    //   .then((response: any) => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then((d: any) => {
-    //     if (currentValue === value) {
-    //       const { result } = d;
-    //       const data = result.map((item: any) => ({
-    //         value: item[0],
-    //         text: item[0],
-    //       }));
-    //       callback(data);
-    //     }
-    //   });
-    // jsonp(`https://suggest.taobao.com/sug?${str}`)
-    //   .then((response: any) => {
-    //     return response.json();
-    //   })
-    //   .then((d: any) => {
-    //     if (currentValue === value) {
-    //       const { result } = d;
-    //       console.log("data:",result)
-    //       const data = result.map((item: any) => ({
-    //         value: item[0],
-    //         text: item[0],
-    //       }));
-    //       console.log("dataArr:",data)
-    //       callback(data);
-    //     }
-    //   });
   };
   if (value) {
     timeout = setTimeout(fake, 300);
@@ -116,8 +75,8 @@ const SearchInput: React.FC<{
 export function SearchTest1() {
   return (
     <>
-      {" "}
       <SearchInput placeholder="input search text" style={{ width: 200 }} />
+      <SearchOutlined />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { BASEURL, ILoginProps, ISearchProps } from "./inter";
+import { BASEURL, IArticleList, ILoginProps, ISearchProps } from "./inter";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -8,7 +8,7 @@ export interface IGlobalResponse<T> {
   status: number;
 }
 interface IPostSpeechText {
-  text: string
+  text: string;
 }
 function appendParams2Path(
   path: string,
@@ -23,8 +23,6 @@ async function GlobalAxios<T = any, D = any>(
   url: string,
   data?: D
 ): Promise<AxiosResponse<IGlobalResponse<T>, any>> {
-
-
   let config: AxiosRequestConfig<D> = {};
   config.baseURL = BASEURL;
 
@@ -44,7 +42,6 @@ async function GlobalAxios<T = any, D = any>(
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
 
-
   if (response.statusText === "OK") {
     return response;
   } else {
@@ -53,18 +50,6 @@ async function GlobalAxios<T = any, D = any>(
   return response;
 }
 export const Service = {
-  //whut邮箱验证
-  whutCheckEmail(email: string) {
-    return GlobalAxios<{ emailVV: string }>(
-      "post",
-      "/whutregister/checkemail",
-      {
-        data: {
-          email: email,
-        },
-      }
-    );
-  },
   adminLogin(props: ILoginProps) {
     return GlobalAxios<string>("post", "/admin/login", props);
   },
@@ -72,6 +57,12 @@ export const Service = {
     return GlobalAxios<ISearchProps>(
       "get",
       appendParams2Path("/main/search", { word: props })
+    );
+  },
+  getArticleList() {
+    return GlobalAxios<IArticleList[]>(
+      "get",
+      appendParams2Path("/main/article-list", {})
     );
   },
 };

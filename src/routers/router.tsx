@@ -20,6 +20,7 @@ import { LoginPage } from "../pages/admin/adminLogin";
 import { loadavg } from "os";
 import { AdminMainPage } from "../pages/admin";
 import { ArticlePublishPage } from "../pages/admin/articlePublish";
+import { ArticlePage } from "../pages/main/articlePage";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -40,7 +41,8 @@ export function Routers() {
         <Route path="filed" element={<>归档</>} />
         <Route path="about" element={<>关于</>} />
         <Route path="friendLink" element={<>友情链接</>} />
-        <Route path="search" element={<>搜索</>} />
+        <Route path="article" element={<ArticlePage />} />
+
       </Route>
       {/* <Route path="personal/*" element={<PersonalPage />}>
         <Route path="personalInfo" element={<Teach1Page />} />
