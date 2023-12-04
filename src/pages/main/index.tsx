@@ -29,7 +29,6 @@ export function MainPage() {
             onClick={(props) => {
               if (props.key.length !== 0) {
                 console.log(props.key);
-
                 navigate(props.key, { replace: true });
               }
             }}

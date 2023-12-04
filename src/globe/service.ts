@@ -65,4 +65,11 @@ export const Service = {
       appendParams2Path("/main/article-list", {})
     );
   },
+  //props为文章id
+  getArticleDetail(props: string) {
+    return GlobalAxios<string>(
+      "get",
+      appendParams2Path("main/get-article", { id: props })
+    );
+  },
 };

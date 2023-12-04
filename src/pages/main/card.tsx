@@ -1,11 +1,13 @@
 import { Card } from "antd";
 import { IArticleList } from "../../globe/inter";
+import { useNavigate } from "react-router-dom";
 
-export interface ICardArray{
-  list:IArticleList[]
+export interface ICardArray {
+  list: IArticleList[];
 }
 
-export function CardArray(props:ICardArray) {
+export function CardArray(props: ICardArray) {
+  const navigate = useNavigate();
   return (
     <>
       <div className="carousel-content">
@@ -28,7 +30,12 @@ export function CardArray(props:ICardArray) {
                     />
                   </div>
                 }
-                onClick={() => {console.log(card.ID)}}
+                onClick={() => {
+                  navigate("/main/article", {
+                    replace: true,
+                    state: { id: card.ID },
+                  });
+                }}
               >
                 <p className="ant-card-text">
                   <div>{card.title}</div>
@@ -36,7 +43,6 @@ export function CardArray(props:ICardArray) {
               </Card>
             );
           })}
-          
         </div>
       </div>
     </>
