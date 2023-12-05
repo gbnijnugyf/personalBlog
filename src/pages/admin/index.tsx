@@ -21,7 +21,7 @@ export function AdminMainPage() {
               mode="inline"
               defaultSelectedKeys={["article"]}
               // defaultOpenKeys={["sub1"]}
-              style={{ height: "100%" }}
+              style={{ height: "92vh" }}
               items={menuAdminSider}
               onClick={(props) => {
                 if (props.key.length !== 0) {

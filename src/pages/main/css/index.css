@@ -2,6 +2,7 @@
 .layout {
   background-color: rgb(246, 240, 232);
   min-height: 100vh;
+  font-size: larger;
 }
 .layout .menu {
   position: fixed;
@@ -73,7 +74,6 @@
 .container-detailPage .my-carousel .carousel-content .carousel-content-text .ant-card-text {
   display: flex;
   flex-direction: column;
-  margin-top: -10%;
 }
 .container-detailPage .my-carousel .carousel-content .carousel-content-text .carousel-content-item {
   margin-left: 1%;
