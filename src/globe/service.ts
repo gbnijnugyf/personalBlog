@@ -59,17 +59,23 @@ export const Service = {
       appendParams2Path("/main/search", { word: props })
     );
   },
-  getArticleList() {
+  getArticleList(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/main/article-list", {})
+      appendParams2Path("/main/article-list", { classify: props })
     );
   },
   //props为文章id
   getArticleDetail(props: string) {
     return GlobalAxios<string>(
       "get",
-      appendParams2Path("main/get-article", { id: props })
+      appendParams2Path("/main/get-article", { id: props })
+    );
+  },
+  getClassify() {
+    return GlobalAxios<string[]>(
+      "get",
+      appendParams2Path("/main/article-classify", {})
     );
   },
 };

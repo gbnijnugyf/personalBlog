@@ -10,17 +10,13 @@ import {
 // import { LoginPage } from "../pages/login";
 import { MainPage } from "../pages/main";
 import { PersonalPage } from "../pages/personInfo";
-import {
-  DetailPage,
-  Teach1Page,
-  Teach2Page,
-  Teach3Page,
-} from "../pages/main/detailPage";
+import { DetailPage } from "../pages/main/detailPage";
 import { LoginPage } from "../pages/admin/adminLogin";
 import { loadavg } from "os";
 import { AdminMainPage, MainContent } from "../pages/admin";
-import { ArticlePublishPage } from "../pages/admin/articlePublish";
+import { ArticleManagerPage } from "../pages/admin/articlePublish";
 import { ArticlePage } from "../pages/main/articlePage";
+import { ArticleEdit } from "../pages/admin/articleEdit";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -51,7 +47,9 @@ export function Routers() {
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage />} />
         <Route path="main/*" element={<MainContent />}>
-          <Route path="article" element={<ArticlePublishPage />} />
+          <Route path="article/*" element={<ArticleManagerPage />}>
+            <Route path="edit" element={<ArticleEdit />} />
+          </Route>
           <Route path="comment" element={<>评论管理</>} />
           <Route path="3" element={<>nothing</>} />
         </Route>

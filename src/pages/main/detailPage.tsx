@@ -10,15 +10,6 @@ import { CardArray } from "./card";
 import { Service } from "../../globe/service";
 import { IArticleList } from "../../globe/inter";
 
-export function Teach1Page() {
-  return <div className="teachPage">Teach1Page</div>;
-}
-export function Teach2Page() {
-  return <div className="teachPage">Teach2Page</div>;
-}
-export function Teach3Page() {
-  return <div className="teachPage">Teach3Page</div>;
-}
 
 export function DetailPage() {
   // const {
@@ -41,7 +32,7 @@ export function DetailPage() {
   }
 
   useEffect(() => {
-    Service.getArticleList().then((res) => {
+    Service.getArticleList('').then((res) => {
       // console.log(res.data.data)
       const dataArr = convertTo2DArray(res.data.data, maxNum);
       console.log(dataArr);
