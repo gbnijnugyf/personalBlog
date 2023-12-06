@@ -33,3 +33,16 @@ interface IAddClassifyData {
   url: string;
   cover: string;
 }
+
+/**
+ * article
+ */
+export interface IArticle {
+  body: string;
+  classification: string;
+  cover: null | string;
+  ID: null | string;
+  releaseTime: null | string;
+  title: string;
+  visible: number;
+}

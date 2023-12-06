@@ -1,5 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { BASEURL, ClaOrFri, IAddClassify, IArticleList, ILoginProps, ISearchProps } from "./inter";
+import {
+  BASEURL,
+  ClaOrFri,
+  IAddClassify,
+  IArticle,
+  IArticleList,
+  ILoginProps,
+  ISearchProps,
+} from "./inter";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -82,7 +90,12 @@ export const Service = {
   getClassify() {
     return GlobalAxios<string[]>("get", appendParams2Path("/func/class", {}));
   },
+  //添加分类
   addClassify(props: IAddClassify<ClaOrFri.classify>) {
-    return GlobalAxios<undefined>("post","/infoManager/add",props);
+    return GlobalAxios<undefined>("post", "/infoManager/add", props);
+  },
+  //文章编辑保存
+  saveArticleEdit(props: IArticle) {
+    return axios.put(BASEURL + "/article/edit", props);
   },
 };

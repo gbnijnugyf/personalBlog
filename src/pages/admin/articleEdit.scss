@@ -2,8 +2,23 @@
   // display: flex;
   // flex-direction:row;
   // border: 1px solid red;
+  .edit-header {
+    background-color: white;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .edit-title {
+      border-bottom: 1px solid rgb(128, 124, 124);
+      // flex-grow: 1;
+      font-size: small;
+      display: flex;
+      flex-direction: row;
+    }
+  }
   .edit-window {
     border: 1px solid black;
-    height: 92vh;
+    height: 82vh;
   }
 }

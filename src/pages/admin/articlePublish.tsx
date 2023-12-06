@@ -34,6 +34,7 @@ interface articleMenu {
 export function ArticleManagerPage() {
   const [md, setMd] = useState("./test.md");
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
+  const [display, setDisplay] = useState<boolean>(false);
   const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
   const userEditClassify = useRef("");
   const userEditClassifyDescribe = useRef("");
@@ -57,7 +58,10 @@ export function ArticleManagerPage() {
         description: userEditClassifyDescribe.current,
       },
     };
-    Service.addClassify(tempForm).then((res) => console.log(res));
+    Service.addClassify(tempForm).then((res) => {
+      console.log(res);
+      setDisplay(!display);
+    });
     setIsAddClassifyOpen(false);
   };
   const handleCancel = () => {
@@ -106,7 +110,7 @@ export function ArticleManagerPage() {
         setListdArr(res);
       });
     });
-  }, []);
+  }, [display]);
 
   return (
     <>
@@ -121,11 +125,11 @@ export function ArticleManagerPage() {
               onClick={(props) => {
                 if (props.key.length !== 0) {
                   if (props.key.startsWith("unique-add-")) {
-                    //添加文章
                     const classify = props.key.split("-")[2]; //获取分类
                     if (classify === "classify") {
                       setIsAddClassifyOpen(true);
                     } else {
+                      //添加文章
                       navigate("edit", {
                         replace: true,
                         state: { classify: classify },
