@@ -76,7 +76,7 @@ export function ArticleManagerPage() {
       .then((text) => setMd(text));
 
     Service.getClassify().then(async (res) => {
-      const classifyArr = res.data.data;
+      const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
           const list: articleMemuItem[] = res.data.data.map((aitem) => {

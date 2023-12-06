@@ -18,19 +18,19 @@ export function MainPage() {
   const navigate = useNavigate();
   useEffect(() => {
     Service.getClassify().then((res) => {
-      console.log(res.data.data);
       const promises = res.data.data.map((item) => {
         return {
-          key: item,
-          label: item,
+          key: item.name,
+          label: item.name,
         };
       });
-      Promise.all(promises).then((res) => {
-        const headerMenuTemp = dynamicMenuHeaderProps(res);
+      Promise.all(promises).then((resp) => {
+        const headerMenuTemp = dynamicMenuHeaderProps(resp);
         setHeaderMenu(headerMenuTemp);
       });
     });
-    navigate("detail");
+    
+    // navigate("detail");
 
     // Promise.all(promise).then((res)=>{console.log})
   }, []);

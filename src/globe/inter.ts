@@ -9,10 +9,10 @@ export interface ILoginProps {
 //     ID: string;
 //   }[];
 // }
-export type ISearchProps = {
+export interface ISearchProps  {
   title: string;
   ID: string;
-}[];
+};
 
 export interface IArticleList {
   title: string;
@@ -27,16 +27,13 @@ export interface IAddClassify<T extends ClaOrFri> {
   type: T;
   data: T extends 1 ? Omit<IAddClassifyData, "url" | "cover"> : IAddClassifyData;
 }
-interface IAddClassifyData {
+export interface IAddClassifyData {
   name: string;
   description: string;
   url: string;
   cover: string;
 }
 
-/**
- * article
- */
 export interface IArticle {
   body: string;
   classification: string;

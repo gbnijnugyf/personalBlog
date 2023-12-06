@@ -3,7 +3,7 @@ import { Select } from "antd";
 import type { SelectProps } from "antd/es/select";
 import { SearchOutlined } from "@ant-design/icons";
 import { Service } from "../../globe/service";
-
+import { ISearchProps } from "../../globe/inter";
 
 let timeout: ReturnType<typeof setTimeout> | null;
 let currentValue: string;
@@ -17,15 +17,17 @@ const fetch = (value: string, callback: Function) => {
   console.log(value);
   const fake = () => {
     Service.userSearch(value).then((res) => {
-      // console.log(res);
+      console.log(res);
       if (currentValue === value) {
         const { data } = res.data;
-        console.log("data:",data)
-        const dataArr = data.map((item: any) => ({
-          value: item[0],
-          text: item[0],
-        }));
-        console.log("dataArr:",dataArr)
+        console.log("data:", data);
+        const dataArr = data.map((item: ISearchProps) => {
+          return {
+            value: item.ID,
+            text: item.title,
+          };
+        });
+        console.log("dataArr:", dataArr);
         callback(dataArr);
       }
     });

@@ -7,6 +7,7 @@ import {
   IArticleList,
   ILoginProps,
   ISearchProps,
+  IAddClassifyData,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -60,7 +61,7 @@ export const Service = {
     return GlobalAxios<string>("post", "/admin/login", props);
   },
   userSearch(props: string) {
-    return GlobalAxios<ISearchProps>(
+    return GlobalAxios<ISearchProps[]>(
       "get",
       appendParams2Path("/func/search", { word: props })
     );
@@ -88,7 +89,7 @@ export const Service = {
   },
   //获取分类
   getClassify() {
-    return GlobalAxios<string[]>("get", appendParams2Path("/func/class", {}));
+    return GlobalAxios<IAddClassifyData[]>("get", appendParams2Path("/func/class", {}));
   },
   //添加分类
   addClassify(props: IAddClassify<ClaOrFri.classify>) {
