@@ -32,7 +32,7 @@ export function DetailPage() {
   }
 
   useEffect(() => {
-    Service.getArticleList('').then((res) => {
+    Service.getArticleList().then((res) => {
       // console.log(res.data.data)
       const dataArr = convertTo2DArray(res.data.data, maxNum);
       console.log(dataArr);

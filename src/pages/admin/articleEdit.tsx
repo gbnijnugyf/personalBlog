@@ -6,6 +6,7 @@ import "./css/articleEdit.css";
 import "md-editor-rt/lib/style.css";
 import axios from "axios";
 import { BASEURL } from "../../globe/inter";
+
 export function ArticleEdit() {
   const [text, setText] = useState("# Hello Editor");
 
@@ -24,7 +25,7 @@ export function ArticleEdit() {
           //该ID为该图片所对应文章ID
           form.append("articleID", "eg:123")
           axios
-            .post(BASEURL + "/api/img/upload", form, {
+            .post(BASEURL + "/article/imgUpload", form, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },

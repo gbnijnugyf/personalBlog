@@ -2,7 +2,6 @@
   width: 100%;
   max-height: 92vh;
   overflow: hidden;
-  border: 1px solid red;
 }
 .article-layout .layout {
   background-color: white;
@@ -10,7 +9,6 @@
 .article-layout .layout .article-list {
   height: 92vh;
   overflow: auto;
-  border: 1px solid red;
 }
 .article-layout #content-md {
   display: flex;

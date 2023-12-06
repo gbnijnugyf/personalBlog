@@ -1,7 +1,7 @@
-import { Menu, MenuProps } from "antd";
+import { Input, Menu, MenuProps, Modal } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -26,37 +26,27 @@ interface articleMemuItem {
 interface articleMenu {
   key: string; //类别名称
   label: string; //类别名称
-  children: articleMemuItem[]; //分类下的文章列表
+  children?: articleMemuItem[]; //分类下的文章列表
+  icon?: JSX.Element;
 }
 
 export function ArticleManagerPage() {
   const [md, setMd] = useState("./test.md");
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
-
+  const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
+  const userEditClassify = useRef("");
+  const handleEditClassifyChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    userEditClassify.current = e.target.value;
+  };
+  const handleOk = () => {
+    console.log(userEditClassify.current)
+    setIsAddClassifyOpen(false);
+  };
+  const handleCancel = () => {
+    setIsAddClassifyOpen(false);
+  };
   const navigate = useNavigate();
   const testmd = require("./test.md");
-
-  const items2: MenuProps["items"] = [
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined,
-  ].map((icon, index) => {
-    const key = String(index + 1);
-
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
-  });
 
   useEffect(() => {
     fetch(testmd)
@@ -66,7 +56,7 @@ export function ArticleManagerPage() {
     Service.getClassify().then(async (res) => {
       const classifyArr = res.data.data;
       const promises = classifyArr.map((classify) =>
-        Service.getArticleList(classify).then((res) => {
+        Service.getArticleListByClassify(classify).then((res) => {
           const list: articleMemuItem[] = res.data.data.map((aitem) => {
             const temp: articleMemuItem = {
               key: aitem.ID,
@@ -88,6 +78,12 @@ export function ArticleManagerPage() {
       );
 
       Promise.all(promises).then((res) => {
+        let menuList: articleMenu[] = res;
+        menuList.push({
+          key: "unique-add-classify",
+          label: "新增分类",
+          icon: <PlusCircleOutlined />,
+        });
         // console.log(res);
         setListdArr(res);
       });
@@ -109,16 +105,31 @@ export function ArticleManagerPage() {
                   if (props.key.startsWith("unique-add-")) {
                     //添加文章
                     const classify = props.key.split("-")[2]; //获取分类
-                    navigate("edit", {
-                      replace: true,
-                      state: { classify: classify },
-                    });
+                    if (classify === "classify") {
+                      setIsAddClassifyOpen(true);
+                    } else {
+                      navigate("edit", {
+                        replace: true,
+                        state: { classify: classify },
+                      });
+                    }
                   }
+
                   console.log(props.key);
                   // navigate("main/" + props.key, { replace: true });
                 }
               }}
             />
+            <Modal
+              okText="确认添加"
+              cancelText="取消"
+              title="添加分类"
+              open={isAddClassifyOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Input showCount maxLength={20} onChange={handleEditClassifyChange} />
+            </Modal>
           </Sider>
 
           <Content>

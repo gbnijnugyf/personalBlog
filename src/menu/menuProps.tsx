@@ -100,16 +100,35 @@ export const menuHeaderRItems: ItemType[] = [
   },
 ];
 
+export interface IMenuProps {
+  key: string;
+  icon: JSX.Element;
+  label: string;
+  children?: { key: string; label: string }[];
+}
+
+export function dynamicMenuHeaderProps(
+  props: { key: string; label: string }[]
+): IMenuProps[] {
+  let tempMenu: IMenuProps[] = menuHeaderProps;
+  console.log("tempMenu1:", tempMenu);
+  if (tempMenu.findIndex((item) => item.key === "classify") === -1) {
+    tempMenu.push({
+      key: "classify",
+      icon: <UnorderedListOutlined />,
+      label: "分类",
+      children: props,
+    });
+  }
+
+  console.log("tempMenu2:", tempMenu);
+  return tempMenu;
+}
 export const menuHeaderProps = [
   {
     key: "detail",
     icon: <HomeOutlined />,
     label: "首页",
-  },
-  {
-    key: "classify",
-    icon: <UnorderedListOutlined />,
-    label: "分类",
   },
   {
     key: "filed",
@@ -140,7 +159,6 @@ export const menuHeaderPropsR = [
       <Dropdown menu={{ items: menuHeaderRItems }}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-            Hover me
             <DownOutlined />
           </Space>
         </a>

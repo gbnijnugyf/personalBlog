@@ -56,26 +56,35 @@ export const Service = {
   userSearch(props: string) {
     return GlobalAxios<ISearchProps>(
       "get",
-      appendParams2Path("/main/search", { word: props })
+      appendParams2Path("/func/search", { word: props })
     );
   },
-  getArticleList(props: string) {
+  //获取所有文章列表（首页）
+  getArticleList() {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/main/article-list", { classify: props })
+      appendParams2Path("/article/list", {})
+    );
+  },
+  //根据分类获取文章
+  getArticleListByClassify(props: string) {
+    return GlobalAxios<IArticleList[]>(
+      "get",
+      appendParams2Path("/article/classified", { classify: props })
     );
   },
   //props为文章id
   getArticleDetail(props: string) {
     return GlobalAxios<string>(
       "get",
-      appendParams2Path("/main/get-article", { id: props })
+      appendParams2Path("/article/page", { id: props })
     );
   },
+  //获取分类
   getClassify() {
-    return GlobalAxios<string[]>(
-      "get",
-      appendParams2Path("/main/article-classify", {})
-    );
+    return GlobalAxios<string[]>("get", appendParams2Path("/func/class", {}));
+  },
+  addClassify(props: string) {
+    // return GlobalAxios();
   },
 };
