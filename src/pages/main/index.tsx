@@ -55,7 +55,7 @@ export function MainPage() {
           {/* <MySearch /> */}
           <SearchTest1 />
           <Dropdown menu={{ items: menuHeaderRItems }} className="menu-right">
-            <a onClick={(e) => e.preventDefault()}>Setting</a>
+            <div style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>Setting</div>
           </Dropdown>
           {/* <Menu
             mode="horizontal"

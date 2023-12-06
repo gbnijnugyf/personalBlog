@@ -55,10 +55,11 @@ const SearchInput: React.FC<{
   };
 
   return (
+    //TODO:样式优化，输入框失去焦点时会回到上一次输入
     <Select
       showSearch
       value={value}
-      placeholder={props.placeholder}
+      placeholder={"搜索文章"}
       style={props.style}
       defaultActiveFirstOption={false}
       suffixIcon={null}

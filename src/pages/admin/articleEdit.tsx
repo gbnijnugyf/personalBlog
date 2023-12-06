@@ -1,4 +1,13 @@
-import { Button, Drawer, Input, Layout, message } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  Input,
+  Layout,
+  Space,
+  Upload,
+  message,
+} from "antd";
 import { Content } from "antd/es/layout/layout";
 import { MdEditor } from "md-editor-rt";
 import { useRef, useState } from "react";
@@ -7,15 +16,18 @@ import "md-editor-rt/lib/style.css";
 import axios from "axios";
 import { BASEURL, IArticle } from "../../globe/inter";
 import { Service } from "../../globe/service";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
 
 export function ArticleEdit() {
   const [text, setText] = useState("# Hello Editor");
-  const editTitle = useRef("");
+  // const editTitle = useRef("");
+  const [editTitle, setEditTitle] = useState("");
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
+    // console.log(editTitle.current);
     setOpen(true);
   };
   const onClose = () => {
@@ -24,7 +36,10 @@ export function ArticleEdit() {
   const handleEditTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    editTitle.current = e.target.value;
+    console.log(e.target.value);
+    // editTitle.current = e.target.value;
+    setEditTitle(e.target.value)
+    // console.log(editTitle.current);
   };
 
   //TODO:在文章编辑过程中就会涉及图片上传回显，此时文章并未上传，
@@ -80,7 +95,7 @@ export function ArticleEdit() {
   }
   //TODO: 保存后的菜单展示是一个问题
   const onSaveEdit = (value: string) => {
-    if (editTitle.current === "") {
+    if (editTitle === "") {
       //标题为空
       warning();
       return;
@@ -91,7 +106,7 @@ export function ArticleEdit() {
       cover: null,
       ID: null,
       releaseTime: null,
-      title: editTitle.current,
+      title: editTitle,
       visible: 0,
     };
     console.log(temp);
@@ -133,16 +148,113 @@ export function ArticleEdit() {
           />
         </Content>
       </Layout>
-      <Drawer
-        title="文章发布"
-        placement="right"
-        onClose={onClose}
-        open={open}
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Drawer title="文章发布" placement="right" onClose={onClose} open={open}>
+        <ArticlePublishForm
+          body={text}
+          classify={location.state.classify}
+          successFunc={success}
+          failFunc={error}
+          title={editTitle}
+        />
       </Drawer>
     </>
+  );
+}
+
+interface IArticlePublishFormProps {
+  body: string;
+  classify: string;
+  title: string;
+  successFunc: (text: string) => void;
+  failFunc: (text: string) => void;
+}
+
+function ArticlePublishForm(props: IArticlePublishFormProps) {
+  //TODO:bug——title的值无法传进抽屉
+  const [lastTitle, setLastTitle] = useState(props.title)
+  console.log(lastTitle)
+  const navigate = useNavigate();
+  const formItemLayout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 14 },
+  };
+  const normFile = (e: any) => {
+    // return fileToBase64(e.file)
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  interface IPublishForm {
+    title: string;
+    cover: any[];
+  }
+  const onFinish = (values: IPublishForm) => {
+    let fileBase64 = null;
+    console.log("Received values of form: ", values);
+    if (values.cover !== undefined) {
+      fileBase64 = values.cover[0].thumbUrl;
+      // console.log("image: ", values.cover[0].thumbUrl);
+    }
+    const articleInfo: IArticle = {
+      body: props.body,
+      classification: props.classify,
+      cover: fileBase64,
+      ID: null,
+      releaseTime: null,
+      title: values.title,
+      visible: 1,
+    };
+    Service.publishArticle(articleInfo)
+      .then((res) => {
+        console.log(res);
+        props.successFunc("发布成功");
+        setTimeout(() => {
+          navigate("edit", {
+            replace: true,
+            state: { classify: props.classify },
+          });
+        }, 3000);
+      })
+      .catch(() => props.failFunc("发布失败"));
+  };
+  return (
+    <Form
+      name="validate_other"
+      {...formItemLayout}
+      onFinish={onFinish}
+      initialValues={{ title: lastTitle }}
+      style={{ maxWidth: 600 }}
+    >
+      <Form.Item
+        name="title"
+        label="标题"
+        rules={[{ required: true, message: "请输入标题!" }]}
+      >
+        <Input placeholder="请输入标题" showCount maxLength={15} />
+      </Form.Item>
+
+      <Form.Item
+        name="cover"
+        label="文章缩略图"
+        valuePropName="fileList"
+        getValueFromEvent={normFile}
+      >
+        <Upload name="logo" action="/upload.do" listType="picture">
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
+
+      <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button htmlType="reset">reset</Button>
+        </Space>
+      </Form.Item>
+    </Form>
   );
 }

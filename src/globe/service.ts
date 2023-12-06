@@ -89,7 +89,10 @@ export const Service = {
   },
   //获取分类
   getClassify() {
-    return GlobalAxios<IAddClassifyData[]>("get", appendParams2Path("/func/class", {}));
+    return GlobalAxios<IAddClassifyData[]>(
+      "get",
+      appendParams2Path("/func/class", {})
+    );
   },
   //添加分类
   addClassify(props: IAddClassify<ClaOrFri.classify>) {
@@ -98,5 +101,8 @@ export const Service = {
   //文章编辑保存
   saveArticleEdit(props: IArticle) {
     return axios.put(BASEURL + "/article/edit", props);
+  },
+  publishArticle(props: IArticle) {
+    return GlobalAxios<undefined>("post", "/article/publish", props);
   },
 };
