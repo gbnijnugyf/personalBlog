@@ -16,8 +16,9 @@ import "markdown-navbar/dist/navbar.css";
 import "github-markdown-css/github-markdown-light.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Service } from "../../globe/service";
-import { IArticleList } from "../../globe/inter";
+import { ClaOrFri, IAddClassify, IArticleList } from "../../globe/inter";
 import { promises } from "dns";
+import TextArea from "antd/es/input/TextArea";
 interface articleMemuItem {
   key: string; //文章ID
   icon?: JSX.Element;
@@ -35,11 +36,28 @@ export function ArticleManagerPage() {
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
   const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
   const userEditClassify = useRef("");
-  const handleEditClassifyChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const userEditClassifyDescribe = useRef("");
+  const handleEditClassifyChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     userEditClassify.current = e.target.value;
   };
+  const handleEditClassifyDescribeChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    userEditClassifyDescribe.current = e.target.value;
+  };
   const handleOk = () => {
-    console.log(userEditClassify.current)
+    console.log(userEditClassify.current);
+    console.log(userEditClassifyDescribe.current);
+    const tempForm: IAddClassify<ClaOrFri.classify> = {
+      type: ClaOrFri.classify,
+      data: {
+        name: userEditClassify.current,
+        description: userEditClassifyDescribe.current,
+      },
+    };
+    Service.addClassify(tempForm).then((res) => console.log(res));
     setIsAddClassifyOpen(false);
   };
   const handleCancel = () => {
@@ -128,7 +146,20 @@ export function ArticleManagerPage() {
               onOk={handleOk}
               onCancel={handleCancel}
             >
-              <Input showCount maxLength={20} onChange={handleEditClassifyChange} />
+              分类名称：
+              <Input
+                showCount
+                maxLength={15}
+                onChange={handleEditClassifyChange}
+              />
+              分类描述：
+              <TextArea
+                showCount
+                rows={4}
+                placeholder="maxLength is 200"
+                maxLength={200}
+                onChange={handleEditClassifyDescribeChange}
+              />
             </Modal>
           </Sider>
 

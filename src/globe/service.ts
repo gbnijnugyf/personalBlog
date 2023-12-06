@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { BASEURL, IArticleList, ILoginProps, ISearchProps } from "./inter";
+import { BASEURL, ClaOrFri, IAddClassify, IArticleList, ILoginProps, ISearchProps } from "./inter";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -7,9 +7,7 @@ export interface IGlobalResponse<T> {
   msg: string;
   status: number;
 }
-interface IPostSpeechText {
-  text: string;
-}
+
 function appendParams2Path(
   path: string,
   paramsRaw: string | URLSearchParams | string[][] | Record<string, string>
@@ -84,7 +82,7 @@ export const Service = {
   getClassify() {
     return GlobalAxios<string[]>("get", appendParams2Path("/func/class", {}));
   },
-  addClassify(props: string) {
-    // return GlobalAxios();
+  addClassify(props: IAddClassify<ClaOrFri.classify>) {
+    return GlobalAxios<undefined>("post","/infoManager/add",props);
   },
 };

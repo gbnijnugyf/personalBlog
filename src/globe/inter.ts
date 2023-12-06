@@ -19,3 +19,17 @@ export interface IArticleList {
   ID: string;
   cover: string;
 }
+export enum ClaOrFri{
+  classify = 1,
+  friendLink
+}
+export interface IAddClassify<T extends ClaOrFri> {
+  type: T;
+  data: T extends 1 ? Omit<IAddClassifyData, "url" | "cover"> : IAddClassifyData;
+}
+interface IAddClassifyData {
+  name: string;
+  description: string;
+  url: string;
+  cover: string;
+}
