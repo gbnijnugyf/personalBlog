@@ -67,6 +67,7 @@ const SearchInput: React.FC<{
       onSearch={handleSearch}
       onChange={handleChange}
       notFoundContent={null}
+      allowClear={true}
       options={(data || []).map((d) => ({
         value: d.value,
         label: d.text,

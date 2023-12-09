@@ -48,7 +48,7 @@ export function Routers() {
         <Route path="login" element={<LoginPage />} />
         <Route path="main/*" element={<MainContent />}>
           <Route path="article/*" element={<ArticleManagerPage />}>
-            <Route path="edit" element={<ArticleEdit />} />
+            {/* <Route path="edit" element={<ArticleEdit />} /> */}
           </Route>
           <Route path="comment" element={<>评论管理</>} />
           <Route path="3" element={<>nothing</>} />

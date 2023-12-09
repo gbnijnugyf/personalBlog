@@ -16,9 +16,15 @@ import "markdown-navbar/dist/navbar.css";
 import "github-markdown-css/github-markdown-light.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Service } from "../../globe/service";
-import { ClaOrFri, IAddClassify, IArticleList } from "../../globe/inter";
+import {
+  ClaOrFri,
+  IAddClassify,
+  IArticleList,
+  IMenuInfo,
+} from "../../globe/inter";
 import { promises } from "dns";
 import TextArea from "antd/es/input/TextArea";
+import { ArticleEdit } from "./articleEdit";
 interface articleMemuItem {
   key: string; //文章ID
   icon?: JSX.Element;
@@ -38,6 +44,8 @@ export function ArticleManagerPage() {
   const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
   const userEditClassify = useRef("");
   const userEditClassifyDescribe = useRef("");
+  const [nowClassify, setNowClassify] = useState(""); // 分类
+  const [nowArticleID, setNowArticleID] = useState(""); // 分类
   const handleEditClassifyChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -112,6 +120,34 @@ export function ArticleManagerPage() {
     });
   }, [display]);
 
+  const handleChoose = (props: IMenuInfo) => {
+    console.log(props);
+    if (props.key.length !== 0) {
+      const classify = props.key.split("-")[2]; //获取分类
+      if (props.key.startsWith("unique-add-")) {
+        if (classify === "classify") {
+          setIsAddClassifyOpen(true);
+        } else {
+          setNowClassify(classify);
+          setNowArticleID("");
+
+          //添加文章
+          // navigate("edit", {
+          //   replace: true,
+          //   state: { classify: classify },
+          // });
+        }
+      } else {
+        //选中已存在列表中的文章
+        setNowClassify(classify);
+        setNowArticleID(props.key);
+        console.log(props.key);
+      }
+
+      // navigate("main/" + props.key, { replace: true });
+    }
+  };
+
   return (
     <>
       <div className="article-layout">
@@ -122,25 +158,7 @@ export function ArticleManagerPage() {
               mode="inline"
               defaultSelectedKeys={["article"]}
               items={listArr}
-              onClick={(props) => {
-                if (props.key.length !== 0) {
-                  if (props.key.startsWith("unique-add-")) {
-                    const classify = props.key.split("-")[2]; //获取分类
-                    if (classify === "classify") {
-                      setIsAddClassifyOpen(true);
-                    } else {
-                      //添加文章
-                      navigate("edit", {
-                        replace: true,
-                        state: { classify: classify },
-                      });
-                    }
-                  }
-
-                  console.log(props.key);
-                  // navigate("main/" + props.key, { replace: true });
-                }
-              }}
+              onClick={handleChoose}
             />
             <Modal
               okText="确认添加"
@@ -176,7 +194,13 @@ export function ArticleManagerPage() {
                 <MarkNav className="toc-list" source={md} ordered={true} />
               </Sider>
             </Layout> */}
-            <Outlet />
+            {nowClassify !== "" ? (
+              <ArticleEdit classify={nowClassify} ID={nowArticleID} />
+            ) : (
+              <p>请选择文章或添加文章</p>
+            )}
+            {/* <ArticleEdit classify={nowClassify} ID={nowArticleID} /> */}
+            {/* <Outlet /> */}
           </Content>
         </Layout>
       </div>

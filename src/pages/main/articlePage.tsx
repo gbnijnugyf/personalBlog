@@ -10,9 +10,9 @@ export function ArticlePage() {
 
   useEffect(() => {
     Service.getArticleDetail(articleId).then((res) => {
-      const url = res.data.data;
-      setArticleUrl(url);
-      console.log(articleUrl)
+      const articleBody = res.data.data;
+      // setArticleUrl(url);
+      console.log(articleBody)
     });
   }, [articleId]);
   

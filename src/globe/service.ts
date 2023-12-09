@@ -73,16 +73,16 @@ export const Service = {
       appendParams2Path("/article/list", {})
     );
   },
-  //根据分类获取文章
+  //根据分类获取文章列表
   getArticleListByClassify(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
       appendParams2Path("/article/classified", { classify: props })
     );
   },
-  //props为文章id
+  //props为文章id,获取文章详情
   getArticleDetail(props: string) {
-    return GlobalAxios<string>(
+    return GlobalAxios<IArticle>(
       "get",
       appendParams2Path("/article/page", { id: props })
     );

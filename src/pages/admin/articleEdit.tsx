@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { MdEditor } from "md-editor-rt";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./css/articleEdit.css";
 import "md-editor-rt/lib/style.css";
 import axios from "axios";
@@ -19,12 +19,47 @@ import { Service } from "../../globe/service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 
-export function ArticleEdit() {
+interface IArticleEdit {
+  classify: string; //分类
+  ID: string; //文章ID，新建文章则为""
+}
+
+export function ArticleEdit(props: IArticleEdit) {
   const [text, setText] = useState("# Hello Editor");
   // const editTitle = useRef("");
   const [editTitle, setEditTitle] = useState("");
-  const location = useLocation();
+  // const location = useLocation();
   const [open, setOpen] = useState(false);
+  const articleInit: IArticle = {
+    body: "",
+    classification: "",
+    cover: null,
+    ID: null,
+    releaseTime: null,
+    title: "",
+    visible: 0,
+  };
+  const [articleDetail, setArticleDetail] = useState<IArticle>(articleInit);
+
+  useEffect(() => {
+    console.log("edit:", props.ID);
+    if (props.ID !== "") {
+      //选择已存在文章
+      console.log(props.ID);
+      Service.getArticleDetail(props.ID).then((res) => {
+        console.log(res.data.data);
+        const articleBody = res.data.data;
+        setArticleDetail(articleBody);
+        setText(articleBody.body);
+        setEditTitle(articleBody.title);
+        console.log(editTitle);
+      });
+    } else {
+      setText("# Hello Editor");
+      setEditTitle("");
+      setArticleDetail(articleInit);
+    }
+  }, [props.ID]);
 
   const showDrawer = () => {
     // console.log(editTitle.current);
@@ -38,7 +73,7 @@ export function ArticleEdit() {
   ) => {
     console.log(e.target.value);
     // editTitle.current = e.target.value;
-    setEditTitle(e.target.value)
+    setEditTitle(e.target.value);
     // console.log(editTitle.current);
   };
 
@@ -102,7 +137,7 @@ export function ArticleEdit() {
     }
     const temp: IArticle = {
       body: value,
-      classification: location.state.classify,
+      classification: props.classify,
       cover: null,
       ID: null,
       releaseTime: null,
@@ -127,6 +162,7 @@ export function ArticleEdit() {
             <div className="edit-title">
               {/* <p>标题：</p> */}
               <Input
+                value={editTitle}
                 style={{ fontSize: "large" }}
                 bordered={false}
                 placeholder="请输入标题"
@@ -136,7 +172,7 @@ export function ArticleEdit() {
               />
             </div>
             <Button type="primary" onClick={showDrawer}>
-              发布文章
+              {articleDetail.visible === 0 ? "发布文章" : "取消发布"}
             </Button>
           </div>
           <MdEditor
@@ -151,7 +187,7 @@ export function ArticleEdit() {
       <Drawer title="文章发布" placement="right" onClose={onClose} open={open}>
         <ArticlePublishForm
           body={text}
-          classify={location.state.classify}
+          classify={props.classify}
           successFunc={success}
           failFunc={error}
           title={editTitle}
@@ -171,8 +207,8 @@ interface IArticlePublishFormProps {
 
 function ArticlePublishForm(props: IArticlePublishFormProps) {
   //TODO:bug——title的值无法传进抽屉
-  const [lastTitle, setLastTitle] = useState(props.title)
-  console.log(lastTitle)
+  const [lastTitle, setLastTitle] = useState(props.title);
+  console.log(lastTitle);
   const navigate = useNavigate();
   const formItemLayout = {
     labelCol: { span: 6 },
