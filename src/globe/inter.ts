@@ -43,7 +43,15 @@ export interface IArticle {
   title: string;
   visible: number;
 }
-
+export const articleInit: IArticle = {
+  body: "",
+  classification: "",
+  cover: null,
+  ID: null,
+  releaseTime: null,
+  title: "",
+  visible: 0,
+};
 export interface IMenuInfo {
   key: string;
   keyPath: string[];

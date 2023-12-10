@@ -70,10 +70,10 @@ export function MainPage() {
             }}
           /> */}
         </Header>
-        <Content>
-          <div className="content" style={{ background: "colorBgContainer" }}>
+        <Content className="content" >
+          {/* <div > */}
             <Outlet />
-          </div>
+          {/* </div> */}
         </Content>
         <Footer className="footer">
           Personal Blog ©2023 Created by gbnijnugyf

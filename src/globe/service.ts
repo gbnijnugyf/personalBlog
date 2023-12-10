@@ -70,14 +70,14 @@ export const Service = {
   getArticleList() {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/article/list", {})
+      appendParams2Path("/article/vlist", {})
     );
   },
   //根据分类获取文章列表
   getArticleListByClassify(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/article/classified", { classify: props })
+      appendParams2Path("/article/list", { classify: props })
     );
   },
   //props为文章id,获取文章详情

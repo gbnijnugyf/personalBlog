@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import "./css/articleEdit.css";
 import "md-editor-rt/lib/style.css";
 import axios from "axios";
-import { BASEURL, IArticle } from "../../globe/inter";
+import { BASEURL, IArticle, articleInit } from "../../globe/inter";
 import { Service } from "../../globe/service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
@@ -30,15 +30,7 @@ export function ArticleEdit(props: IArticleEdit) {
   const [editTitle, setEditTitle] = useState("");
   // const location = useLocation();
   const [open, setOpen] = useState(false);
-  const articleInit: IArticle = {
-    body: "",
-    classification: "",
-    cover: null,
-    ID: null,
-    releaseTime: null,
-    title: "",
-    visible: 0,
-  };
+
   const [articleDetail, setArticleDetail] = useState<IArticle>(articleInit);
 
   useEffect(() => {
@@ -274,7 +266,7 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
 
       <Form.Item
         name="cover"
-        label="文章缩略图"
+        label="文章缩略图(宽:高=3:1)"
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >

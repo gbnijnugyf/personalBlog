@@ -76,14 +76,15 @@ export function ArticleManagerPage() {
     setIsAddClassifyOpen(false);
   };
   const navigate = useNavigate();
-  const testmd = require("./test.md");
+  // const testmd = require("./test.md");
 
   useEffect(() => {
-    fetch(testmd)
-      .then((res) => res.text())
-      .then((text) => setMd(text));
+    // fetch(testmd)
+    //   .then((res) => res.text())
+    //   .then((text) => setMd(text));
 
     Service.getClassify().then(async (res) => {
+      console.log(res)
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
