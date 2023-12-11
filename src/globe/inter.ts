@@ -9,23 +9,25 @@ export interface ILoginProps {
 //     ID: string;
 //   }[];
 // }
-export interface ISearchProps  {
+export interface ISearchProps {
   title: string;
   ID: string;
-};
+}
 
 export interface IArticleList {
   title: string;
   ID: string;
   cover: string;
 }
-export enum ClaOrFri{
+export enum ClaOrFri {
   classify = 1,
-  friendLink
+  friendLink,
 }
 export interface IAddClassify<T extends ClaOrFri> {
   type: T;
-  data: T extends 1 ? Omit<IAddClassifyData, "url" | "cover"> : IAddClassifyData;
+  data: T extends 1
+    ? Omit<IAddClassifyData, "url" | "cover">
+    : IAddClassifyData;
 }
 export interface IAddClassifyData {
   name: string;
@@ -58,4 +60,29 @@ export interface IMenuInfo {
   /** @deprecated This will not support in future. You should avoid to use this */
   item: React.ReactInstance;
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
+}
+// export interface IComment {
+//   commentID: string;
+//   email: string;
+//   isBlogger: string;
+//   nickname: string;
+//   preID: null | string;
+//   primary: string;
+// }
+
+export interface IRootComment {
+  rootComment: IComment;
+  reply: IComment[];
+}
+
+export interface IComment {
+  avator: null | string;
+  commentID: string;
+  email: string;
+  isBlogger: null | string;
+  nickname: string;
+  preID: null | string;
+  primary: string;
+  time: string;
+  body: string;
 }

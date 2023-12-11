@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/compatible": "^5.1.2",
     "@ant-design/icons": "^4.8.0",
     "@ant-design/pro-layout": "^7.4.0",
     "@testing-library/jest-dom": "^5.16.5",

@@ -1,0 +1,6 @@
+.comment-add {
+  display: flex;
+  justify-content: center;
+  margin: 1%;
+  border: 1px solid red;
+}

@@ -8,6 +8,7 @@ import {
   ILoginProps,
   ISearchProps,
   IAddClassifyData,
+  IRootComment,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -102,7 +103,17 @@ export const Service = {
   saveArticleEdit(props: IArticle) {
     return axios.put(BASEURL + "/article/edit", props);
   },
+  //发布文章
   publishArticle(props: IArticle) {
     return GlobalAxios<undefined>("post", "/article/publish", props);
+  },
+  //发布评论
+  // publishComment(props:IComment)
+  //根据文章ID获取评论
+  getComment(props: string) {
+    return GlobalAxios<IRootComment[]>(
+      "get",
+      appendParams2Path("/comment/pagecom", { id: props })
+    );
   },
 };

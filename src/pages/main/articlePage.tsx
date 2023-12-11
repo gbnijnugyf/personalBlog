@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import "./css/index.css";
 import { Content, Header } from "antd/es/layout/layout";
 import { IArticle, articleInit } from "../../globe/inter";
+import { CommentPage } from "./comment";
 const scrollElement = document.documentElement;
 export function ArticlePage() {
   // 路由携带参数navigate("/home",{state:{id:123}})
@@ -45,7 +46,7 @@ export function ArticlePage() {
               <MarkNav source={md} ordered={true} />
             </div>
           </Sider>
-          <div>
+          <div className="article-content">
             <Header className="article-header">
               <div className="header-title">
                 <div id="title">
@@ -65,6 +66,9 @@ export function ArticlePage() {
             <MdPreview modelValue={md} />
           </div>
         </Layout>
+        <div className="comment">
+          <CommentPage articleId={articleBody.ID} />
+        </div>
       </div>
     </>
   );

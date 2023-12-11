@@ -91,14 +91,16 @@
 .container-aritclePage {
   height: fit-content;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: white;
+}
+.container-aritclePage .article-content {
+  width: 100%;
 }
 .container-aritclePage .markdown-nav {
   background-color: white;
   overflow: auto;
   height: 80vh;
-  width: 100vw;
   position: fixed;
   left: 0;
 }
@@ -122,4 +124,8 @@
   align-content: center;
   align-items: center;
   font-size: xx-small;
+}
+.container-aritclePage .comment {
+  border: 1px solid red;
+  margin-top: 5%;
 }
