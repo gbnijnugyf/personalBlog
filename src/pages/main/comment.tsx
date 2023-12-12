@@ -8,69 +8,126 @@ import TextArea from "antd/es/input/TextArea";
 import { Service } from "../../globe/service";
 import { IRootComment } from "../../globe/inter";
 
-function ExampleComment(props: IRootComment) {
+interface IExampleComment {
+  comment: IRootComment;
+  setFunc: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      nickName: string;
+    }>
+  >;
+  openFunc: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function ExampleComment(props: IExampleComment) {
   // console.log(props);
+  props.comment.reply.sort((a, b) => {
+    const timeA = new Date(a.time).getTime();
+    const timeB = new Date(b.time).getTime();
+    return timeB - timeA; // 时间晚的在前面
+  });
+
+  function handleReply(pre: ISetPreID) {
+    props.setFunc(pre);
+    props.openFunc(true);
+  }
+
   return (
     <Comment
-      actions={[<span key="comment-nested-reply-to">Reply to</span>]}
-      author={<div>{props.rootComment.nickname}</div>}
+      actions={[
+        <span
+          key="comment-nested-reply-to"
+          onClick={() => {
+            const temp: ISetPreID = {
+              id: props.comment.rootComment.commentID,
+              nickName: props.comment.rootComment.nickname,
+            };
+            handleReply(temp);
+          }}
+        >
+          回复
+        </span>,
+      ]}
+      author={
+        <div>
+          {props.comment.rootComment.nickname} {props.comment.rootComment.time}
+        </div>
+      }
       avatar={
         <Avatar
           icon={<UserOutlined />}
-          src={props.rootComment.avator}
-          alt={props.rootComment.nickname}
+          src={props.comment.rootComment.avator}
+          alt={props.comment.rootComment.nickname}
         />
       }
-      content={<p>{props.rootComment.body}</p>}
+      content={<p>{props.comment.rootComment.body}</p>}
     >
       {/* TODO:have bug when call itself */}
-      {/* <ExampleComment>1</ExampleComment> */}
-      {/* {props.children !== undefined ? props.children : null} */}
+      {props.comment.reply.map((item) => {
+        let preNickName: string = "";
+        if (item.preID !== null) {
+          const foundPerson = props.comment.reply.find(
+            (it) => it.commentID === item.preID
+          );
+          if (foundPerson !== undefined) {
+            preNickName = foundPerson.nickname;
+          }
+        }
+
+        return (
+          <Comment
+            actions={[
+              <span
+                key="comment-nested-reply-to"
+                onClick={() => {
+                  const temp: ISetPreID = {
+                    id: item.commentID,
+                    nickName: item.nickname,
+                  };
+                  handleReply(temp);
+                }}
+              >
+                回复
+              </span>,
+            ]}
+            author={
+              <div>
+                {item.nickname}
+                {preNickName !== "" ? ` 回复 ${preNickName}` : null} {item.time}
+              </div>
+            }
+            avatar={
+              <Avatar
+                icon={<UserOutlined />}
+                src={props.comment.rootComment.avator}
+                alt={props.comment.rootComment.nickname}
+              />
+            }
+            content={item.body}
+          />
+        );
+      })}
     </Comment>
   );
 }
-// const ExampleComment: React.FC<{ children?: React.ReactNode }> = ({
-//   children,
-// }) => (
-//   <Comment
-//     actions={[<span key="comment-nested-reply-to">Reply to</span>]}
-//     author={<a>Han Solo</a>}
-//     avatar={
-//       <Avatar
-//         icon={<UserOutlined />}
-//         src="https://joeschmoe.io/api/v1/random"
-//         alt="Han Solo"
-//       />
-//     }
-//     content={
-//       <p>
-//         We supply a series of design principles, practical patterns and high
-//         quality design resources (Sketch and Axure).
-//       </p>
-//     }
-//   >
-//     {children}
-//   </Comment>
-// );
-
+interface ISetPreID {
+  id: string;
+  nickName: string;
+}
 export function CommentPage(props: { articleId: string | null }) {
+  const preIDInit: ISetPreID = {
+    id: "",
+    nickName: "",
+  };
   const [open, setOpen] = useState(false);
   const [rootComment, setRootComment] = useState<IRootComment[]>();
+  const [preId, setPreId] = useState<ISetPreID>(preIDInit);
   const onClose = () => {
     setOpen(false);
   };
   const articleId_ = props.articleId === null ? "" : props.articleId;
   useEffect(() => {
     Service.getComment(articleId_).then((res) => {
-      // const promises = res.data.data;
-      // console.log(res.data.data);
       setRootComment(res.data.data);
-      // console.log(rootComment);
-      // Promise.all(promises).then((res_) => {
-      //   console.log(res_)
-      //   setRootComment(res_);
-      //   console.log(rootComment)
-      // });
     });
   }, [articleId_]);
 
@@ -78,27 +135,41 @@ export function CommentPage(props: { articleId: string | null }) {
     <>
       <div className="comment-display">
         {rootComment === undefined ? (
-          <div style={{fontSize:"medium"}}>暂无评论</div>
+          <div style={{ fontSize: "medium" }}>暂无评论</div>
         ) : (
           rootComment.map((aRootComment) => {
             // console.log(aRootComment);
+            const temp: IRootComment = {
+              rootComment: aRootComment.rootComment,
+              reply: aRootComment.reply,
+            };
             return (
-              <>
-                <ExampleComment
-                  rootComment={aRootComment.rootComment}
-                  reply={aRootComment.reply}
-                />
-              </>
+              <ExampleComment
+                comment={temp}
+                setFunc={setPreId}
+                openFunc={setOpen}
+              />
             );
           })
         )}
-        {/* <ExampleComment rootComment={rootComment} reply={[]} /> */}
       </div>
       <div className="comment-add">
-        <Button onClick={() => setOpen(true)}>发表评论</Button>
+        <Button
+          onClick={() => {
+            setPreId(preIDInit);
+            setOpen(true);
+          }}
+        >
+          发表评论
+        </Button>
       </div>
-      <Drawer title="发表评论" placement="right" onClose={onClose} open={open}>
-        <AddComment />
+      <Drawer
+        title={preId.id !== "" ? `回复${preId.nickName}` : "发表评论"}
+        placement="right"
+        onClose={onClose}
+        open={open}
+      >
+        <AddComment pre={preId} />
       </Drawer>
     </>
   );
@@ -115,9 +186,9 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-function AddComment() {
+function AddComment(props: { pre: ISetPreID }) {
   const [form] = Form.useForm();
-
+  console.log(props.pre);
   const onFinish = (values: any) => {
     console.log(values);
   };
@@ -148,13 +219,10 @@ function AddComment() {
       >
         <Input />
       </Form.Item>
-      <Form.Item name="nickname" label="nickname" rules={[{ required: true }]}>
+      <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="isBlogger" label="作者key" rules={[{ required: false }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name="comment" label="comment" rules={[{ required: true }]}>
+      <Form.Item name="comment" label="评论内容" rules={[{ required: true }]}>
         <TextArea
           showCount
           rows={4}
@@ -166,10 +234,10 @@ function AddComment() {
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
-            Submit
+            提交
           </Button>
           <Button htmlType="button" onClick={onReset}>
-            Reset
+            重置
           </Button>
         </Space>
       </Form.Item>

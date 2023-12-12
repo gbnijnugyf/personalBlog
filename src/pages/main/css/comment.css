@@ -1,3 +1,7 @@
+.comment-display {
+  margin-left: 2%;
+}
+
 .comment-add {
   display: flex;
   justify-content: center;

@@ -278,9 +278,9 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
         <Space>
           <Button type="primary" htmlType="submit">
-            Submit
+            提交
           </Button>
-          <Button htmlType="reset">reset</Button>
+          <Button htmlType="reset">重置</Button>
         </Space>
       </Form.Item>
     </Form>
