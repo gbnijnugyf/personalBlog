@@ -119,4 +119,11 @@ export const Service = {
       appendParams2Path("/comment/pagecom", { id: props })
     );
   },
+  //根据评论id删除评论
+  deleteComment(props: string) {
+    return GlobalAxios<undefined>(
+      "delete",
+      appendParams2Path("/comment/delete", { id: props })
+    );
+  },
 };

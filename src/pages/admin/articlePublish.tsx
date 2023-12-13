@@ -25,12 +25,12 @@ import {
 import { promises } from "dns";
 import TextArea from "antd/es/input/TextArea";
 import { ArticleEdit } from "./articleEdit";
-interface articleMemuItem {
+export interface articleMemuItem {
   key: string; //文章ID
   icon?: JSX.Element;
   label: string; //文章标题
 }
-interface articleMenu {
+export interface articleMenu {
   key: string; //类别名称
   label: string; //类别名称
   children?: articleMemuItem[]; //分类下的文章列表
@@ -116,7 +116,7 @@ export function ArticleManagerPage() {
           icon: <PlusCircleOutlined />,
         });
         // console.log(res);
-        setListdArr(res);
+        setListdArr(menuList);
       });
     });
   }, [display]);
@@ -124,8 +124,9 @@ export function ArticleManagerPage() {
   const handleChoose = (props: IMenuInfo) => {
     console.log(props);
     if (props.key.length !== 0) {
-      const classify = props.key.split("-")[2]; //获取分类
+      
       if (props.key.startsWith("unique-add-")) {
+        const classify = props.key.split("-")[2]; //获取分类
         if (classify === "classify") {
           setIsAddClassifyOpen(true);
         } else {
@@ -140,7 +141,7 @@ export function ArticleManagerPage() {
         }
       } else {
         //选中已存在列表中的文章
-        setNowClassify(classify);
+        setNowClassify(props.keyPath[1]);
         setNowArticleID(props.key);
         console.log(props.key);
       }
@@ -187,21 +188,11 @@ export function ArticleManagerPage() {
           </Sider>
 
           <Content>
-            {/* <Layout>
-              <div className="markdown-body" id="content-md">
-                <ReactMarkdown children={md} remarkPlugins={[remarkGfm]} />
-              </div>
-              <Sider className="left-sider">
-                <MarkNav className="toc-list" source={md} ordered={true} />
-              </Sider>
-            </Layout> */}
             {nowClassify !== "" ? (
               <ArticleEdit classify={nowClassify} ID={nowArticleID} />
             ) : (
               <p>请选择文章或添加文章</p>
             )}
-            {/* <ArticleEdit classify={nowClassify} ID={nowArticleID} /> */}
-            {/* <Outlet /> */}
           </Content>
         </Layout>
       </div>

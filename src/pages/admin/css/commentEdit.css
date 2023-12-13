@@ -1,0 +1,8 @@
+.back-div {
+  cursor: pointer;
+  font-size: medium;
+}
+
+.back-div :hover {
+  color: rgb(27, 69, 237);
+}

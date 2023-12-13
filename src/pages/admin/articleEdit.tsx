@@ -19,7 +19,7 @@ import { Service } from "../../globe/service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 
-interface IArticleEdit {
+export interface IArticleEdit {
   classify: string; //分类
   ID: string; //文章ID，新建文章则为""
 }

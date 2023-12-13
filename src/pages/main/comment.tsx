@@ -1,5 +1,5 @@
 import "./css/comment.css";
-import { Avatar, Drawer, message } from "antd";
+import { Avatar, Drawer, Modal, message } from "antd";
 import { Comment } from "@ant-design/compatible";
 import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
@@ -10,6 +10,7 @@ import { IComment, IRootComment } from "../../globe/inter";
 
 interface IExampleComment {
   comment: IRootComment;
+  admin: boolean;
   setFunc: React.Dispatch<
     React.SetStateAction<{
       id: string;
@@ -17,66 +18,151 @@ interface IExampleComment {
     }>
   >;
   openFunc: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  display: boolean;
 }
 function ExampleComment(props: IExampleComment) {
   // console.log(props);
+  const [isDeleteCommentOpen, setIsDeleteCommentOpen] =
+    useState<boolean>(false);
+  const infoInit: ISetPreID = {
+    id: "",
+    nickName: "",
+  };
+  const [info, setInfo] = useState<ISetPreID>(infoInit);
   props.comment.reply.sort((a, b) => {
     const timeA = new Date(a.time).getTime();
     const timeB = new Date(b.time).getTime();
     return timeB - timeA; // 时间晚的在前面
   });
+  const [messageApi, contextHolder] = message.useMessage();
 
   function handleReply(pre: ISetPreID) {
     props.setFunc(pre);
     props.openFunc(true);
   }
+  function success(text: string = "删除成功") {
+    props.setDisplay(!props.display);
+    messageApi.open({
+      type: "success",
+      content: text,
+    });
+  }
+  function error(text: string = "删除失败，请重试") {
+    messageApi.open({
+      type: "error",
+      content: text,
+    });
+  }
+  function handleDelete(info: ISetPreID) {
+    setInfo(info);
+    setIsDeleteCommentOpen(true);
+  }
+  const confirnDelete = () => {
+    Service.deleteComment(info.id)
+      .then((res) => {
+        console.log(res);
+        success();
+        setIsDeleteCommentOpen(false);
+      })
+      .catch(() => {
+        setIsDeleteCommentOpen(false);
+        error();
+      });
+  };
+  const handleCancel = () => {
+    setIsDeleteCommentOpen(false);
+  };
+  const commentActions: React.ReactNode[] = [
+    <span
+      key="comment-nested-reply-to"
+      onClick={() => {
+        const temp: ISetPreID = {
+          //TODO:null检查
+          id: props.comment.rootComment.commentID as string,
+          nickName: props.comment.rootComment.nickname,
+        };
+        handleReply(temp);
+      }}
+    >
+      回复
+    </span>,
+  ];
+  if (props.admin) {
+    commentActions.push(
+      <span
+        key="comment-nested-reply-to"
+        onClick={() => {
+          const temp: ISetPreID = {
+            //TODO:null检查
+            id: props.comment.rootComment.commentID as string,
+            nickName: props.comment.rootComment.nickname,
+          };
+          console.log(temp);
+          handleDelete(temp);
+        }}
+      >
+        删除
+      </span>
+    );
+  }
 
   return (
-    <Comment
-      actions={[
-        <span
-          key="comment-nested-reply-to"
-          onClick={() => {
-            const temp: ISetPreID = {
-              //TODO:null检查
-              id: props.comment.rootComment.commentID as string,
-              nickName: props.comment.rootComment.nickname,
-            };
-            handleReply(temp);
-          }}
-        >
-          回复
-        </span>,
-      ]}
-      author={
-        <div>
-          {props.comment.rootComment.nickname} {props.comment.rootComment.time}
-        </div>
-      }
-      avatar={
-        <Avatar
-          icon={<UserOutlined />}
-          src={props.comment.rootComment.avator}
-          alt={props.comment.rootComment.nickname}
-        />
-      }
-      content={<p>{props.comment.rootComment.body}</p>}
-    >
-      {/* TODO:have bug when call itself */}
-      {props.comment.reply.map((item) => {
-        let preNickName: string = "";
-        if (item.preID !== null) {
-          const foundPerson = props.comment.reply.find(
-            (it) => it.commentID === item.preID
-          );
-          if (foundPerson !== undefined) {
-            preNickName = foundPerson.nickname;
-          }
+    <>
+      {contextHolder}
+      <Modal
+        okText="确认删除"
+        cancelText="取消"
+        title="确定删除该评论及子评论吗？"
+        open={isDeleteCommentOpen}
+        onOk={confirnDelete}
+        onCancel={handleCancel}
+      />
+      <Comment
+        actions={commentActions}
+        author={
+          <div>
+            {props.comment.rootComment.nickname}{" "}
+            {props.comment.rootComment.time}
+          </div>
         }
-
-        return (
-          <Comment
-            actions={[
+        avatar={
+          <Avatar
+            icon={<UserOutlined />}
+            src={props.comment.rootComment.avator}
+            alt={props.comment.rootComment.nickname}
+          />
+        }
+        content={<p>{props.comment.rootComment.body}</p>}
+      >
+        {/* TODO:have bug when call itself */}
+        {props.comment.reply.map((item) => {
+          let preNickName: string = "";
+          if (item.preID !== null) {
+            const foundPerson = props.comment.reply.find(
+              (it) => it.commentID === item.preID
+            );
+            if (foundPerson !== undefined) {
+              preNickName = foundPerson.nickname;
+            }
+          }
+          const commentActionsItem: React.ReactNode[] = [
+            <span
+              key="comment-nested-reply-to"
+              onClick={() => {
+                const temp: ISetPreID = {
+                  //TODO:null检查
+                  id: item.commentID as string,
+                  nickName: item.nickname,
+                };
+                handleReply(temp);
+              }}
+            >
+              回复
+            </span>,
+          ];
+          if (props.admin) {
+            commentActionsItem.push(
               <span
                 key="comment-nested-reply-to"
                 onClick={() => {
@@ -85,37 +171,46 @@ function ExampleComment(props: IExampleComment) {
                     id: item.commentID as string,
                     nickName: item.nickname,
                   };
-                  handleReply(temp);
+                  handleDelete(temp);
                 }}
               >
-                回复
-              </span>,
-            ]}
-            author={
-              <div>
-                {item.nickname}
-                {preNickName !== "" ? ` 回复 ${preNickName}` : null} {item.time}
-              </div>
-            }
-            avatar={
-              <Avatar
-                icon={<UserOutlined />}
-                src={props.comment.rootComment.avator}
-                alt={props.comment.rootComment.nickname}
-              />
-            }
-            content={item.body}
-          />
-        );
-      })}
-    </Comment>
+                删除
+              </span>
+            );
+          }
+          return (
+            <Comment
+              actions={commentActionsItem}
+              author={
+                <div>
+                  {item.nickname}
+                  {preNickName !== "" ? ` 回复 ${preNickName}` : null}{" "}
+                  {item.time}
+                </div>
+              }
+              avatar={
+                <Avatar
+                  icon={<UserOutlined />}
+                  src={props.comment.rootComment.avator}
+                  alt={props.comment.rootComment.nickname}
+                />
+              }
+              content={item.body}
+            />
+          );
+        })}
+      </Comment>
+    </>
   );
 }
 interface ISetPreID {
   id: string;
   nickName: string;
 }
-export function CommentPage(props: { articleId: string | null }) {
+export function CommentPage(props: {
+  articleId: string | null;
+  admin: boolean;
+}) {
   const preIDInit: ISetPreID = {
     id: "",
     nickName: "",
@@ -123,6 +218,7 @@ export function CommentPage(props: { articleId: string | null }) {
   const [open, setOpen] = useState(false);
   const [rootComment, setRootComment] = useState<IRootComment[]>();
   const [preId, setPreId] = useState<ISetPreID>(preIDInit);
+  const [display, setDisplay] = useState<boolean>(false);
   const onClose = () => {
     setOpen(false);
   };
@@ -131,7 +227,7 @@ export function CommentPage(props: { articleId: string | null }) {
     Service.getComment(articleId_).then((res) => {
       setRootComment(res.data.data);
     });
-  }, [articleId_]);
+  }, [articleId_, display]);
 
   return (
     <>
@@ -150,6 +246,9 @@ export function CommentPage(props: { articleId: string | null }) {
                 comment={temp}
                 setFunc={setPreId}
                 openFunc={setOpen}
+                admin={props.admin}
+                setDisplay={setDisplay}
+                display={display}
               />
             );
           })
@@ -171,7 +270,13 @@ export function CommentPage(props: { articleId: string | null }) {
         onClose={onClose}
         open={open}
       >
-        <AddComment pre={preId} articleID={articleId_} setOpen={setOpen} />
+        <AddComment
+          pre={preId}
+          articleID={articleId_}
+          setOpen={setOpen}
+          display={display}
+          setDisplay={setDisplay}
+        />
       </Drawer>
     </>
   );
@@ -190,6 +295,8 @@ interface IAddComment {
   pre: ISetPreID;
   articleID: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  display: boolean;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function AddComment(props: IAddComment) {
@@ -229,6 +336,7 @@ function AddComment(props: IAddComment) {
   };
   const [messageApi, contextHolder] = message.useMessage();
   function success(text: string = "评论成功") {
+    props.setDisplay(!props.display);
     messageApi.open({
       type: "success",
       content: text,

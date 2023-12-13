@@ -17,7 +17,7 @@ const scrollElement = document.documentElement;
 export function ArticlePage() {
   // 路由携带参数navigate("/home",{state:{id:123}})
   const articleId = useLocation().state.id;
-  console.log(articleId);
+  console.log("111:",articleId);
   const [articleText, setArticleText] = useState(""); //正文
   const [articleBody, setArticleBody] = useState<IArticle>(articleInit);
   // const [id] = useState("preview-only");
@@ -38,37 +38,41 @@ export function ArticlePage() {
 
   return (
     <>
-      <div className="container-aritclePage">
-        <Layout>
-          <Sider className="markdown-nav">
-            {/* <div> */}
-              <MarkNav source={/*articleText*/md} ordered={true} />
-            {/* </div> */}
-          </Sider>
-          <div className="article-content">
-            <Header className="article-header">
-              <div className="header-title">
-                <div id="title">
-                  <strong>{articleBody.title}</strong>
+      {articleId === null ? (
+        <>这篇文章不见啦</>
+      ) : (
+        <div className="container-aritclePage">
+          <Layout>
+            <Sider className="markdown-nav">
+              {/* <div> */}
+              <MarkNav source={/*articleText*/ md} ordered={true} />
+              {/* </div> */}
+            </Sider>
+            <div className="article-content">
+              <Header className="article-header">
+                <div className="header-title">
+                  <div id="title">
+                    <strong>{articleBody.title}</strong>
+                  </div>
                 </div>
-              </div>
-              <div className="header-info">
-                <Tag>{articleBody.classification}</Tag>
-                <div id="time">发布时间：{articleBody.releaseTime}</div>
-              </div>
-              <Image
-                width={900}
-                height={300}
-                src={articleBody.cover as string}
-              />
-            </Header>
-            <MdPreview modelValue={/*articleText*/md} />
+                <div className="header-info">
+                  <Tag>{articleBody.classification}</Tag>
+                  <div id="time">发布时间：{articleBody.releaseTime}</div>
+                </div>
+                <Image
+                  width={900}
+                  height={300}
+                  src={articleBody.cover as string}
+                />
+              </Header>
+              <MdPreview modelValue={/*articleText*/ md} />
+            </div>
+          </Layout>
+          <div className="comment">
+            <CommentPage articleId={articleBody.ID} admin={false} />
           </div>
-        </Layout>
-        <div className="comment">
-          <CommentPage articleId={articleBody.ID} />
         </div>
-      </div>
+      )}
     </>
   );
 }

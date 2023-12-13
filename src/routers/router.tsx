@@ -17,6 +17,7 @@ import { AdminMainPage, MainContent } from "../pages/admin";
 import { ArticleManagerPage } from "../pages/admin/articlePublish";
 import { ArticlePage } from "../pages/main/articlePage";
 import { ArticleEdit } from "../pages/admin/articleEdit";
+import { CommentManagerPage } from "../pages/admin/commentEdit";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ export function Routers() {
     console.log(location.pathname);
     if (!location.pathname.startsWith("/admin")) {
       navigate("/main/detail");
+    } else if (location.pathname.startsWith("/admin/main")) {
+      navigate("/admin/main/article");
+    } else if (location.pathname.startsWith("/admin")) {
+      navigate("/admin/login");
     }
   }, []);
 
@@ -47,10 +52,8 @@ export function Routers() {
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage />} />
         <Route path="main/*" element={<MainContent />}>
-          <Route path="article/*" element={<ArticleManagerPage />}>
-            {/* <Route path="edit" element={<ArticleEdit />} /> */}
-          </Route>
-          <Route path="comment" element={<>评论管理</>} />
+          <Route path="article/*" element={<ArticleManagerPage />} />
+          <Route path="comment" element={<CommentManagerPage />} />
           <Route path="3" element={<>nothing</>} />
         </Route>
       </Route>
