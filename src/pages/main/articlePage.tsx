@@ -20,8 +20,7 @@ export function ArticlePage() {
   console.log(articleId);
   const [articleText, setArticleText] = useState(""); //正文
   const [articleBody, setArticleBody] = useState<IArticle>(articleInit);
-  const [text] = useState("# Hello Editor");
-  const [id] = useState("preview-only");
+  // const [id] = useState("preview-only");
   const [md, setMd] = useState("");
   useEffect(() => {
     const testmd = require("./test.md");
@@ -32,7 +31,7 @@ export function ArticlePage() {
     Service.getArticleDetail(articleId).then((res) => {
       setArticleBody(res.data.data);
       // setArticleUrl(url);
-      setArticleText(articleBody.body);
+      setArticleText(res.data.data.body);
       console.log(articleBody);
     });
   }, [articleId]);
@@ -42,9 +41,9 @@ export function ArticlePage() {
       <div className="container-aritclePage">
         <Layout>
           <Sider className="markdown-nav">
-            <div>
-              <MarkNav source={md} ordered={true} />
-            </div>
+            {/* <div> */}
+              <MarkNav source={/*articleText*/md} ordered={true} />
+            {/* </div> */}
           </Sider>
           <div className="article-content">
             <Header className="article-header">
@@ -63,7 +62,7 @@ export function ArticlePage() {
                 src={articleBody.cover as string}
               />
             </Header>
-            <MdPreview modelValue={md} />
+            <MdPreview modelValue={/*articleText*/md} />
           </div>
         </Layout>
         <div className="comment">

@@ -13,7 +13,7 @@
   justify-content: center;
   width: 100%;
   background-color: rgba(98, 235, 160, 0.8);
-  z-index: 1;
+  z-index: 2;
   justify-content: flex-end;
 }
 .layout .menu .menu-center {
@@ -36,7 +36,6 @@
   overflow: auto;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  position: relative;
 }
 .layout .content ::after {
   height: 5px; /* 设置阴影的高度 */
@@ -96,15 +95,9 @@
 }
 .container-aritclePage .article-content {
   width: 100%;
+  z-index: 1;
 }
-.container-aritclePage .markdown-nav {
-  background-color: white;
-  overflow: auto;
-  height: 80vh;
-  position: fixed;
-  left: 0;
-}
-.container-aritclePage .article-header {
+.container-aritclePage .article-content .article-header {
   background-color: white;
   border-bottom: 1px solid lightgray;
   padding-bottom: 1%;
@@ -112,18 +105,30 @@
   flex-direction: column;
   height: fit-content;
 }
-.container-aritclePage .article-header .header-title {
+.container-aritclePage .article-content .article-header .header-title {
   padding: 0%;
 }
-.container-aritclePage .article-header .header-title #title {
+.container-aritclePage .article-content .article-header .header-title #title {
   font-size: larger;
 }
-.container-aritclePage .article-header .header-info {
+.container-aritclePage .article-content .article-header .header-info {
   display: flex;
   flex-direction: row;
   align-content: center;
   align-items: center;
   font-size: xx-small;
+}
+.container-aritclePage .markdown-nav {
+  background-color: white;
+  overflow: auto;
+  height: 80vh;
+  position: fixed;
+  left: 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.container-aritclePage .markdown-nav ::after {
+  height: 5px; /* 设置阴影的高度 */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
 }
 .container-aritclePage .comment {
   border: 1px solid red;
