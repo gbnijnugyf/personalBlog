@@ -53,13 +53,7 @@ export function ArticleEdit(props: IArticleEdit) {
     }
   }, [props.ID]);
 
-  const showDrawer = () => {
-    // console.log(editTitle.current);
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+
   const handleEditTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -163,7 +157,7 @@ export function ArticleEdit(props: IArticleEdit) {
                 onChange={handleEditTitleChange}
               />
             </div>
-            <Button type="primary" onClick={showDrawer}>
+            <Button type="primary" onClick={()=>setOpen(true)}>
               {articleDetail.visible === 0 ? "发布文章" : "取消发布"}
             </Button>
           </div>
@@ -176,7 +170,7 @@ export function ArticleEdit(props: IArticleEdit) {
           />
         </Content>
       </Layout>
-      <Drawer title="文章发布" placement="right" onClose={onClose} open={open}>
+      <Drawer title="文章发布" placement="right" onClose={()=>setOpen(false)} open={open}>
         <ArticlePublishForm
           body={text}
           classify={props.classify}

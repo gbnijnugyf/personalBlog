@@ -1,12 +1,12 @@
 import "./css/comment.css";
-import { Avatar, Drawer } from "antd";
+import { Avatar, Drawer, message } from "antd";
 import { Comment } from "@ant-design/compatible";
 import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Select, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Service } from "../../globe/service";
-import { IRootComment } from "../../globe/inter";
+import { IComment, IRootComment } from "../../globe/inter";
 
 interface IExampleComment {
   comment: IRootComment;
@@ -38,7 +38,8 @@ function ExampleComment(props: IExampleComment) {
           key="comment-nested-reply-to"
           onClick={() => {
             const temp: ISetPreID = {
-              id: props.comment.rootComment.commentID,
+              //TODO:null检查
+              id: props.comment.rootComment.commentID as string,
               nickName: props.comment.rootComment.nickname,
             };
             handleReply(temp);
@@ -80,7 +81,8 @@ function ExampleComment(props: IExampleComment) {
                 key="comment-nested-reply-to"
                 onClick={() => {
                   const temp: ISetPreID = {
-                    id: item.commentID,
+                    //TODO:null检查
+                    id: item.commentID as string,
                     nickName: item.nickname,
                   };
                   handleReply(temp);
@@ -169,13 +171,11 @@ export function CommentPage(props: { articleId: string | null }) {
         onClose={onClose}
         open={open}
       >
-        <AddComment pre={preId} />
+        <AddComment pre={preId} articleID={articleId_} setOpen={setOpen} />
       </Drawer>
     </>
   );
 }
-
-const { Option } = Select;
 
 const layout = {
   labelCol: { span: 8 },
@@ -186,61 +186,107 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-function AddComment(props: { pre: ISetPreID }) {
+interface IAddComment {
+  pre: ISetPreID;
+  articleID: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function AddComment(props: IAddComment) {
   const [form] = Form.useForm();
   console.log(props.pre);
-  const onFinish = (values: any) => {
+  interface IOnFinish {
+    email: string;
+    nickname: string;
+    comment: string;
+  }
+  const onFinish = (values: IOnFinish) => {
     console.log(values);
+    const commentValue: IComment = {
+      avator: null,
+      commentID: null,
+      email: values.email,
+      isBlogger: null,
+      nickname: values.nickname,
+      preID: props.pre.id !== "" ? props.pre.id : null,
+      primary: props.articleID,
+      time: "",
+      body: values.comment,
+    };
+    Service.publishComment(commentValue)
+      .then((res) => {
+        console.log(res);
+        success();
+        props.setOpen(false);
+      })
+      .catch(() => {
+        error();
+      });
   };
 
   const onReset = () => {
     form.resetFields();
   };
-
+  const [messageApi, contextHolder] = message.useMessage();
+  function success(text: string = "评论成功") {
+    messageApi.open({
+      type: "success",
+      content: text,
+    });
+  }
+  function error(text: string = "评论失败，请重试") {
+    messageApi.open({
+      type: "error",
+      content: text,
+    });
+  }
   return (
-    <Form
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-    >
-      <Form.Item
-        name="email"
-        label="email"
-        rules={[
-          { required: true },
-          {
-            pattern:
-              /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
-            message: "邮箱格式不正确",
-          },
-        ]}
+    <>
+      {contextHolder}
+      <Form
+        {...layout}
+        form={form}
+        name="control-hooks"
+        onFinish={onFinish}
+        style={{ maxWidth: 600 }}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name="comment" label="评论内容" rules={[{ required: true }]}>
-        <TextArea
-          showCount
-          rows={4}
-          placeholder="maxLength is 200"
-          maxLength={200}
-        />
-      </Form.Item>
+        <Form.Item
+          name="email"
+          label="email"
+          rules={[
+            { required: true },
+            {
+              pattern:
+                /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+              message: "邮箱格式不正确",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item name="comment" label="评论内容" rules={[{ required: true }]}>
+          <TextArea
+            showCount
+            rows={4}
+            placeholder="maxLength is 200"
+            maxLength={200}
+          />
+        </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
-          <Button htmlType="button" onClick={onReset}>
-            重置
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+        <Form.Item {...tailLayout}>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
+            <Button htmlType="button" onClick={onReset}>
+              重置
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    </>
   );
 }

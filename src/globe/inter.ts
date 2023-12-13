@@ -77,7 +77,7 @@ export interface IRootComment {
 
 export interface IComment {
   avator: null | string;
-  commentID: string;
+  commentID: string|null;
   email: string;
   isBlogger: null | string;
   nickname: string;

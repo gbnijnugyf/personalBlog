@@ -9,6 +9,7 @@ import {
   ISearchProps,
   IAddClassifyData,
   IRootComment,
+  IComment,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -108,7 +109,9 @@ export const Service = {
     return GlobalAxios<undefined>("post", "/article/publish", props);
   },
   //发布评论
-  // publishComment(props:IComment)
+  publishComment(props: IComment) {
+    return GlobalAxios<undefined>("post", "/comment/add", props);
+  },
   //根据文章ID获取评论
   getComment(props: string) {
     return GlobalAxios<IRootComment[]>(
