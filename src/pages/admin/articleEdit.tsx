@@ -4,6 +4,7 @@ import {
   Form,
   Input,
   Layout,
+  Modal,
   Space,
   Upload,
   message,
@@ -30,9 +31,24 @@ export function ArticleEdit(props: IArticleEdit) {
   const [editTitle, setEditTitle] = useState("");
   // const location = useLocation();
   const [open, setOpen] = useState(false);
-
+  const [flush, setFlush] = useState<boolean>(false);
+  const [isCancelPublishOpen, setIsCancelPublishOpen] = useState(false);
   const [articleDetail, setArticleDetail] = useState<IArticle>(articleInit);
-
+  const handleOk = () => {
+    const cancelId = articleDetail.ID === null ? "" : articleDetail.ID;
+    Service.cancelPublisArticle(cancelId)
+      .then(() => {
+        success("取消发布成功");
+        setFlush(!flush);
+      })
+      .catch(() => {
+        error("取消发布失败");
+      });
+    setIsCancelPublishOpen(false);
+  };
+  const handleCancel = () => {
+    setIsCancelPublishOpen(false);
+  };
   useEffect(() => {
     console.log("edit:", props.ID);
     if (props.ID !== "") {
@@ -51,8 +67,7 @@ export function ArticleEdit(props: IArticleEdit) {
       setEditTitle("");
       setArticleDetail(articleInit);
     }
-  }, [props.ID]);
-
+  }, [props.ID, flush]);
 
   const handleEditTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -157,7 +172,16 @@ export function ArticleEdit(props: IArticleEdit) {
                 onChange={handleEditTitleChange}
               />
             </div>
-            <Button type="primary" onClick={()=>setOpen(true)}>
+            <Button
+              type="primary"
+              onClick={() => {
+                if (articleDetail.visible === 0) {
+                  setOpen(true);
+                } else {
+                  setIsCancelPublishOpen(true);
+                }
+              }}
+            >
               {articleDetail.visible === 0 ? "发布文章" : "取消发布"}
             </Button>
           </div>
@@ -169,8 +193,21 @@ export function ArticleEdit(props: IArticleEdit) {
             onSave={onSaveEdit}
           />
         </Content>
+        <Modal
+          okText="确认"
+          cancelText="取消"
+          title="确认取消发布吗？"
+          open={isCancelPublishOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        />
       </Layout>
-      <Drawer title="文章发布" placement="right" onClose={()=>setOpen(false)} open={open}>
+      <Drawer
+        title="文章发布"
+        placement="right"
+        onClose={() => setOpen(false)}
+        open={open}
+      >
         <ArticlePublishForm
           body={text}
           classify={props.classify}

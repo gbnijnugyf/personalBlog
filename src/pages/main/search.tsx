@@ -4,11 +4,12 @@ import type { SelectProps } from "antd/es/select";
 import { SearchOutlined } from "@ant-design/icons";
 import { Service } from "../../globe/service";
 import { ISearchProps } from "../../globe/inter";
+import { useNavigate } from "react-router-dom";
 
 let timeout: ReturnType<typeof setTimeout> | null;
 let currentValue: string;
 
-const fetch = (value: string, callback: Function) => {
+function fetch(value: string, callback: Function) {
   if (timeout) {
     clearTimeout(timeout);
     timeout = null;
@@ -19,7 +20,7 @@ const fetch = (value: string, callback: Function) => {
     Service.userSearch(value).then((res) => {
       console.log(res);
       if (currentValue === value) {
-        const { data } = res.data;
+        const data = res.data.data;
         console.log("data:", data);
         const dataArr = data.map((item: ISearchProps) => {
           return {
@@ -37,12 +38,13 @@ const fetch = (value: string, callback: Function) => {
   } else {
     callback([]);
   }
-};
+}
 
 const SearchInput: React.FC<{
   placeholder: string;
   style: React.CSSProperties;
 }> = (props) => {
+  const navigate = useNavigate();
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
 
@@ -51,7 +53,12 @@ const SearchInput: React.FC<{
   };
 
   const handleChange = (newValue: string) => {
-    setValue(newValue);
+    console.log(newValue);
+    if (newValue !== undefined) {
+      navigate("/main/article", { replace: true, state: { id: newValue } });
+    }
+    // console.log(data);
+    // setValue(newValue);
   };
 
   return (

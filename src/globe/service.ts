@@ -126,4 +126,11 @@ export const Service = {
       appendParams2Path("/comment/delete", { id: props })
     );
   },
+  //根据文章ID取消文章发布
+  cancelPublisArticle(props: string) {
+    return GlobalAxios(
+      "get",
+      appendParams2Path("/article/unpublish", { id: props })
+    );
+  },
 };
