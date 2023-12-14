@@ -297,7 +297,7 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
 
       <Form.Item
         name="cover"
-        label="文章缩略图(宽:高=3:1)"
+        label="文章缩略图"
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >

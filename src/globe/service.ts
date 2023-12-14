@@ -10,6 +10,7 @@ import {
   IAddClassifyData,
   IRootComment,
   IComment,
+  IFriendLink,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -142,6 +143,13 @@ export const Service = {
   },
   //获取友情链接
   getFriendLink() {
-    return GlobalAxios("get", appendParams2Path("/func/flink", {}));
+    return GlobalAxios<IFriendLink[]>(
+      "get",
+      appendParams2Path("/func/flink", {})
+    );
+  },
+  //添加友情链接
+  addFriendLink(props: IFriendLink) {
+    return GlobalAxios<undefined>("post", "/infoManager/addF", props);
   },
 };

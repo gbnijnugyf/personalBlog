@@ -5,7 +5,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
-import { Avatar, Button, Drawer, List, Space } from "antd";
+import { Avatar, Button, Drawer, List, Space ,Image} from "antd";
 import { AddComment, ISetPreID } from "./comment";
 import "./css/about.css"
 
@@ -50,7 +50,7 @@ export function About() {
               </Button>,
             ]}
             extra={
-              <img
+              <Image
                 width={272}
                 alt="logo"
                 src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"

@@ -2,10 +2,12 @@ import {
   AppstoreOutlined,
   BellOutlined,
   CommentOutlined,
+  CopyOutlined,
   DiffOutlined,
   DownOutlined,
   HomeOutlined,
   LinkOutlined,
+  MessageOutlined,
   RadarChartOutlined,
   SearchOutlined,
   SettingOutlined,
@@ -195,17 +197,17 @@ export const menuMainDetailSider = [
 export const menuAdminSider = [
   {
     key: "article",
-    icon: <UserOutlined />,
+    icon: <CopyOutlined />,
     label: "文章管理",
   },
   {
     key: "comment",
-    icon: <VideoCameraOutlined />,
-    label: "评论管理",
+    icon: <MessageOutlined  />,
+    label: "评论/留言管理",
   },
   {
     key: "friendLink",
-    icon: <UploadOutlined />,
+    icon: <LinkOutlined />,
     label: "友情链接管理",
   },
 ];

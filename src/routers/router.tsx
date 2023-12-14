@@ -20,6 +20,7 @@ import { ArticleEdit } from "../pages/admin/articleEdit";
 import { CommentManagerPage } from "../pages/admin/commentEdit";
 import { About } from "../pages/main/about";
 import { FriendPage } from "../pages/main/friend";
+import { FriendEditPage } from "../pages/admin/friendEdit";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -43,7 +44,10 @@ export function Routers() {
         {/* <Route path="classify" element={<>分类</>} /> */}
         {/* <Route path="filed" element={<>归档</>} /> */}
         <Route path="about" element={<About />} />
-        <Route path="friendLink" element={<FriendPage />} />
+        <Route
+          path="friendLink"
+          element={<FriendPage admin={false} data={undefined} />}
+        />
         <Route path="article" element={<ArticlePage />} />
       </Route>
       {/* <Route path="personal/*" element={<PersonalPage />}>
@@ -56,7 +60,7 @@ export function Routers() {
         <Route path="main/*" element={<MainContent />}>
           <Route path="article/*" element={<ArticleManagerPage />} />
           <Route path="comment" element={<CommentManagerPage />} />
-          <Route path="3" element={<>nothing</>} />
+          <Route path="friendLink" element={<FriendEditPage />} />
         </Route>
       </Route>
       <Route path="setting" element={<>设置</>} />
