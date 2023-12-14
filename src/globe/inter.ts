@@ -76,13 +76,14 @@ export interface IRootComment {
 }
 
 export interface IComment {
-  avator: null | string;
+  avator_url: null | string;
+  passageID: string;
   commentID: string|null;
   email: string;
   isBlogger: null | string;
   nickname: string;
   preID: null | string;
-  primary: string;
+  primary: number;//为0时，属于留言；为1时，属于文章
   time: string;
   body: string;
 }

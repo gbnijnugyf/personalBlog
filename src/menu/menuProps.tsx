@@ -130,11 +130,11 @@ export const menuHeaderProps = [
     icon: <HomeOutlined />,
     label: "首页",
   },
-  {
-    key: "filed",
-    icon: <DiffOutlined />,
-    label: "归档",
-  },
+  // {
+  //   key: "filed",
+  //   icon: <DiffOutlined />,
+  //   label: "归档",
+  // },
   {
     key: "about",
     icon: <RadarChartOutlined />,
@@ -204,8 +204,8 @@ export const menuAdminSider = [
     label: "评论管理",
   },
   {
-    key: "3",
+    key: "friendLink",
     icon: <UploadOutlined />,
-    label: "nav 3",
+    label: "友情链接管理",
   },
 ];

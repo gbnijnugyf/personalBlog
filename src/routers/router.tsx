@@ -18,6 +18,7 @@ import { ArticleManagerPage } from "../pages/admin/articlePublish";
 import { ArticlePage } from "../pages/main/articlePage";
 import { ArticleEdit } from "../pages/admin/articleEdit";
 import { CommentManagerPage } from "../pages/admin/commentEdit";
+import { About } from "../pages/main/about";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export function Routers() {
         <Route path="detail" element={<DetailPage />} />
         <Route path="classify" element={<>分类</>} />
         <Route path="filed" element={<>归档</>} />
-        <Route path="about" element={<>关于</>} />
+        <Route path="about" element={<About />} />
         <Route path="friendLink" element={<>友情链接</>} />
         <Route path="article" element={<ArticlePage />} />
       </Route>

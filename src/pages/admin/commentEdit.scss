@@ -3,6 +3,25 @@
   cursor: pointer;
   font-size: medium;
 }
-.back-div :hover {
-  color: rgb(27, 69, 237);
+
+.comment-layout {
+  .layout {
+    background-color: white;
+    .article-list {
+      // margin-top: 10%;
+      height: 100%;
+      overflow: auto;
+    }
+  }
+  // display: flex;
+  width: 100%;
+  // min-height: 50vh;
+  // max-height: 92vh;
+  // overflow: hidden;
+  // overflow-y: scroll;
+  .content1 {
+    width: 100%;
+    min-height: 92vh;
+    overflow-y: auto;
+  }
 }

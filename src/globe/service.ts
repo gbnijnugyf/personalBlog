@@ -108,7 +108,7 @@ export const Service = {
   publishArticle(props: IArticle) {
     return GlobalAxios<undefined>("post", "/article/publish", props);
   },
-  //发布评论
+  //发布评论/留言
   publishComment(props: IComment) {
     return GlobalAxios<undefined>("post", "/comment/add", props);
   },
@@ -131,6 +131,13 @@ export const Service = {
     return GlobalAxios(
       "get",
       appendParams2Path("/article/unpublish", { id: props })
+    );
+  },
+  //获取留言
+  getMessage() {
+    return GlobalAxios<IComment[]>(
+      "get",
+      appendParams2Path("/comment/pagecom", {})
     );
   },
 };

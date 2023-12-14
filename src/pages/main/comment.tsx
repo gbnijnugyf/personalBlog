@@ -129,7 +129,7 @@ function ExampleComment(props: IExampleComment) {
         avatar={
           <Avatar
             icon={<UserOutlined />}
-            src={props.comment.rootComment.avator}
+            src={props.comment.rootComment.avator_url}
             alt={props.comment.rootComment.nickname}
           />
         }
@@ -191,7 +191,7 @@ function ExampleComment(props: IExampleComment) {
               avatar={
                 <Avatar
                   icon={<UserOutlined />}
-                  src={props.comment.rootComment.avator}
+                  src={props.comment.rootComment.avator_url}
                   alt={props.comment.rootComment.nickname}
                 />
               }
@@ -203,7 +203,7 @@ function ExampleComment(props: IExampleComment) {
     </>
   );
 }
-interface ISetPreID {
+export interface ISetPreID {
   id: string;
   nickName: string;
 }
@@ -276,6 +276,7 @@ export function CommentPage(props: {
           setOpen={setOpen}
           display={display}
           setDisplay={setDisplay}
+          msgOrComment={1}
         />
       </Drawer>
     </>
@@ -292,6 +293,7 @@ const tailLayout = {
 };
 
 interface IAddComment {
+  msgOrComment: number; //评论还是留言。为0时，属于留言；为1时，属于文章评论
   pre: ISetPreID;
   articleID: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -299,7 +301,7 @@ interface IAddComment {
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function AddComment(props: IAddComment) {
+export function AddComment(props: IAddComment) {
   const [form] = Form.useForm();
   console.log(props.pre);
   interface IOnFinish {
@@ -310,24 +312,33 @@ function AddComment(props: IAddComment) {
   const onFinish = (values: IOnFinish) => {
     console.log(values);
     const commentValue: IComment = {
-      avator: null,
+      avator_url: null,
       commentID: null,
       email: values.email,
       isBlogger: null,
       nickname: values.nickname,
       preID: props.pre.id !== "" ? props.pre.id : null,
-      primary: props.articleID,
+      primary: props.msgOrComment,
+      passageID: props.articleID,
       time: "",
       body: values.comment,
     };
     Service.publishComment(commentValue)
       .then((res) => {
         console.log(res);
-        success();
+        if (props.msgOrComment === 1) {
+          success();
+        } else {
+          success("留言成功");
+        }
         props.setOpen(false);
       })
       .catch(() => {
-        error();
+        if (props.msgOrComment === 1) {
+          error();
+        } else {
+          error("留言失败，请重试");
+        }
       });
   };
 

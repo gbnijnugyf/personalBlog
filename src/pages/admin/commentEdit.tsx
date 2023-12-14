@@ -1,18 +1,19 @@
-import { Input, Menu, MenuProps, Modal } from "antd";
+import { Avatar, Input, List, Menu, MenuProps, Modal } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
 import React, { useEffect, useRef, useState } from "react";
 
 import "./css/commentEdit.css";
-import "markdown-navbar/dist/navbar.css";
-import "github-markdown-css/github-markdown-light.css";
+// import "markdown-navbar/dist/navbar.css";
+// import "github-markdown-css/github-markdown-light.css";
 import { Service } from "../../globe/service";
-import { IMenuInfo } from "../../globe/inter";
+import { IComment, IMenuInfo } from "../../globe/inter";
 import { articleMemuItem, articleMenu } from "./articlePublish";
 import { IArticleEdit } from "./articleEdit";
 import { CommentPage } from "../main/comment";
 import { Link, useNavigate } from "react-router-dom";
 import { replace } from "lodash";
+import { UserOutlined } from "@ant-design/icons";
 
 export function CommentManagerPage() {
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
@@ -59,6 +60,7 @@ export function CommentManagerPage() {
       //TODO:修改为评论/留言管理
       if (props.key === "unique-message") {
         //获取留言
+        setNowClassify("unique-message");
         console.log("1");
       } else {
         //选中已存在列表中的文章
@@ -71,7 +73,7 @@ export function CommentManagerPage() {
 
   return (
     <>
-      <div className="article-layout">
+      <div className="comment-layout">
         <Layout className="layout">
           <Sider>
             <Menu
@@ -82,13 +84,19 @@ export function CommentManagerPage() {
               onClick={handleChoose}
             />
           </Sider>
-          <Content>
-            {nowClassify !== "" ? (
-              <CommentEdit classify={nowClassify} ID={nowArticleID} />
-            ) : (
-              <p>请选择文章以查看评论</p>
-            )}
-          </Content>
+          <div className="content1">
+            <Content>
+              {nowClassify !== "" ? (
+                nowClassify !== "unique-message" ? (
+                  <CommentEdit classify={nowClassify} ID={nowArticleID} />
+                ) : (
+                  <Message />
+                )
+              ) : (
+                <p>请选择文章/留言以查看</p>
+              )}
+            </Content>
+          </div>
         </Layout>
       </div>
     </>
@@ -100,7 +108,7 @@ function CommentEdit(props: IArticleEdit) {
   console.log(props);
   return (
     <>
-    {/* TODO:打开新标签页并传参 */}
+      {/* TODO:打开新标签页并传参 */}
       <div
         onClick={() =>
           navigate("/main/article", { replace: true, state: { id: props.ID } })
@@ -110,6 +118,33 @@ function CommentEdit(props: IArticleEdit) {
         点我回到文章详情
       </div>
       <CommentPage articleId={props.ID} admin={true} />
+    </>
+  );
+}
+
+function Message() {
+  const [msgList, setMsgList] = useState<IComment[]>();
+  useEffect(() => {
+    Service.getMessage().then((res) => {
+      const list: IComment[] = res.data.data;
+      setMsgList(list);
+    });
+  }, []);
+  return (
+    <>
+      <List
+        itemLayout="horizontal"
+        dataSource={msgList}
+        renderItem={(item, index) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar icon={<UserOutlined />} src={""} />}
+              // title={<a href="https://ant.design">{item.title}</a>}
+              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+            />
+          </List.Item>
+        )}
+      />
     </>
   );
 }

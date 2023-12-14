@@ -3,6 +3,18 @@
   font-size: medium;
 }
 
-.back-div :hover {
-  color: rgb(27, 69, 237);
+.comment-layout {
+  width: 100%;
+}
+.comment-layout .layout {
+  background-color: white;
+}
+.comment-layout .layout .article-list {
+  height: 100%;
+  overflow: auto;
+}
+.comment-layout .content1 {
+  width: 100%;
+  min-height: 92vh;
+  overflow-y: auto;
 }
