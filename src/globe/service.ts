@@ -140,4 +140,8 @@ export const Service = {
       appendParams2Path("/comment/pagecom", {})
     );
   },
+  //获取友情链接
+  getFriendLink() {
+    return GlobalAxios("get", appendParams2Path("/func/flink", {}));
+  },
 };

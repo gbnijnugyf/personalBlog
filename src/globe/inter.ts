@@ -87,3 +87,10 @@ export interface IComment {
   time: string;
   body: string;
 }
+
+export interface IFriendLink {
+    cover: string;
+    description: string;
+    name: string;
+    url: string;
+}
