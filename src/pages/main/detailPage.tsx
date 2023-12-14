@@ -1,20 +1,20 @@
 import { Breadcrumb, Card, Carousel, Menu, theme, Image } from "antd";
 import Layout, { Content, Footer } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { menuMainDetailSider } from "../../menu/menuProps";
 import "./css/index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Meta from "antd/es/card/Meta";
 import { CardArray } from "./card";
 import { Service } from "../../globe/service";
 import { IArticleList } from "../../globe/inter";
 
-
 export function DetailPage() {
   // const {
   //   token: { colorBgContainer },
   // } = theme.useToken();
+  const location = useLocation();
   const [cardArr, setCardArr] = useState<IArticleList[][]>([]);
   const maxNum = 8; //单页
 
@@ -32,17 +32,36 @@ export function DetailPage() {
   }
 
   useEffect(() => {
-    Service.getArticleList().then((res) => {
-      // console.log(res.data.data)
-      const dataArr = convertTo2DArray(res.data.data, maxNum);
-      console.log(dataArr);
-      setCardArr(dataArr);
-    });
-  }, []);
+    if (location.state.className === "") {
+      Service.getArticleList().then((res) => {
+        // console.log(res.data.data)
+        const dataArr = convertTo2DArray(res.data.data, maxNum);
+        console.log(dataArr);
+        setCardArr(dataArr);
+      });
+    } else {
+      Service.getArticleListByClassify(location.state.className).then((res) => {
+        const dataArr = convertTo2DArray(res.data.data, maxNum);
+        console.log("class", dataArr);
+        setCardArr(dataArr);
+      });
+    }
+  }, [location]);
 
   return (
     <>
       <div className="container-detailPage">
+        {location.state.className !== "" ? (
+          <h1
+            style={{
+              fontSize: "large",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {location.state.className}
+          </h1>
+        ) : null}
         <Carousel className="my-carousel">
           {cardArr.length > 0 ? (
             cardArr.map((pageArr) => {

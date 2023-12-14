@@ -25,7 +25,7 @@ export function Routers() {
   useEffect(() => {
     console.log(location.pathname);
     if (!location.pathname.startsWith("/admin")) {
-      navigate("/main/detail");
+      navigate("/main/detail", { state: { className: "" } });
     } else if (location.pathname.startsWith("/admin/main")) {
       navigate("/admin/main/article");
     } else if (location.pathname.startsWith("/admin")) {

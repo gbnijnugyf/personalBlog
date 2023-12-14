@@ -29,7 +29,7 @@ export function MainPage() {
         setHeaderMenu(headerMenuTemp);
       });
     });
-    
+
     // navigate("detail");
 
     // Promise.all(promise).then((res)=>{console.log})
@@ -48,14 +48,34 @@ export function MainPage() {
             onClick={(props) => {
               if (props.key.length !== 0) {
                 console.log(props.key);
-                navigate(props.key, { replace: true });
+
+                if (props.keyPath.length > 1) {
+                  navigate("detail", {
+                    replace: true,
+                    state: { className: props.keyPath[0] },
+                  });
+                } else {
+                  if (props.key === "detail") {
+                    navigate(props.key, {
+                      replace: true,
+                      state: { className: "" },
+                    });
+                  } else {
+                    navigate(props.key, { replace: true });
+                  }
+                }
               }
             }}
           />
           {/* <MySearch /> */}
           <SearchTest1 />
           <Dropdown menu={{ items: menuHeaderRItems }} className="menu-right">
-            <div style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>Setting</div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={(e) => e.preventDefault()}
+            >
+              Setting
+            </div>
           </Dropdown>
           {/* <Menu
             mode="horizontal"
@@ -70,9 +90,9 @@ export function MainPage() {
             }}
           /> */}
         </Header>
-        <Content className="content" >
+        <Content className="content">
           {/* <div > */}
-            <Outlet />
+          <Outlet />
           {/* </div> */}
         </Content>
         <Footer className="footer">
