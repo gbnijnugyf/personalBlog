@@ -20,22 +20,15 @@ export function FriendPage(props: IFriendPage) {
         setFriendLinkList(list);
       });
     }
-    console.log(1)
+    console.log(1);
   }, [props.data]);
-  const actionArr: React.ReactNode[] | undefined = [];
-  if (props.admin) {
-    actionArr.push(<Button>删除</Button>);
-  }
   return (
     <>
       <List
-        itemLayout="horizontal"
+        itemLayout="vertical"
         dataSource={friendLinkList}
         renderItem={(item, index) => (
-          <List.Item
-            actions={actionArr}
-            extra={<Image width={272} alt="logo" src={item.cover} />}
-          >
+          <List.Item extra={<Image width={272} alt="logo" src={item.cover} />}>
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} />}
               // title={<a href="https://ant.design">{item.title}</a>}
@@ -45,6 +38,13 @@ export function FriendPage(props: IFriendPage) {
                 </>
               }
             />
+            {props.admin?<Button
+              onClick={() => {
+                console.log(item);
+              }}
+            >
+              编辑
+            </Button>:null}
           </List.Item>
         )}
       />

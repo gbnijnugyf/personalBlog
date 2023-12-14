@@ -33,14 +33,14 @@ export function DetailPage() {
 
   useEffect(() => {
     if (location.state.className === "") {
-      Service.getArticleList().then((res) => {
+      Service.getArticleList("all").then((res) => {
         // console.log(res.data.data)
         const dataArr = convertTo2DArray(res.data.data, maxNum);
         console.log(dataArr);
         setCardArr(dataArr);
       });
     } else {
-      Service.getArticleListByClassify(location.state.className).then((res) => {
+      Service.getArticleList(location.state.className).then((res) => {
         const dataArr = convertTo2DArray(res.data.data, maxNum);
         console.log("class", dataArr);
         setCardArr(dataArr);
@@ -62,7 +62,7 @@ export function DetailPage() {
             {location.state.className}
           </h1>
         ) : null}
-        <Carousel className="my-carousel">
+        <Carousel className="my-carousel" autoplay={true}>
           {cardArr.length > 0 ? (
             cardArr.map((pageArr) => {
               return (

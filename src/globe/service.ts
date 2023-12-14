@@ -69,18 +69,18 @@ export const Service = {
       appendParams2Path("/func/search", { word: props })
     );
   },
-  //获取所有文章列表（首页）
-  getArticleList() {
+  //根据分类获取所有文章列表（仅可见）（当classname为all时获取所有）
+  getArticleList(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/article/vlist", {})
+      appendParams2Path("/article/vlist",  { classname: props })
     );
   },
-  //根据分类获取文章列表
+  //根据分类获取所有文章列表（含不可见）
   getArticleListByClassify(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/article/list", { classify: props })
+      appendParams2Path("/article/list", { classname: props })
     );
   },
   //props为文章id,获取文章详情
