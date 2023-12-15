@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Layout, Modal, Tabs } from "antd";
+import { Button, Checkbox, Form, Input, Layout, Modal, Tabs, message } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/adminLogin.css";
 import { useState } from "react";
@@ -10,6 +10,14 @@ import { useNavigate } from "react-router-dom";
 function AdminLogin() {
   const navigate = useNavigate()
   //管理员登录
+  const [messageApi, contextHolder] = message.useMessage();
+
+  function error(text: string = "账号或密码错误") {
+    messageApi.open({
+      type: "error",
+      content: text,
+    });
+  }
   function onFinish(values: ILoginProps) {
     // if (values !== undefined) {
     //   console.log("1");
@@ -18,7 +26,11 @@ function AdminLogin() {
     // }
     // console.log("Received values of form: ", values);
     Service.adminLogin(values).then((res) => {
-      // console.log(res)
+      console.log(res)
+      if(res.data.status===0){
+        error();
+        return
+      }
       if (res.data.data !== undefined) {
         localStorage.setItem("token", res.data.data);
         navigate("/admin/main/article")
@@ -27,6 +39,8 @@ function AdminLogin() {
   }
 
   return (
+    <>
+    {contextHolder}
     <Form
       name="normal_login"
       className="stud-login-form"
@@ -59,6 +73,7 @@ function AdminLogin() {
         </Button>
       </Form.Item>
     </Form>
+    </>
   );
 }
 
