@@ -49,7 +49,7 @@ async function GlobalAxios<T = any, D = any>(
     //axios将data自动序列化为json格式
     response = await axios[method]<IGlobalResponse<T>>(url, data, config);
   } else {
-    params.set("time", new Date().getTime().toString());
+    // params.set("time", new Date().getTime().toString());
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
 
@@ -104,8 +104,8 @@ export const Service = {
     );
   },
   //添加分类
-  addClassify(props: IAddClassify<ClaOrFri.classify>) {
-    return GlobalAxios<undefined>("post", "/infoManager/add", props);
+  addClassify(props: IAddClassify) {
+    return GlobalAxios<undefined>("post", "/info/addC", props);
   },
   //文章编辑保存
   saveArticleEdit(props: IArticle) {
@@ -156,14 +156,14 @@ export const Service = {
   },
   //添加友情链接
   addFriendLink(props: IFriendLink) {
-    return GlobalAxios<undefined>("post", "/infoManager/addF", props);
+    return GlobalAxios<undefined>("post", "/info/addF", props);
   },
   //友情链接编辑保存
   saveFriendLinkEdit(props: IFriendLink) {
-    return axios.put(BASEURL + "/infoManager/editF", props);
+    return axios.put(BASEURL + "/info/editF", props);
   },
   //分类编辑保存
   saveClassEdit(props: IClassEdit) {
-    return axios.put(BASEURL + "/infoManager/editC", props);
+    return axios.put(BASEURL + "/info/editC", props);
   },
 };

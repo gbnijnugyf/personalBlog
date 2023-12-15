@@ -28,11 +28,13 @@ export function DetailPage() {
   useEffect(() => {
     if (location.state.className === "") {
       Service.getArticleList("all").then((res) => {
+        console.log(res)
         const dataArr = convertTo2DArray(res.data.data, maxNum);
         setCardArr(dataArr);
       });
     } else {
       Service.getArticleList(location.state.className).then((res) => {
+        console.log(location.state.className)
         const dataArr = convertTo2DArray(res.data.data, maxNum);
         setCardArr(dataArr);
       });

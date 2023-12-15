@@ -11,10 +11,7 @@ import {
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  EditOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import "./css/articlePublish.css";
 import "markdown-navbar/dist/navbar.css";
 import "github-markdown-css/github-markdown-light.css";
@@ -41,7 +38,7 @@ export interface articleMenu {
 }
 
 export function ArticleManagerPage() {
-  const [md, setMd] = useState("./test.md");
+  // const [md, setMd] = useState("./test.md");
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
   const [display, setDisplay] = useState<boolean>(false);
   const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
@@ -67,15 +64,14 @@ export function ArticleManagerPage() {
     userEditClassifyDescribe.current = e.target.value;
   };
   const handleOk = () => {
-    const tempForm: IAddClassify<ClaOrFri.classify> = {
-      type: ClaOrFri.classify,
-      data: {
-        name: userEditClassify.current,
-        description: userEditClassifyDescribe.current,
-      },
+    const tempForm: IAddClassify = {
+      name: userEditClassify.current,
+      description: userEditClassifyDescribe.current,
     };
     Service.addClassify(tempForm).then((res) => {
       setDisplay(!display);
+      //TODO:添加成功提示
+      console.log("添加分类接口响应:", res);
     });
     setIsAddClassifyOpen(false);
   };
@@ -88,8 +84,8 @@ export function ArticleManagerPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     Service.getClassify().then(async (res) => {
+      console.log("11", res);
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
@@ -128,9 +124,9 @@ export function ArticleManagerPage() {
         setListdArr(menuList);
       });
     });
-    if(newArticle.ID!==""){
-      setNowArticleID(newArticle.ID)
-      setNowClassify(newArticle.classify)
+    if (newArticle.ID !== "") {
+      setNowArticleID(newArticle.ID);
+      setNowClassify(newArticle.classify);
     }
   }, [display, newArticle]);
 
@@ -152,7 +148,6 @@ export function ArticleManagerPage() {
         setNowClassify(props.keyPath[1]);
         setNowArticleID(props.key);
       }
-
     }
   };
 
@@ -197,7 +192,7 @@ export function ArticleManagerPage() {
               open={isEditClassifyOpen}
               onCancel={handleCancel1}
               footer={[]}
-              style={{width:"80vw"}}
+              style={{ width: "80vw" }}
             >
               <ClassEdit setDisplay={setDisplay} display={display} />
             </Modal>
@@ -269,11 +264,14 @@ const EditableCell: React.FC<EditableCellProps> = ({
     </td>
   );
 };
-function ClassEdit(props:{setDisplay:React.Dispatch<React.SetStateAction<boolean>>, display:boolean}) {
+function ClassEdit(props: {
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  display: boolean;
+}) {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState("");
-
+  const [oldName, setOldName] = useState<string>("")
   useEffect(() => {
     Service.getClassify().then((res) => {
       const promises = res.data.data.map((i) => {
@@ -293,6 +291,8 @@ function ClassEdit(props:{setDisplay:React.Dispatch<React.SetStateAction<boolean
   const isEditing = (record: Item) => record.key === editingKey;
 
   const edit = (record: Partial<Item> & { key: React.Key }) => {
+    console.log(record)
+    setOldName(record.key)
     form.setFieldsValue({ classname: "", ...record });
     setEditingKey(record.key);
   };
@@ -302,25 +302,34 @@ function ClassEdit(props:{setDisplay:React.Dispatch<React.SetStateAction<boolean
   };
 
   const save = async (key: React.Key) => {
+    console.log(key)
     try {
       const row = (await form.validateFields()) as Item;
       const newData = [...data];
+      console.log(newData)
       const index = newData.findIndex((item) => key === item.key);
+      console.log(index)
+      console.log(newData)
+//TODO:太奇怪了
+      console.log(newData[index])
       if (index > -1) {
         const item = newData[index];
-        const tempItem: IClassEdit = {
+        console.log(item)
+        const tempItem: IClassEdit = {//TODO：bug参数貌似不能获取到最新值
           name: item.classname,
-          description: "",
+          description: item.description,
+          oldname: oldName
         };
         Service.saveClassEdit(tempItem)
-          .then(() => {
+          .then((res) => {
+            console.log(res)
             newData.splice(index, 1, {
               ...item,
               ...row,
             });
             setData(newData);
             setEditingKey("");
-            props.setDisplay(!props.display)
+            props.setDisplay(!props.display);
           })
           .catch(() => {});
       }

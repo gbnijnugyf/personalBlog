@@ -1,4 +1,5 @@
 export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
+// export const BASEURL = "http://10.79.140.249:5000";
 export interface ILoginProps {
   userName: string;
   passWord: string;
@@ -17,11 +18,9 @@ export enum ClaOrFri {
   classify = 1,
   friendLink,
 }
-export interface IAddClassify<T extends ClaOrFri> {
-  type: T;
-  data: T extends 1
-    ? Omit<IAddClassifyData, "url" | "cover">
-    : IAddClassifyData;
+export interface IAddClassify {
+  name: string;
+  description: string;
 }
 export interface IAddClassifyData {
   name: string;
@@ -35,13 +34,13 @@ export interface ISaveArticle {
 }
 
 export interface IArticle {
+  visibility: number; //0不可见 1可见
   body: string;
   classification: string;
   cover: null | string;
   ID: null | string;
   releaseTime: null | string;
   title: string;
-  visible: number;
 }
 export const articleInit: IArticle = {
   body: "",
@@ -50,7 +49,7 @@ export const articleInit: IArticle = {
   ID: null,
   releaseTime: null,
   title: "",
-  visible: 0,
+  visibility: 0,
 };
 export interface IMenuInfo {
   key: string;
@@ -59,7 +58,6 @@ export interface IMenuInfo {
   item: React.ReactInstance;
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 }
-
 
 export interface IRootComment {
   rootComment: IComment;
@@ -86,6 +84,7 @@ export interface IFriendLink {
   url: string;
 }
 export interface IClassEdit {
+  oldname: string;
   name: string;
   description: string;
 }

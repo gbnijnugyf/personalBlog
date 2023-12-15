@@ -27,11 +27,11 @@ export interface IArticleEdit {
 interface IArticleEditNew {
   classify: string; //分类
   ID: string; //文章ID，新建文章则为""
-  setNew:React.Dispatch<React.SetStateAction<IArticleEdit>>
+  setNew: React.Dispatch<React.SetStateAction<IArticleEdit>>;
 }
 
 export function ArticleEdit(props: IArticleEditNew) {
-
+  console.log("ArticleEdit入口:", props);
   const [text, setText] = useState("# Hello Editor");
   const [editTitle, setEditTitle] = useState("");
   const [open, setOpen] = useState(false);
@@ -41,7 +41,8 @@ export function ArticleEdit(props: IArticleEditNew) {
   const handleOk = () => {
     const cancelId = articleDetail.ID === null ? "" : articleDetail.ID;
     Service.cancelPublisArticle(cancelId)
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         success("取消发布成功");
         setFlush(!flush);
       })
@@ -54,11 +55,11 @@ export function ArticleEdit(props: IArticleEditNew) {
     setIsCancelPublishOpen(false);
   };
   useEffect(() => {
-
     if (props.ID !== "") {
       //选择已存在文章
       Service.getArticleDetail(props.ID).then((res) => {
         const articleBody = res.data.data;
+        console.log(res.data.data);
         setArticleDetail(articleBody);
         setText(articleBody.body);
         setEditTitle(articleBody.title);
@@ -84,7 +85,7 @@ export function ArticleEdit(props: IArticleEditNew) {
       files.map((file) => {
         return new Promise((rev, rej) => {
           const form = new FormData();
-          form.append("file", file);  
+          form.append("file", file);
           axios
             .post(BASEURL + "/article/imgUpload", form, {
               headers: {
@@ -92,6 +93,7 @@ export function ArticleEdit(props: IArticleEditNew) {
               },
             })
             .then((res) => {
+              console.log("文章内上传图片", res);
               rev(res);
             })
             .catch((error) => rej(error));
@@ -136,16 +138,16 @@ export function ArticleEdit(props: IArticleEditNew) {
       ID: props.ID,
       releaseTime: null,
       title: editTitle,
-      visible: 0,
+      visibility: 0,
     };
     Service.saveArticleEdit(temp)
       .then((res) => {
-        if(props.ID===""){
-          const temp:IArticleEdit={
+        if (props.ID === "") {
+          const temp: IArticleEdit = {
             classify: props.classify,
-            ID: res.data.data.id
-          }
-          props.setNew(temp)
+            ID: res.data.data.id,
+          };
+          props.setNew(temp);
         }
         success();
       })
@@ -173,18 +175,18 @@ export function ArticleEdit(props: IArticleEditNew) {
             <Button
               type="primary"
               onClick={() => {
-                if (articleDetail.visible === 0) {
-                  if(articleDetail.ID!==null&&articleDetail.ID!==""){
+                if (articleDetail.visibility === 0) {
+                  if (articleDetail.ID !== null && articleDetail.ID !== "") {
                     setOpen(true);
-                  }else{
-                    warning("请先填写标题并保存")
+                  } else {
+                    warning("请先填写标题并保存");
                   }
                 } else {
                   setIsCancelPublishOpen(true);
                 }
               }}
             >
-              {articleDetail.visible === 0 ? "发布文章" : "取消发布"}
+              {articleDetail.visibility === 0 ? "发布文章" : "取消发布"}
             </Button>
           </div>
           <MdEditor
@@ -216,6 +218,7 @@ export function ArticleEdit(props: IArticleEditNew) {
           successFunc={success}
           failFunc={error}
           title={editTitle}
+          id={props.ID}
         />
       </Drawer>
     </>
@@ -226,6 +229,7 @@ interface IArticlePublishFormProps {
   body: string;
   classify: string;
   title: string;
+  id: string;
   successFunc: (text: string) => void;
   failFunc: (text: string) => void;
 }
@@ -258,10 +262,10 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       body: props.body,
       classification: props.classify,
       cover: fileBase64,
-      ID: null,
+      ID: props.id, //TODO
       releaseTime: null,
       title: values.title,
-      visible: 1,
+      visibility: 0,
     };
     Service.publishArticle(articleInfo)
       .then((res) => {
