@@ -24,7 +24,7 @@ import {
 } from "../../globe/inter";
 import { promises } from "dns";
 import TextArea from "antd/es/input/TextArea";
-import { ArticleEdit } from "./articleEdit";
+import { ArticleEdit, IArticleEdit } from "./articleEdit";
 export interface articleMemuItem {
   key: string; //文章ID
   icon?: JSX.Element;
@@ -46,6 +46,12 @@ export function ArticleManagerPage() {
   const userEditClassifyDescribe = useRef("");
   const [nowClassify, setNowClassify] = useState(""); // 分类
   const [nowArticleID, setNowArticleID] = useState(""); // 分类
+  const newArticleInit: IArticleEdit = {
+    classify: "",
+    ID: "",
+  };
+  const [newArticle, setNewArticle] = useState<IArticleEdit>(newArticleInit); //当添加新文章并保存时，需要修改文章列表
+
   const handleEditClassifyChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -84,7 +90,7 @@ export function ArticleManagerPage() {
     //   .then((text) => setMd(text));
 
     Service.getClassify().then(async (res) => {
-      console.log(res)
+      console.log(res);
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
@@ -119,12 +125,12 @@ export function ArticleManagerPage() {
         setListdArr(menuList);
       });
     });
-  }, [display]);
+    // setNewArticle(newArticleInit);
+  }, [display, newArticle]);
 
   const handleChoose = (props: IMenuInfo) => {
     console.log(props);
     if (props.key.length !== 0) {
-      
       if (props.key.startsWith("unique-add-")) {
         const classify = props.key.split("-")[2]; //获取分类
         if (classify === "classify") {
@@ -158,9 +164,10 @@ export function ArticleManagerPage() {
             <Menu
               className="article-list"
               mode="inline"
-              defaultSelectedKeys={["article"]}
               items={listArr}
               onClick={handleChoose}
+              defaultSelectedKeys={[newArticle.classify]}
+              defaultOpenKeys={[newArticle.ID]}
             />
             <Modal
               okText="确认添加"
@@ -189,7 +196,11 @@ export function ArticleManagerPage() {
 
           <Content>
             {nowClassify !== "" ? (
-              <ArticleEdit classify={nowClassify} ID={nowArticleID} />
+              <ArticleEdit
+                classify={nowClassify}
+                ID={nowArticleID}
+                setNew={setNewArticle}
+              />
             ) : (
               <p>请选择文章或添加文章</p>
             )}

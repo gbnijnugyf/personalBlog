@@ -11,6 +11,7 @@ import {
   IRootComment,
   IComment,
   IFriendLink,
+  ISaveArticle,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -29,7 +30,7 @@ function appendParams2Path(
 }
 
 async function GlobalAxios<T = any, D = any>(
-  method: "post" | "get" | "delete",
+  method: "post" | "get" | "delete" | "put",
   url: string,
   data?: D
 ): Promise<AxiosResponse<IGlobalResponse<T>, any>> {
@@ -44,7 +45,7 @@ async function GlobalAxios<T = any, D = any>(
   config.params = params;
 
   let response;
-  if (method === "post") {
+  if (method === "post" || method === "put") {
     //axios将data自动序列化为json格式
     response = await axios[method]<IGlobalResponse<T>>(url, data, config);
   } else {
@@ -108,7 +109,8 @@ export const Service = {
   },
   //文章编辑保存
   saveArticleEdit(props: IArticle) {
-    return axios.put(BASEURL + "/article/edit", props);
+    // return axios.put(BASEURL + "/article/edit", props);
+    return GlobalAxios<ISaveArticle>("put", "/article/edit", props);
   },
   //发布文章
   publishArticle(props: IArticle) {

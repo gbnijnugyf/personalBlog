@@ -24,8 +24,14 @@ export interface IArticleEdit {
   classify: string; //分类
   ID: string; //文章ID，新建文章则为""
 }
+interface IArticleEditNew {
+  classify: string; //分类
+  ID: string; //文章ID，新建文章则为""
+  setNew:React.Dispatch<React.SetStateAction<IArticleEdit>>
+}
 
-export function ArticleEdit(props: IArticleEdit) {
+export function ArticleEdit(props: IArticleEditNew) {
+  console.log(props)
   const [text, setText] = useState("# Hello Editor");
   // const editTitle = useRef("");
   const [editTitle, setEditTitle] = useState("");
@@ -136,11 +142,12 @@ export function ArticleEdit(props: IArticleEdit) {
       warning();
       return;
     }
+
     const temp: IArticle = {
       body: value,
       classification: props.classify,
       cover: null,
-      ID: null,
+      ID: props.ID,
       releaseTime: null,
       title: editTitle,
       visible: 0,
@@ -148,6 +155,13 @@ export function ArticleEdit(props: IArticleEdit) {
     console.log(temp);
     Service.saveArticleEdit(temp)
       .then((res) => {
+        if(props.ID===""){
+          const temp:IArticleEdit={
+            classify: props.classify,
+            ID: res.data.data.id
+          }
+          props.setNew(temp)
+        }
         console.log(res);
         success();
       })
@@ -176,7 +190,11 @@ export function ArticleEdit(props: IArticleEdit) {
               type="primary"
               onClick={() => {
                 if (articleDetail.visible === 0) {
-                  setOpen(true);
+                  if(articleDetail.ID!==null&&articleDetail.ID!==""){
+                    setOpen(true);
+                  }else{
+                    warning("请先填写标题并保存")
+                  }
                 } else {
                   setIsCancelPublishOpen(true);
                 }

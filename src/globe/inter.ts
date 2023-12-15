@@ -35,6 +35,10 @@ export interface IAddClassifyData {
   url: string;
   cover: string;
 }
+export interface ISaveArticle {
+  id: string;
+  releaseTime: string;
+}
 
 export interface IArticle {
   body: string;
@@ -78,19 +82,19 @@ export interface IRootComment {
 export interface IComment {
   avator_url: null | string;
   passageID: string;
-  commentID: string|null;
+  commentID: string | null;
   email: string;
   isBlogger: null | string;
   nickname: string;
   preID: null | string;
-  primary: number;//为0时，属于留言；为1时，属于文章
+  primary: number; //为0时，属于留言；为1时，属于文章
   time: string;
   body: string;
 }
 
 export interface IFriendLink {
-    cover: string;
-    description: string;
-    name: string;
-    url: string;
+  cover: string;
+  description: string;
+  name: string;
+  url: string;
 }
