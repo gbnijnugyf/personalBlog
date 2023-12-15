@@ -147,6 +147,10 @@ export function ArticleManagerPage() {
         setListdArr(menuList);
       });
     });
+    if(newArticle.ID!==""){
+      setNowArticleID(newArticle.ID)
+      setNowClassify(newArticle.classify)
+    }
     // setNewArticle(newArticleInit);
   }, [display, newArticle]);
 
