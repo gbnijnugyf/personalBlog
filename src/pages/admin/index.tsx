@@ -32,7 +32,6 @@ export function AdminMainPage() {
               items={menuAdminSider}
               onClick={async (props) => {
                 if (props.key.length !== 0) {
-                  console.log(props.key);
                   if (props.key === "loginout") {
                     await Service.adminLoginout().then(() =>
                       localStorage.removeItem("token")

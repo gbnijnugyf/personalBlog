@@ -67,7 +67,6 @@ export function dynamicMenuHeaderProps(
   props: { key: string; label: string }[]
 ): IMenuProps[] {
   let tempMenu: IMenuProps[] = menuHeaderProps;
-  console.log("tempMenu1:", tempMenu);
   if (tempMenu.findIndex((item) => item.key === "classify") === -1) {
     tempMenu.push({
       key: "classify",
@@ -77,7 +76,6 @@ export function dynamicMenuHeaderProps(
     });
   }
 
-  console.log("tempMenu2:", tempMenu);
   return tempMenu;
 }
 export const menuHeaderProps = [

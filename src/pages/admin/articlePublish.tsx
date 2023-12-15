@@ -67,8 +67,6 @@ export function ArticleManagerPage() {
     userEditClassifyDescribe.current = e.target.value;
   };
   const handleOk = () => {
-    console.log(userEditClassify.current);
-    console.log(userEditClassifyDescribe.current);
     const tempForm: IAddClassify<ClaOrFri.classify> = {
       type: ClaOrFri.classify,
       data: {
@@ -77,7 +75,6 @@ export function ArticleManagerPage() {
       },
     };
     Service.addClassify(tempForm).then((res) => {
-      console.log(res);
       setDisplay(!display);
     });
     setIsAddClassifyOpen(false);
@@ -93,7 +90,6 @@ export function ArticleManagerPage() {
   useEffect(() => {
 
     Service.getClassify().then(async (res) => {
-      console.log(res);
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
@@ -139,7 +135,6 @@ export function ArticleManagerPage() {
   }, [display, newArticle]);
 
   const handleChoose = (props: IMenuInfo) => {
-    console.log(props);
     if (props.key.length !== 0) {
       if (props.key.startsWith("unique-add-")) {
         const classify = props.key.split("-")[2]; //获取分类
@@ -156,7 +151,6 @@ export function ArticleManagerPage() {
         //选中已存在列表中的文章
         setNowClassify(props.keyPath[1]);
         setNowArticleID(props.key);
-        console.log(props.key);
       }
 
     }
@@ -313,9 +307,7 @@ function ClassEdit(props:{setDisplay:React.Dispatch<React.SetStateAction<boolean
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
-        console.log("index:", index);
         const item = newData[index];
-        console.log("11:", item);
         const tempItem: IClassEdit = {
           name: item.classname,
           description: "",

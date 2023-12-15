@@ -60,7 +60,6 @@ function ExampleComment(props: IExampleComment) {
   const confirnDelete = () => {
     Service.deleteComment(info.id)
       .then((res) => {
-        console.log(res);
         success();
         setIsDeleteCommentOpen(false);
       })
@@ -97,7 +96,6 @@ function ExampleComment(props: IExampleComment) {
             id: props.comment.rootComment.commentID as string,
             nickName: props.comment.rootComment.nickname,
           };
-          console.log(temp);
           handleDelete(temp);
         }}
       >
@@ -301,14 +299,12 @@ interface IAddComment {
 
 export function AddComment(props: IAddComment) {
   const [form] = Form.useForm();
-  console.log(props.pre);
   interface IOnFinish {
     email: string;
     nickname: string;
     comment: string;
   }
   const onFinish = (values: IOnFinish) => {
-    console.log(values);
     const commentValue: IComment = {
       avator_url: null,
       commentID: null,
@@ -323,7 +319,6 @@ export function AddComment(props: IAddComment) {
     };
     Service.publishComment(commentValue)
       .then((res) => {
-        console.log(res);
         if (props.msgOrComment === 1) {
           success();
         } else {

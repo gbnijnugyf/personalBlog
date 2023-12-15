@@ -15,20 +15,16 @@ function fetch(value: string, callback: Function) {
     timeout = null;
   }
   currentValue = value;
-  console.log(value);
   const fake = () => {
     Service.userSearch(value).then((res) => {
-      console.log(res);
       if (currentValue === value) {
         const data = res.data.data;
-        console.log("data:", data);
         const dataArr = data.map((item: ISearchProps) => {
           return {
             value: item.ID,
             text: item.title,
           };
         });
-        console.log("dataArr:", dataArr);
         callback(dataArr);
       }
     });
@@ -53,7 +49,6 @@ const SearchInput: React.FC<{
   };
 
   const handleChange = (newValue: string) => {
-    console.log(newValue);
     if (newValue !== undefined) {
       navigate("/main/article", { replace: true, state: { id: newValue } });
     }

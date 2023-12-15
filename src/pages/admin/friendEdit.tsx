@@ -117,9 +117,7 @@ export function FriendEditPage() {
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
-        console.log("index:", index);
         const item = newData[index];
-        console.log("11:", item);
         const tempItem: IFriendLink = {
           cover: item.cover,
           description: item.description,

@@ -15,7 +15,6 @@ const scrollElement = document.documentElement;
 export function ArticlePage() {
   // 路由携带参数navigate("/home",{state:{id:123}})
   const articleId = useLocation().state.id;
-  console.log("111:",articleId);
   const [articleText, setArticleText] = useState(""); //正文
   const [articleBody, setArticleBody] = useState<IArticle>(articleInit);
   const [md, setMd] = useState("");
@@ -28,7 +27,6 @@ export function ArticlePage() {
     Service.getArticleDetail(articleId).then((res) => {
       setArticleBody(res.data.data);
       setArticleText(res.data.data.body);
-      console.log(articleBody);
     });
   }, [articleId]);
 

@@ -20,7 +20,6 @@ export function FriendPage(props: IFriendPage) {
         setFriendLinkList(list);
       });
     }
-    console.log(1);
   }, [props.data]);
   return (
     <>
@@ -40,7 +39,6 @@ export function FriendPage(props: IFriendPage) {
             />
             {props.admin?<Button
               onClick={() => {
-                console.log(item);
               }}
             >
               编辑

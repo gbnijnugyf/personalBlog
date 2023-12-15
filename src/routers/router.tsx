@@ -20,7 +20,6 @@ export function Routers() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    console.log(location.pathname);
     const token = localStorage.getItem('token')
     if (!location.pathname.startsWith("/admin")) {
       navigate("/main/detail", { state: { className: "" } });

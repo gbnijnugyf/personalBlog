@@ -20,7 +20,6 @@ export function CommentManagerPage() {
 
   useEffect(() => {
     Service.getClassify().then(async (res) => {
-      console.log(res);
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
@@ -51,17 +50,14 @@ export function CommentManagerPage() {
   }, [display]);
 
   const handleChoose = (props: IMenuInfo) => {
-    console.log(props);
     if (props.key.length !== 0) {
       if (props.key === "unique-message") {
         //获取留言
         setNowClassify("unique-message");
-        console.log("1");
       } else {
         //选中已存在列表中的文章
         setNowClassify(props.keyPath[1]);
         setNowArticleID(props.key);
-        console.log(props.key);
       }
     }
   };
@@ -100,7 +96,6 @@ export function CommentManagerPage() {
 
 function CommentEdit(props: IArticleEdit) {
   const navigate = useNavigate();
-  console.log(props);
   return (
     <>
       {/* TODO:打开新标签页并传参 */}

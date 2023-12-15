@@ -41,7 +41,6 @@ export function MainPage() {
             className="menu-center"
             onClick={(props) => {
               if (props.key.length !== 0) {
-                console.log(props.key);
 
                 if (props.keyPath.length > 1) {
                   navigate("detail", {

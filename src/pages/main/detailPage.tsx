@@ -29,13 +29,11 @@ export function DetailPage() {
     if (location.state.className === "") {
       Service.getArticleList("all").then((res) => {
         const dataArr = convertTo2DArray(res.data.data, maxNum);
-        console.log(dataArr);
         setCardArr(dataArr);
       });
     } else {
       Service.getArticleList(location.state.className).then((res) => {
         const dataArr = convertTo2DArray(res.data.data, maxNum);
-        console.log("class", dataArr);
         setCardArr(dataArr);
       });
     }

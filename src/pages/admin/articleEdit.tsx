@@ -31,7 +31,7 @@ interface IArticleEditNew {
 }
 
 export function ArticleEdit(props: IArticleEditNew) {
-  console.log(props)
+
   const [text, setText] = useState("# Hello Editor");
   const [editTitle, setEditTitle] = useState("");
   const [open, setOpen] = useState(false);
@@ -54,17 +54,14 @@ export function ArticleEdit(props: IArticleEditNew) {
     setIsCancelPublishOpen(false);
   };
   useEffect(() => {
-    console.log("edit:", props.ID);
+
     if (props.ID !== "") {
       //选择已存在文章
-      console.log(props.ID);
       Service.getArticleDetail(props.ID).then((res) => {
-        console.log(res.data.data);
         const articleBody = res.data.data;
         setArticleDetail(articleBody);
         setText(articleBody.body);
         setEditTitle(articleBody.title);
-        console.log(editTitle);
       });
     } else {
       setText("# Hello Editor");
@@ -76,7 +73,6 @@ export function ArticleEdit(props: IArticleEditNew) {
   const handleEditTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log(e.target.value);
     setEditTitle(e.target.value);
   };
 
@@ -86,7 +82,6 @@ export function ArticleEdit(props: IArticleEditNew) {
   ) => {
     const res = await Promise.all(
       files.map((file) => {
-        console.log(file);
         return new Promise((rev, rej) => {
           const form = new FormData();
           form.append("file", file);  
@@ -97,7 +92,6 @@ export function ArticleEdit(props: IArticleEditNew) {
               },
             })
             .then((res) => {
-              console.log("{res}:", res);
               rev(res);
             })
             .catch((error) => rej(error));
@@ -144,7 +138,6 @@ export function ArticleEdit(props: IArticleEditNew) {
       title: editTitle,
       visible: 0,
     };
-    console.log(temp);
     Service.saveArticleEdit(temp)
       .then((res) => {
         if(props.ID===""){
@@ -154,7 +147,6 @@ export function ArticleEdit(props: IArticleEditNew) {
           }
           props.setNew(temp)
         }
-        console.log(res);
         success();
       })
       .catch(() => error());
@@ -241,14 +233,12 @@ interface IArticlePublishFormProps {
 function ArticlePublishForm(props: IArticlePublishFormProps) {
   //TODO:bug——title的值无法传进抽屉
   const [lastTitle, setLastTitle] = useState(props.title);
-  console.log(lastTitle);
   const navigate = useNavigate();
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
   const normFile = (e: any) => {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -261,10 +251,8 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
   }
   const onFinish = (values: IPublishForm) => {
     let fileBase64 = null;
-    console.log("Received values of form: ", values);
     if (values.cover !== undefined) {
       fileBase64 = values.cover[0].thumbUrl;
-      // console.log("image: ", values.cover[0].thumbUrl);
     }
     const articleInfo: IArticle = {
       body: props.body,
@@ -277,7 +265,6 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
     };
     Service.publishArticle(articleInfo)
       .then((res) => {
-        console.log(res);
         props.successFunc("发布成功");
         setTimeout(() => {
           navigate("edit", {
