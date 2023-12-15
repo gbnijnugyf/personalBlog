@@ -140,8 +140,9 @@ function Message() {
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} src={""} />}
               // title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              description={<><div>{item.nickname}</div><div>{item.email}</div></>}
             />
+            {item.body}
           </List.Item>
         )}
       />
