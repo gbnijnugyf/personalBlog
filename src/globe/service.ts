@@ -12,6 +12,7 @@ import {
   IComment,
   IFriendLink,
   ISaveArticle,
+  IClassEdit,
 } from "./inter";
 
 // 返回响应中data的类型
@@ -162,5 +163,9 @@ export const Service = {
   //友情链接编辑保存
   saveFriendLinkEdit(props: IFriendLink) {
     return axios.put(BASEURL + "/infoManager/editF", props);
+  },
+  //分类编辑保存
+  saveClassEdit(props: IClassEdit) {
+    return axios.put(BASEURL + "/infoManager/editC", props);
   },
 };

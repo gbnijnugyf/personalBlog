@@ -274,7 +274,7 @@ export function FriendEditPage() {
   const isEditing = (record: Item) => record.key === editingKey;
 
   const edit = (record: Partial<Item> & { key: React.Key }) => {
-    form.setFieldsValue({ name: "", age: "", address: "", ...record });
+    form.setFieldsValue({ name: "", url: "", description: "", ...record });
     setEditingKey(record.key);
   };
 

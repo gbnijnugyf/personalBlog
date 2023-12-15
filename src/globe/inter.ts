@@ -98,3 +98,7 @@ export interface IFriendLink {
   name: string;
   url: string;
 }
+export interface IClassEdit {
+  name: string;
+  description: string;
+}
