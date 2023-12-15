@@ -13,6 +13,5 @@
   flex-direction: row;
 }
 .edit-layout .edit-window {
-  border: 1px solid black;
   height: 82vh;
 }
