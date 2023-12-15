@@ -5,21 +5,25 @@ import "./css/adminLogin.css";
 import { useState } from "react";
 import { ILoginProps } from "../../globe/inter";
 import { Service } from "../../globe/service";
+import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
+  const navigate = useNavigate()
   //管理员登录
   function onFinish(values: ILoginProps) {
-    if (values!==undefined){
-      console.log("1")
-    }else{
-      console.log("2")
-    }
-    console.log("Received values of form: ", values);
-    Service.adminLogin(values).then((res)=>{
-      if(res.data.data==='successful'){
-        
+    // if (values !== undefined) {
+    //   console.log("1");
+    // } else {
+    //   console.log("2");
+    // }
+    // console.log("Received values of form: ", values);
+    Service.adminLogin(values).then((res) => {
+      // console.log(res)
+      if (res.data.data !== undefined) {
+        localStorage.setItem("token", res.data.data);
+        navigate("/admin/main/article")
       }
-    })
+    });
   }
 
   return (

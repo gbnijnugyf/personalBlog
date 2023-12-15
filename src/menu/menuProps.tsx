@@ -7,6 +7,7 @@ import {
   DownOutlined,
   HomeOutlined,
   LinkOutlined,
+  LogoutOutlined,
   MessageOutlined,
   RadarChartOutlined,
   SearchOutlined,
@@ -209,5 +210,10 @@ export const menuAdminSider = [
     key: "friendLink",
     icon: <LinkOutlined />,
     label: "友情链接管理",
+  },
+  {
+    key: "loginout",
+    icon: <LogoutOutlined />,
+    label: "登出",
   },
 ];

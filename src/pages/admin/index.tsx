@@ -5,10 +5,17 @@ import "./css/index.css";
 import Sider from "antd/es/layout/Sider";
 import { useEffect } from "react";
 import { menuAdminSider } from "../../menu/menuProps";
+import { Service } from "../../globe/service";
 
 export function AdminMainPage() {
   const localtion = useLocation();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/admin/login");
+    }
+  }, [localtion.pathname]);
+
   return (
     <>
       <Layout className="admin-layout">
@@ -16,17 +23,22 @@ export function AdminMainPage() {
         {!localtion.pathname.startsWith("/admin/main") ? (
           <></>
         ) : (
-          <Sider style={{marginTop:'8vh'}}>
+          <Sider style={{ marginTop: "8vh" }}>
             <Menu
               mode="inline"
               defaultSelectedKeys={["article"]}
               // defaultOpenKeys={["sub1"]}
               style={{ height: "92vh" }}
               items={menuAdminSider}
-              onClick={(props) => {
+              onClick={async (props) => {
                 if (props.key.length !== 0) {
                   console.log(props.key);
-                  navigate("main/"+props.key, { replace: true });
+                  if (props.key === "loginout") {
+                    await Service.adminLoginout().then(() =>
+                      localStorage.removeItem("token")
+                    );
+                  }
+                  navigate("main/" + props.key, { replace: true });
                 }
               }}
             />

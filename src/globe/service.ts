@@ -60,8 +60,13 @@ async function GlobalAxios<T = any, D = any>(
   return response;
 }
 export const Service = {
+  //管理员登录
   adminLogin(props: ILoginProps) {
     return GlobalAxios<string>("post", "/admin/login", props);
+  },
+  //管理员登出
+  adminLoginout() {
+    return GlobalAxios("get", "/admin/logout");
   },
   userSearch(props: string) {
     return GlobalAxios<ISearchProps[]>(
@@ -73,7 +78,7 @@ export const Service = {
   getArticleList(props: string) {
     return GlobalAxios<IArticleList[]>(
       "get",
-      appendParams2Path("/article/vlist",  { classname: props })
+      appendParams2Path("/article/vlist", { classname: props })
     );
   },
   //根据分类获取所有文章列表（含不可见）
@@ -151,5 +156,9 @@ export const Service = {
   //添加友情链接
   addFriendLink(props: IFriendLink) {
     return GlobalAxios<undefined>("post", "/infoManager/addF", props);
+  },
+  //友情链接编辑保存
+  saveFriendLinkEdit(props: IFriendLink) {
+    return axios.put(BASEURL + "/infoManager/editF", props);
   },
 };

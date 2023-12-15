@@ -27,20 +27,26 @@ export function Routers() {
   const location = useLocation();
   useEffect(() => {
     console.log(location.pathname);
+    const token = localStorage.getItem('token')
     if (!location.pathname.startsWith("/admin")) {
       navigate("/main/detail", { state: { className: "" } });
-    } else if (location.pathname.startsWith("/admin/main")) {
-      navigate("/admin/main/article");
     } else if (location.pathname.startsWith("/admin")) {
-      navigate("/admin/login");
-    }
-  }, []);
+      if (token === null) {
+        navigate("/admin/login");
+      } else {
+        navigate("/admin/main/article");
+      }
+    } 
+    // else if (location.pathname.startsWith("/admin/main")) {
+    //   navigate("/admin/main/article");
+    // }
+  }, [localStorage.getItem('token')]);
 
   return (
     <Routes>
       {/* <Route path="login/*" element={<LoginPage />}/> */}
       <Route path="main/*" element={<MainPage />}>
-        <Route path="detail" element={<DetailPage />} />
+        <Route index path="detail" element={<DetailPage />} />
         {/* <Route path="classify" element={<>分类</>} /> */}
         {/* <Route path="filed" element={<>归档</>} /> */}
         <Route path="about" element={<About />} />
@@ -64,19 +70,6 @@ export function Routers() {
         </Route>
       </Route>
       <Route path="setting" element={<>设置</>} />
-      {/* <Route
-        index
-        element={
-          <Navigate
-            to={
-              localStorage.getItem("token") === null
-                ? "/login"
-                : "/main"
-            }
-            replace
-          />
-        }
-      /> */}
     </Routes>
   );
 }
