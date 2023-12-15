@@ -2,23 +2,18 @@
   .layout {
     background-color: white;
     .article-list {
-      // margin-top: 10%;
       height: 92vh;
       overflow: auto;
 
     }
   }
-  // display: flex;
   width: 100%;
-  // min-height: 50vh;
   max-height: 92vh;
   overflow: hidden;
-  // overflow-y: scroll
 
   #content-md {
     display: flex;
     flex-direction: column;
-    // align-items: flex-start;
   }
   .left-sider {
     background-color: white;

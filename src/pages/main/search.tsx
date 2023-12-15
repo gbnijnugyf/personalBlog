@@ -57,12 +57,9 @@ const SearchInput: React.FC<{
     if (newValue !== undefined) {
       navigate("/main/article", { replace: true, state: { id: newValue } });
     }
-    // console.log(data);
-    // setValue(newValue);
   };
 
   return (
-    //TODO:样式优化，输入框失去焦点时会回到上一次输入
     <Select
       showSearch
       value={value}

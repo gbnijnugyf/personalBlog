@@ -3,7 +3,7 @@ import { Avatar, Drawer, Modal, message } from "antd";
 import { Comment } from "@ant-design/compatible";
 import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Select, Space } from "antd";
+import { Button, Form, Input, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Service } from "../../globe/service";
 import { IComment, IRootComment } from "../../globe/inter";
@@ -22,7 +22,6 @@ interface IExampleComment {
   display: boolean;
 }
 function ExampleComment(props: IExampleComment) {
-  // console.log(props);
   const [isDeleteCommentOpen, setIsDeleteCommentOpen] =
     useState<boolean>(false);
   const infoInit: ISetPreID = {
@@ -236,7 +235,6 @@ export function CommentPage(props: {
           <div style={{ fontSize: "medium" }}>暂无评论</div>
         ) : (
           rootComment.map((aRootComment) => {
-            // console.log(aRootComment);
             const temp: IRootComment = {
               rootComment: aRootComment.rootComment,
               reply: aRootComment.reply,

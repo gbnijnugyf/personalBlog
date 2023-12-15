@@ -1,25 +1,15 @@
 import {
-  AppstoreOutlined,
-  BellOutlined,
-  CommentOutlined,
   CopyOutlined,
-  DiffOutlined,
   DownOutlined,
   HomeOutlined,
   LinkOutlined,
   LogoutOutlined,
   MessageOutlined,
   RadarChartOutlined,
-  SearchOutlined,
-  SettingOutlined,
   SmileOutlined,
-  ToolOutlined,
   UnorderedListOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Avatar, Badge, Dropdown, Space } from "antd";
+import { Dropdown, Space } from "antd";
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
 interface ICreateInitMenu {
@@ -41,49 +31,12 @@ function createInitMenu(
   });
 }
 
-export const menuProps = {
-  route: {
-    path: "/",
-    routes: [
-      {
-        path: "/personal",
-        name: "个人界面",
-        icon: null,
-        // component: mainPage()
-        component: "PersonalPage",
-      },
-      {
-        path: "/w",
-        name: "欢ss",
-        icon: null,
-        // component: mainPage()
-        component: "./W",
-      },
-      {
-        path: "/we",
-        name: "欢ssd",
-        icon: null,
-        // component: mainPage()
-        component: "./We",
-      },
-    ],
-  },
-};
-
 export const menuHeaderRItems: ItemType[] = [
   {
     key: "1",
     label: (
       <a target="_blank" rel="noopener noreferrer" href="/admin/login">
         管理员登录
-      </a>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <a rel="noopener noreferrer" href="/setting">
-        设置
       </a>
     ),
   },
@@ -148,11 +101,6 @@ export const menuHeaderProps = [
     icon: <LinkOutlined />,
     label: "友情链接",
   },
-  // {
-  //   key: "search",
-  //   icon: <SearchOutlined />,
-  //   label: "搜索",
-  // },
 ];
 //首页，分类，归档，关于，友情链接，搜索
 export const menuHeaderPropsR = [

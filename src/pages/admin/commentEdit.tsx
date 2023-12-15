@@ -1,24 +1,20 @@
-import { Avatar, Input, List, Menu, MenuProps, Modal } from "antd";
+import { Avatar, List, Menu,  } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./css/commentEdit.css";
-// import "markdown-navbar/dist/navbar.css";
-// import "github-markdown-css/github-markdown-light.css";
 import { Service } from "../../globe/service";
 import { IComment, IMenuInfo } from "../../globe/inter";
 import { articleMemuItem, articleMenu } from "./articlePublish";
 import { IArticleEdit } from "./articleEdit";
 import { CommentPage } from "../main/comment";
 import { Link, useNavigate } from "react-router-dom";
-import { replace } from "lodash";
 import { UserOutlined } from "@ant-design/icons";
 
 export function CommentManagerPage() {
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
   const [display, setDisplay] = useState<boolean>(false);
-  const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
   const [nowClassify, setNowClassify] = useState(""); // 分类
   const [nowArticleID, setNowArticleID] = useState(""); // 分类
 
@@ -57,7 +53,6 @@ export function CommentManagerPage() {
   const handleChoose = (props: IMenuInfo) => {
     console.log(props);
     if (props.key.length !== 0) {
-      //TODO:修改为评论/留言管理
       if (props.key === "unique-message") {
         //获取留言
         setNowClassify("unique-message");
@@ -109,6 +104,7 @@ function CommentEdit(props: IArticleEdit) {
   return (
     <>
       {/* TODO:打开新标签页并传参 */}
+      <Link to={{pathname:"/main/article"}} replace={true} state={{id:props.ID}}>ww</Link>
       <div
         onClick={() =>
           navigate("/main/article", { replace: true, state: { id: props.ID } })

@@ -11,13 +11,13 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { MdEditor } from "md-editor-rt";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./css/articleEdit.css";
 import "md-editor-rt/lib/style.css";
 import axios from "axios";
 import { BASEURL, IArticle, articleInit } from "../../globe/inter";
 import { Service } from "../../globe/service";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 
 export interface IArticleEdit {
@@ -33,9 +33,7 @@ interface IArticleEditNew {
 export function ArticleEdit(props: IArticleEditNew) {
   console.log(props)
   const [text, setText] = useState("# Hello Editor");
-  // const editTitle = useRef("");
   const [editTitle, setEditTitle] = useState("");
-  // const location = useLocation();
   const [open, setOpen] = useState(false);
   const [flush, setFlush] = useState<boolean>(false);
   const [isCancelPublishOpen, setIsCancelPublishOpen] = useState(false);
@@ -79,13 +77,9 @@ export function ArticleEdit(props: IArticleEditNew) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     console.log(e.target.value);
-    // editTitle.current = e.target.value;
     setEditTitle(e.target.value);
-    // console.log(editTitle.current);
   };
 
-  //TODO:在文章编辑过程中就会涉及图片上传回显，此时文章并未上传，
-  //为了对应————在添加文章之时就需要向后端发请求获得一个文章ID
   const onUploadImg = async (
     files: Array<File>,
     callback: (urls: string[]) => void
@@ -95,9 +89,7 @@ export function ArticleEdit(props: IArticleEditNew) {
         console.log(file);
         return new Promise((rev, rej) => {
           const form = new FormData();
-          form.append("file", file);
-          //TODO:该ID为该图片所对应文章ID，md自己索引，可删除？
-          form.append("articleID", "eg:123");
+          form.append("file", file);  
           axios
             .post(BASEURL + "/article/imgUpload", form, {
               headers: {
@@ -113,7 +105,7 @@ export function ArticleEdit(props: IArticleEditNew) {
       })
     );
 
-    callback(res.map((item: any) => item.data.url));
+    callback(res.map((item: any) => item.data.data.url));
   };
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -256,7 +248,6 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
     wrapperCol: { span: 14 },
   };
   const normFile = (e: any) => {
-    // return fileToBase64(e.file)
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;

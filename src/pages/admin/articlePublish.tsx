@@ -3,7 +3,6 @@ import {
   Input,
   InputNumber,
   Menu,
-  MenuProps,
   Modal,
   Popconfirm,
   Table,
@@ -14,28 +13,19 @@ import Layout, { Content } from "antd/es/layout/layout";
 import React, { useEffect, useRef, useState } from "react";
 import {
   EditOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
   PlusCircleOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import ReactMarkdown from "react-markdown";
-import MarkNav from "markdown-navbar";
-import remarkGfm from "remark-gfm";
 import "./css/articlePublish.css";
 import "markdown-navbar/dist/navbar.css";
 import "github-markdown-css/github-markdown-light.css";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Service } from "../../globe/service";
 import {
   ClaOrFri,
   IAddClassify,
-  IArticleList,
   IClassEdit,
-  IFriendLink,
   IMenuInfo,
 } from "../../globe/inter";
-import { promises } from "dns";
 import TextArea from "antd/es/input/TextArea";
 import { ArticleEdit, IArticleEdit } from "./articleEdit";
 export interface articleMemuItem {
@@ -99,12 +89,8 @@ export function ArticleManagerPage() {
     setIsEditClassifyOpen(false);
   };
   const navigate = useNavigate();
-  // const testmd = require("./test.md");
 
   useEffect(() => {
-    // fetch(testmd)
-    //   .then((res) => res.text())
-    //   .then((text) => setMd(text));
 
     Service.getClassify().then(async (res) => {
       console.log(res);
@@ -143,7 +129,6 @@ export function ArticleManagerPage() {
           label: "编辑分类",
           icon: <EditOutlined />,
         });
-        // console.log(res);
         setListdArr(menuList);
       });
     });
@@ -151,7 +136,6 @@ export function ArticleManagerPage() {
       setNowArticleID(newArticle.ID)
       setNowClassify(newArticle.classify)
     }
-    // setNewArticle(newArticleInit);
   }, [display, newArticle]);
 
   const handleChoose = (props: IMenuInfo) => {
@@ -164,12 +148,6 @@ export function ArticleManagerPage() {
         } else {
           setNowClassify(classify);
           setNowArticleID("");
-
-          //添加文章
-          // navigate("edit", {
-          //   replace: true,
-          //   state: { classify: classify },
-          // });
         }
       } else if (props.key.startsWith("unique-edit-")) {
         //编辑分类
@@ -181,7 +159,6 @@ export function ArticleManagerPage() {
         console.log(props.key);
       }
 
-      // navigate("main/" + props.key, { replace: true });
     }
   };
 
@@ -305,7 +282,6 @@ function ClassEdit(props:{setDisplay:React.Dispatch<React.SetStateAction<boolean
 
   useEffect(() => {
     Service.getClassify().then((res) => {
-      // const list: Item[] = res.data.data.;
       const promises = res.data.data.map((i) => {
         const it: Item = {
           key: i.name,

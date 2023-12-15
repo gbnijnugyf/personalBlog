@@ -1,16 +1,14 @@
 import {
-  LikeOutlined,
   MessageOutlined,
-  StarOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
-import { Avatar, Button, Drawer, List, Space ,Image} from "antd";
+import { useState } from "react";
+import { Avatar, Button, Drawer, List,Image} from "antd";
 import { AddComment, ISetPreID } from "./comment";
 import "./css/about.css"
 
 const data = Array.from({ length: 1 }).map((_, i) => ({
-  //   href: "https://ant.design",
+
   title: `个人信息`,
   avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
   description: "苦逼",

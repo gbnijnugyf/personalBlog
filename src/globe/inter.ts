@@ -3,12 +3,6 @@ export interface ILoginProps {
   userName: string;
   passWord: string;
 }
-// export interface ISearchProps {
-//   result: {
-//     title: string;
-//     ID: string;
-//   }[];
-// }
 export interface ISearchProps {
   title: string;
   ID: string;
@@ -65,14 +59,7 @@ export interface IMenuInfo {
   item: React.ReactInstance;
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 }
-// export interface IComment {
-//   commentID: string;
-//   email: string;
-//   isBlogger: string;
-//   nickname: string;
-//   preID: null | string;
-//   primary: string;
-// }
+
 
 export interface IRootComment {
   rootComment: IComment;

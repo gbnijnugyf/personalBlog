@@ -19,12 +19,6 @@ function AdminLogin() {
     });
   }
   function onFinish(values: ILoginProps) {
-    // if (values !== undefined) {
-    //   console.log("1");
-    // } else {
-    //   console.log("2");
-    // }
-    // console.log("Received values of form: ", values);
     Service.adminLogin(values).then((res) => {
       console.log(res)
       if(res.data.status===0){

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   menuHeaderRItems,
-  menuHeaderProps,
   IMenuProps,
   dynamicMenuHeaderProps,
 } from "../../menu/menuProps";
@@ -29,10 +28,6 @@ export function MainPage() {
         setHeaderMenu(headerMenuTemp);
       });
     });
-
-    // navigate("detail");
-
-    // Promise.all(promise).then((res)=>{console.log})
   }, []);
 
   return (
@@ -40,7 +35,6 @@ export function MainPage() {
       <Layout className="layout">
         <Header className="menu">
           <Menu
-            // theme="dark"
             mode="horizontal"
             defaultSelectedKeys={["detail"]}
             items={headerMenu}
@@ -67,7 +61,6 @@ export function MainPage() {
               }
             }}
           />
-          {/* <MySearch /> */}
           <SearchTest1 />
           <Dropdown menu={{ items: menuHeaderRItems }} className="menu-right">
             <div
@@ -77,23 +70,9 @@ export function MainPage() {
               Setting
             </div>
           </Dropdown>
-          {/* <Menu
-            mode="horizontal"
-            items={menuHeaderPropsR}
-            className="menu-right"
-            onClick={(props) => {
-              if (props.key.length !== 0) {
-                console.log(props.key);
-
-                navigate(props.key, { replace: true });
-              }
-            }}
-          /> */}
         </Header>
         <Content className="content">
-          {/* <div > */}
           <Outlet />
-          {/* </div> */}
         </Content>
         <Footer className="footer">
           Personal Blog ©2023 Created by gbnijnugyf

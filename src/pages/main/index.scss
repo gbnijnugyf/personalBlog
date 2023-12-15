@@ -17,7 +17,6 @@
       display: flex;
       background: none;
       border-bottom: 0;
-      // background-color: rgba(98, 235, 160, 0.8);
     }
     .menu-right {
       display: flex;
@@ -32,7 +31,6 @@
     margin-top: 10vh;
     width: 70vw;
     min-height: 80vh;
-    // max-height: 80vh;
     overflow: auto;
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -49,10 +47,8 @@
 }
 
 .container-detailPage {
-  // border: 1px solid red;
   height: 80vh;
   .my-carousel {
-    // border: 1px solid red;
     .carousel-content {
       height: 80vh;
 
@@ -64,7 +60,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         align-content: center;
-        // justify-content: space-around;
         justify-content: flex-start;
         margin-left: 9%;
         .ant-card-cover {
@@ -78,8 +73,6 @@
         .ant-card-text {
           display: flex;
           flex-direction: column;
-          // height: 40%;
-          // margin-top: -10%;
         }
         .carousel-content-item {
           margin-left: 1%;
@@ -132,11 +125,9 @@
     background-color: white;
     overflow: auto;
     height: 80vh;
-    // width: 100vw;
     position: fixed;
     left: 0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    // position: relative;
     ::after {
       height: 5px; /* 设置阴影的高度 */
       background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
@@ -147,6 +138,5 @@
   .comment {
     border: 1px solid red;
     margin-top: 5%;
-    // width: 10%;
   }
 }

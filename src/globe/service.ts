@@ -39,10 +39,9 @@ async function GlobalAxios<T = any, D = any>(
   config.baseURL = BASEURL;
 
   const parsedURL = new URL(BASEURL + url);
-  //   const parsedURL = parse(url);
 
   const params = new URLSearchParams(parsedURL.searchParams || "");
-  //   url = parsedURL.pathname || "";
+
   config.params = params;
 
   let response;
@@ -110,7 +109,6 @@ export const Service = {
   },
   //文章编辑保存
   saveArticleEdit(props: IArticle) {
-    // return axios.put(BASEURL + "/article/edit", props);
     return GlobalAxios<ISaveArticle>("put", "/article/edit", props);
   },
   //发布文章

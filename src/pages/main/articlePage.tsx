@@ -7,10 +7,8 @@ import "md-editor-rt/lib/preview.css";
 import Sider from "antd/es/layout/Sider";
 import { Layout, Tag, Image } from "antd";
 import remarkGfm from "remark-gfm";
-
-import ReactMarkdown from "react-markdown";
 import "./css/index.css";
-import { Content, Header } from "antd/es/layout/layout";
+import { Header } from "antd/es/layout/layout";
 import { IArticle, articleInit } from "../../globe/inter";
 import { CommentPage } from "./comment";
 const scrollElement = document.documentElement;
@@ -20,7 +18,6 @@ export function ArticlePage() {
   console.log("111:",articleId);
   const [articleText, setArticleText] = useState(""); //正文
   const [articleBody, setArticleBody] = useState<IArticle>(articleInit);
-  // const [id] = useState("preview-only");
   const [md, setMd] = useState("");
   useEffect(() => {
     const testmd = require("./test.md");
@@ -30,7 +27,6 @@ export function ArticlePage() {
 
     Service.getArticleDetail(articleId).then((res) => {
       setArticleBody(res.data.data);
-      // setArticleUrl(url);
       setArticleText(res.data.data.body);
       console.log(articleBody);
     });

@@ -1,19 +1,13 @@
-import { Breadcrumb, Card, Carousel, Menu, theme, Image } from "antd";
-import Layout, { Content, Footer } from "antd/es/layout/layout";
-import Sider from "antd/es/layout/Sider";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { menuMainDetailSider } from "../../menu/menuProps";
+import { Carousel } from "antd";
+import {  useLocation } from "react-router-dom";
+
 import "./css/index.css";
-import { useEffect, useLayoutEffect, useState } from "react";
-import Meta from "antd/es/card/Meta";
+import { useEffect, useState } from "react";
 import { CardArray } from "./card";
 import { Service } from "../../globe/service";
 import { IArticleList } from "../../globe/inter";
 
 export function DetailPage() {
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
   const location = useLocation();
   const [cardArr, setCardArr] = useState<IArticleList[][]>([]);
   const maxNum = 8; //单页
@@ -34,7 +28,6 @@ export function DetailPage() {
   useEffect(() => {
     if (location.state.className === "") {
       Service.getArticleList("all").then((res) => {
-        // console.log(res.data.data)
         const dataArr = convertTo2DArray(res.data.data, maxNum);
         console.log(dataArr);
         setCardArr(dataArr);
