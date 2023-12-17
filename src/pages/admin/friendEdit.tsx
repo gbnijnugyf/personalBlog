@@ -113,9 +113,14 @@ export function FriendEditPage() {
 
   const save = async (key: React.Key) => {
     try {
-      const row = (await form.validateFields()) as Item;
-      const newData = [...data];
+      const row = (await form.validateFields()) as Item;//as key实际上不包含key，即没有索引值,从这获取更新值
+      let newData = [...data];//此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
       const index = newData.findIndex((item) => key === item.key);
+      //通过row修改，使其真正的是newData,cover不可修改所以没有重新赋值
+      newData[index].key = row.name
+      newData[index].description = row.description
+      newData[index].name = row.name
+      newData[index].url = row.url
       if (index > -1) {
         const item = newData[index];
         const tempItem: IFriendLink = {

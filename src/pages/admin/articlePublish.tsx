@@ -311,6 +311,7 @@ function ClassEdit(props: {
       //通过row修改，使其真正的是newData
       newData[index].key = row.classname
       newData[index].classname = row.classname
+      newData[index].description = row.description
       if (index > -1) {
         const item = newData[index];
         console.log(item)
