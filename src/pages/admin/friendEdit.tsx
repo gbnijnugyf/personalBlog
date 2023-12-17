@@ -268,8 +268,8 @@ export function FriendEditPage() {
 
 
 interface IFriendPublishFormProps {
-  successFunc: () => void;
-  failFunc: () => void;
+  successFunc: (text:string) => void;
+  failFunc: (text:string) => void;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   dispaly: boolean;
 }
@@ -310,10 +310,10 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
       .then((res) => {
         console.log(res);
         props.setDisplay(!props.dispaly);
-        props.successFunc();
+        props.successFunc("添加成功");
       })
       .catch(() => {
-        props.failFunc();
+        props.failFunc("添加失败");
       });
   };
   return (

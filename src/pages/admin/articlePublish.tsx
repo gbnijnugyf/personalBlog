@@ -7,6 +7,7 @@ import {
   Popconfirm,
   Table,
   Typography,
+  message,
 } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
@@ -47,6 +48,19 @@ export function ArticleManagerPage() {
   const userEditClassifyDescribe = useRef("");
   const [nowClassify, setNowClassify] = useState(""); // 分类
   const [nowArticleID, setNowArticleID] = useState(""); // 分类
+  const [messageApi, contextHolder] = message.useMessage();
+  function success(text: string = "添加成功") {
+    messageApi.open({
+      type: "success",
+      content: text,
+    });
+  }
+  function error(text: string = "添加失败") {
+    messageApi.open({
+      type: "error",
+      content: text,
+    });
+  }
   const newArticleInit: IArticleEdit = {
     classify: "",
     ID: "",
@@ -68,11 +82,14 @@ export function ArticleManagerPage() {
       name: userEditClassify.current,
       description: userEditClassifyDescribe.current,
     };
-    Service.addClassify(tempForm).then((res) => {
-      setDisplay(!display);
-      //TODO:添加成功提示
-      console.log("添加分类接口响应:", res);
-    });
+    Service.addClassify(tempForm)
+      .then((res) => {
+        setDisplay(!display);
+        //TODO:添加成功提示
+        success();
+        console.log("添加分类接口响应:", res);
+      })
+      .catch(() => error());
     setIsAddClassifyOpen(false);
   };
   const handleCancel = () => {
@@ -153,6 +170,7 @@ export function ArticleManagerPage() {
 
   return (
     <>
+      {contextHolder}
       <div className="article-layout">
         <Layout className="layout">
           <Sider>
@@ -271,7 +289,7 @@ function ClassEdit(props: {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState("");
-  const [oldName, setOldName] = useState<string>("")
+  const [oldName, setOldName] = useState<string>("");
   useEffect(() => {
     Service.getClassify().then((res) => {
       const promises = res.data.data.map((i) => {
@@ -291,8 +309,8 @@ function ClassEdit(props: {
   const isEditing = (record: Item) => record.key === editingKey;
 
   const edit = (record: Partial<Item> & { key: React.Key }) => {
-    console.log(record)
-    setOldName(record.key)
+    console.log(record);
+    setOldName(record.key);
     form.setFieldsValue({ classname: "", ...record });
     setEditingKey(record.key);
   };
@@ -302,27 +320,27 @@ function ClassEdit(props: {
   };
 
   const save = async (key: React.Key) => {
-    console.log(key)
+    console.log(key);
     try {
       //索引key就是classname，classname唯一
-      const row = (await form.validateFields()) as Item;//as key实际上不包含key，即没有索引值,从这获取更新值
-      let newData = [...data];//此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
+      const row = (await form.validateFields()) as Item; //as key实际上不包含key，即没有索引值,从这获取更新值
+      let newData = [...data]; //此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
       const index = newData.findIndex((item) => key === item.key);
       //通过row修改，使其真正的是newData
-      newData[index].key = row.classname
-      newData[index].classname = row.classname
-      newData[index].description = row.description
+      newData[index].key = row.classname;
+      newData[index].classname = row.classname;
+      newData[index].description = row.description;
       if (index > -1) {
         const item = newData[index];
-        console.log(item)
+        console.log(item);
         const tempItem: IClassEdit = {
           name: item.classname,
           description: item.description,
-          oldname: oldName
+          oldname: oldName,
         };
         Service.saveClassEdit(tempItem)
           .then((res) => {
-            console.log(res)
+            console.log(res);
             newData.splice(index, 1, {
               ...item,
               ...row,

@@ -262,7 +262,7 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       body: props.body,
       classification: props.classify,
       cover: fileBase64,
-      ID: props.id, //TODO
+      ID: props.id,
       releaseTime: null,
       title: values.title,
       visibility: 0,
