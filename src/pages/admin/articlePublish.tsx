@@ -22,6 +22,7 @@ import {
   ClaOrFri,
   IAddClassify,
   IClassEdit,
+  IDeleteFriOrClas,
   IMenuInfo,
 } from "../../globe/inter";
 import TextArea from "antd/es/input/TextArea";
@@ -211,7 +212,12 @@ export function ArticleManagerPage() {
               footer={[]}
               style={{ width: "80vw" }}
             >
-              <ClassEdit setDisplay={setDisplay} display={display} />
+              <ClassEdit
+                successFunc={success}
+                failFunc={error}
+                setDisplay={setDisplay}
+                display={display}
+              />
             </Modal>
           </Sider>
 
@@ -284,6 +290,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
 function ClassEdit(props: {
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   display: boolean;
+  successFunc: (text?: string) => void;
+  failFunc: (text?: string) => void;
 }) {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
@@ -317,6 +325,21 @@ function ClassEdit(props: {
   const cancel = () => {
     setEditingKey("");
   };
+  const handleDelete = (key: React.Key) => {
+    props.setDisplay(!props.display);
+    console.log(key.toString());
+    const delTemp: IDeleteFriOrClas = {
+      name: key.toString(),
+      type: "1", //表示分类
+    };
+    Service.deleteFriOrClas(delTemp)
+      .then(() => {
+        props.successFunc("删除成功");
+        const newData = data.filter((item) => item.key !== key);
+        setData(newData);
+      })
+      .catch(() => props.failFunc("删除失败"));
+  };
 
   const save = async (key: React.Key) => {
     console.log(key);
@@ -339,6 +362,7 @@ function ClassEdit(props: {
         };
         Service.saveClassEdit(tempItem)
           .then((res) => {
+            props.setDisplay(!props.display);
             console.log(res);
             newData.splice(index, 1, {
               ...item,
@@ -346,7 +370,6 @@ function ClassEdit(props: {
             });
             setData(newData);
             setEditingKey("");
-            props.setDisplay(!props.display);
           })
           .catch(() => {});
       }
@@ -394,6 +417,19 @@ function ClassEdit(props: {
           </Typography.Link>
         );
       },
+    },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (_: any, record: { key: React.Key }) =>
+        data.length >= 1 ? (
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(record.key)}
+          >
+            <div>Delete</div>
+          </Popconfirm>
+        ) : null,
     },
   ];
 
