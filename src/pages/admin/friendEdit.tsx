@@ -1,16 +1,22 @@
 import {
+  Button,
+  Drawer,
   Form,
   Input,
   InputNumber,
   Popconfirm,
+  Space,
   Table,
   Typography,
+  Upload,
   message,
 } from "antd";
 import "./css/friendEdit.css";
 import { useEffect, useState } from "react";
 import { IFriendLink } from "../../globe/inter";
 import { Service } from "../../globe/service";
+import { UploadOutlined } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 
 interface Item {
   key: string;
@@ -69,6 +75,9 @@ export function FriendEditPage() {
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
+  const [open, setOpen] = useState(false);
+  const [display, setDisplay] = useState<boolean>(false);
+
 
   function success(text: string = "编辑成功") {
     messageApi.open({
@@ -113,14 +122,14 @@ export function FriendEditPage() {
 
   const save = async (key: React.Key) => {
     try {
-      const row = (await form.validateFields()) as Item;//as key实际上不包含key，即没有索引值,从这获取更新值
-      let newData = [...data];//此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
+      const row = (await form.validateFields()) as Item; //as key实际上不包含key，即没有索引值,从这获取更新值
+      let newData = [...data]; //此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
       const index = newData.findIndex((item) => key === item.key);
       //通过row修改，使其真正的是newData,cover不可修改所以没有重新赋值
-      newData[index].key = row.name
-      newData[index].description = row.description
-      newData[index].name = row.name
-      newData[index].url = row.url
+      newData[index].key = row.name;
+      newData[index].description = row.description;
+      newData[index].name = row.name;
+      newData[index].url = row.url;
       if (index > -1) {
         const item = newData[index];
         const tempItem: IFriendLink = {
@@ -216,6 +225,13 @@ export function FriendEditPage() {
   return (
     <>
       {contextHolder}
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        添加友情链接
+      </Button>
       <Form form={form} component={false}>
         <Table
           components={{
@@ -233,6 +249,118 @@ export function FriendEditPage() {
           }}
         />
       </Form>
+      <Drawer
+            title="添加友情链接"
+            placement="right"
+            onClose={() => setOpen(false)}
+            open={open}
+          >
+            <FriendPublishForm
+              successFunc={success}
+              failFunc={error}
+              setDisplay={setDisplay}
+              dispaly={display}
+            />
+          </Drawer>
     </>
+  );
+}
+
+
+interface IFriendPublishFormProps {
+  successFunc: () => void;
+  failFunc: () => void;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  dispaly: boolean;
+}
+function FriendPublishForm(props: IFriendPublishFormProps) {
+  const formItemLayout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 14 },
+  };
+  const normFile = (e: any) => {
+    // return fileToBase64(e.file)
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  interface IPublishForm {
+    linkName: string;
+    description: string;
+    url: string;
+    cover: any[];
+  }
+  const onFinish = (values: IPublishForm) => {
+    let fileBase64 = null;
+    console.log("Received values of form: ", values);
+    if (values.cover !== undefined) {
+      fileBase64 = values.cover[0].thumbUrl;
+      // console.log("image: ", values.cover[0].thumbUrl);
+    }
+    const linkInfo: IFriendLink = {
+      cover: fileBase64,
+      description: values.description,
+      name: values.linkName,
+      url: values.url,
+    };
+    Service.addFriendLink(linkInfo)
+      .then((res) => {
+        console.log(res);
+        props.setDisplay(!props.dispaly);
+        props.successFunc();
+      })
+      .catch(() => {
+        props.failFunc();
+      });
+  };
+  return (
+    <Form
+      name="validate_other"
+      {...formItemLayout}
+      onFinish={onFinish}
+      style={{ maxWidth: 600 }}
+    >
+      <Form.Item name="linkName" label="链接名" rules={[{ required: true }]}>
+        <Input placeholder="请输入链接名" showCount maxLength={15} />
+      </Form.Item>
+      <Form.Item name="linkUrl" label="链接地址" rules={[{ required: true }]}>
+        <Input placeholder="请输入链接地址" maxLength={9999} />
+      </Form.Item>
+      <Form.Item
+        name="linkDescribe"
+        label="链接描述"
+        rules={[{ required: true }]}
+      >
+        <TextArea
+          showCount
+          rows={4}
+          placeholder="maxLength is 200"
+          maxLength={200}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="cover"
+        label="链接缩略图"
+        valuePropName="fileList"
+        getValueFromEvent={normFile}
+      >
+        <Upload name="logo" action="/upload.do" listType="picture">
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
+      </Form.Item>
+
+      <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
+          <Button htmlType="reset">重置</Button>
+        </Space>
+      </Form.Item>
+    </Form>
   );
 }
