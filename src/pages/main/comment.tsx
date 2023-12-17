@@ -222,12 +222,10 @@ export function CommentPage(props: { articleId: string; admin: boolean }) {
   const onClose = () => {
     setOpen(false);
   };
-  const [articleId_] = useState<string>(props.articleId);
-
+  console.log(props.articleId)
   // const articleId_ = props.articleId === null ? "" : props.articleId;
   useEffect(() => {
-    console.log(articleId_);
-    if (articleId_ === "-1") {
+    if (props.articleId === "-1") {
       //获取留言
       Service.getMessage().then((res) => {
         console.log(res);
@@ -235,12 +233,12 @@ export function CommentPage(props: { articleId: string; admin: boolean }) {
       });
     } else {
       //获取文章评论
-      Service.getComment(articleId_).then((res) => {
+      Service.getComment(props.articleId).then((res) => {
         console.log(res);
         setRootComment(res.data.data);
       });
     }
-  }, [articleId_, display]);
+  }, [display,props.articleId]);
 
   return (
     <>
@@ -291,7 +289,7 @@ export function CommentPage(props: { articleId: string; admin: boolean }) {
       >
         <AddComment
           pre={preId}
-          articleID={articleId_}
+          articleID={props.articleId}
           setOpen={setOpen}
           display={display}
           setDisplay={setDisplay}

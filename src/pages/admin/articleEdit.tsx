@@ -39,8 +39,9 @@ export function ArticleEdit(props: IArticleEditNew) {
   const [isCancelPublishOpen, setIsCancelPublishOpen] = useState(false);
   const [articleDetail, setArticleDetail] = useState<IArticle>(articleInit);
   const handleOk = () => {
-    const cancelId = articleDetail.ID === null ? "" : articleDetail.ID;
-    Service.cancelPublisArticle(cancelId)
+    // const cancelId = articleDetail.ID === null ? "" : articleDetail.ID;
+    console.log(props.ID)
+    Service.cancelPublisArticle(props.ID)
       .then((res) => {
         console.log(res);
         success("取消发布成功");
@@ -213,6 +214,8 @@ export function ArticleEdit(props: IArticleEditNew) {
         open={open}
       >
         <ArticlePublishForm
+          setDisplay={setFlush}
+          display={flush}
           body={text}
           classify={props.classify}
           successFunc={success}
@@ -232,6 +235,8 @@ interface IArticlePublishFormProps {
   id: string;
   successFunc: (text: string) => void;
   failFunc: (text: string) => void;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  display: boolean;
 }
 
 function ArticlePublishForm(props: IArticlePublishFormProps) {
@@ -265,12 +270,13 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       ID: props.id,
       releaseTime: null,
       title: values.title,
-      visibility: 0,//即使发送给后端也不应该获取
+      visibility: 0, //即使发送给后端也不应该获取
     };
     Service.publishArticle(articleInfo)
       .then((res) => {
         props.successFunc("发布成功");
-        console.log(res)
+        props.setDisplay(!props.display)
+        console.log(res);
         setTimeout(() => {
           navigate("edit", {
             replace: true,
