@@ -229,7 +229,7 @@ export function CommentPage(props: {
   return (
     <>
       <div className="comment-display">
-        {rootComment === undefined ? (
+        {rootComment === undefined || !Array.isArray(rootComment)? (
           <div style={{ fontSize: "medium" }}>暂无评论</div>
         ) : (
           rootComment.map((aRootComment) => {

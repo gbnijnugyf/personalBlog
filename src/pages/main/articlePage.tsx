@@ -13,16 +13,16 @@ import { IArticle, articleInit } from "../../globe/inter";
 import { CommentPage } from "./comment";
 const scrollElement = document.documentElement;
 
-function matchSearchId(str: string) {
-  const regex = /[?&]id=(\d+)/;
-  const match = str.match(regex);
+// function matchSearchId(str: string) {
+//   const regex = /[?&]id=(\d+)/;
+//   const match = str.match(regex);
 
-  if (match && match[1]) {
-    const id = match[1];
-    return id;
-  }
-  return "";
-}
+//   if (match && match[1]) {
+//     const id = match[1];
+//     return id;
+//   }
+//   return "";
+// }
 
 export function ArticlePage() {
   // 路由携带参数navigate("/home",{state:{id:123}})
