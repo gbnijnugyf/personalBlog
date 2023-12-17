@@ -1,11 +1,11 @@
-import { Avatar, List, Menu,  } from "antd";
+import { Avatar, List, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 
 import "./css/commentEdit.css";
 import { Service } from "../../globe/service";
-import { IComment, IMenuInfo } from "../../globe/inter";
+import { IComment, IMenuInfo, appendParams2Path } from "../../globe/inter";
 import { articleMemuItem, articleMenu } from "./articlePublish";
 import { IArticleEdit } from "./articleEdit";
 import { CommentPage } from "../main/comment";
@@ -99,10 +99,17 @@ function CommentEdit(props: IArticleEdit) {
   return (
     <>
       {/* TODO:打开新标签页并传参 */}
-      {/* <Link to="/main/article" replace={true} state={{id:props.ID}}>ww</Link> */}
+      <Link
+        to={"/main/article"}
+        // to={appendParams2Path("/main/article", { id: props.ID })}
+        replace={true}
+        state={{ id: props.ID }}
+      >
+        ww
+      </Link>
       <div
         onClick={() =>
-          navigate("/main/article", { replace: true, state: { id: props.ID }})
+          navigate("/main/article", { replace: true, state: { id: props.ID } })
         }
         className="back-div"
       >
@@ -131,7 +138,12 @@ function Message() {
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} src={""} />}
               // title={<a href="https://ant.design">{item.title}</a>}
-              description={<><div>{item.nickname}</div><div>{item.email}</div></>}
+              description={
+                <>
+                  <div>{item.nickname}</div>
+                  <div>{item.email}</div>
+                </>
+              }
             />
             {item.body}
           </List.Item>

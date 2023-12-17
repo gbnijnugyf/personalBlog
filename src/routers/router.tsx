@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { MainPage } from "../pages/main";
 import { DetailPage } from "../pages/main/detailPage";
 import { LoginPage } from "../pages/admin/adminLogin";
@@ -20,7 +15,7 @@ export function Routers() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     if (!location.pathname.startsWith("/admin")) {
       navigate("/main/detail", { state: { className: "" } });
     } else if (location.pathname.startsWith("/admin")) {
@@ -30,11 +25,10 @@ export function Routers() {
         navigate("/admin/main/article");
       }
     }
-  }, [localStorage.getItem('token')]);
+  }, [localStorage.getItem("token")]);
 
   return (
     <Routes>
-
       <Route path="main/*" element={<MainPage />}>
         <Route index path="detail" element={<DetailPage />} />
         <Route path="about" element={<About />} />
@@ -42,7 +36,13 @@ export function Routers() {
           path="friendLink"
           element={<FriendPage admin={false} data={undefined} />}
         />
-        <Route path="article" element={<ArticlePage />} />
+        <Route
+          path="article/"
+          // loader={({ params }) => {
+          //   console.log(params.teamId); // "hotspur"
+          // }}
+          element={<ArticlePage />}
+        />
       </Route>
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage />} />

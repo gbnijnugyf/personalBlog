@@ -14,6 +14,7 @@ import {
   ISaveArticle,
   IClassEdit,
   IDeleteFriOrClas,
+  appendParams2Path,
 } from "./inter";
 import { createExportDefault } from "typescript";
 
@@ -24,13 +25,7 @@ export interface IGlobalResponse<T> {
   status: number;
 }
 
-function appendParams2Path(
-  path: string,
-  paramsRaw: string | URLSearchParams | string[][] | Record<string, string>
-) {
-  const params = new URLSearchParams(paramsRaw);
-  return `${path}?${params.toString()}`;
-}
+
 
 async function GlobalAxios<T = any, D = any>(
   method: "post" | "get" | "delete" | "put",
