@@ -304,18 +304,17 @@ function ClassEdit(props: {
   const save = async (key: React.Key) => {
     console.log(key)
     try {
-      const row = (await form.validateFields()) as Item;
-      const newData = [...data];
-      console.log(newData)
+      //索引key就是classname，classname唯一
+      const row = (await form.validateFields()) as Item;//as key实际上不包含key，即没有索引值,从这获取更新值
+      let newData = [...data];//此时能拿到更新值，但根据索引找到对应行后不是更新值，通过row修改
       const index = newData.findIndex((item) => key === item.key);
-      console.log(index)
-      console.log(newData)
-//TODO:太奇怪了
-      console.log(newData[index])
+      //通过row修改，使其真正的是newData
+      newData[index].key = row.classname
+      newData[index].classname = row.classname
       if (index > -1) {
         const item = newData[index];
         console.log(item)
-        const tempItem: IClassEdit = {//TODO：bug参数貌似不能获取到最新值
+        const tempItem: IClassEdit = {
           name: item.classname,
           description: item.description,
           oldname: oldName
