@@ -36,13 +36,7 @@ export function Routers() {
           path="friendLink"
           element={<FriendPage admin={false} data={undefined} />}
         />
-        <Route
-          path="article/"
-          // loader={({ params }) => {
-          //   console.log(params.teamId); // "hotspur"
-          // }}
-          element={<ArticlePage />}
-        />
+        <Route path="article" element={<ArticlePage />} />
       </Route>
       <Route path="admin/*" element={<AdminMainPage />}>
         <Route path="login" element={<LoginPage />} />

@@ -10,6 +10,7 @@ import {
 import "./css/index.css";
 import { SearchTest1 } from "./search";
 import { Service } from "../../globe/service";
+import { UserSwitchOutlined } from "@ant-design/icons";
 
 export function MainPage() {
   const [headerMenu, setHeaderMenu] = useState<IMenuProps[]>();
@@ -66,7 +67,7 @@ export function MainPage() {
               style={{ cursor: "pointer" }}
               onClick={(e) => e.preventDefault()}
             >
-              Setting
+              <UserSwitchOutlined style={{fontSize:"145%"}}/>
             </div>
           </Dropdown>
         </Header>

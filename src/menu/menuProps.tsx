@@ -8,6 +8,7 @@ import {
   RadarChartOutlined,
   SmileOutlined,
   UnorderedListOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { ItemType } from "antd/es/menu/hooks/useItems";
@@ -101,21 +102,13 @@ export const menuHeaderProps = [
   },
 ];
 //首页，分类，归档，关于，友情链接，搜索
-export const menuHeaderPropsR = [
-  {
-    key: "setting",
-    icon: (
-      <Dropdown menu={{ items: menuHeaderRItems }}>
-        <a onClick={(e) => e.preventDefault()}>
-          <Space>
-            <DownOutlined />
-          </Space>
-        </a>
-      </Dropdown>
-    ),
-    label: null,
-  },
-];
+// export const menuHeaderPropsR = [
+//   {
+//     key: "setting",
+//     icon: <UserSwitchOutlined />,
+//     label: null,
+//   },
+// ];
 
 export const menuMainDetailSider = [
   {
