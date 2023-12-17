@@ -85,7 +85,6 @@ export function ArticleManagerPage() {
     Service.addClassify(tempForm)
       .then((res) => {
         setDisplay(!display);
-        //TODO:添加成功提示
         success();
         console.log("添加分类接口响应:", res);
       })

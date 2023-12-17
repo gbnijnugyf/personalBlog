@@ -87,6 +87,12 @@
   flex-direction: column;
   overflow: hidden;
 }
+.container-detailPage .my-carousel .carousel-content .carousel-content-text .carousel-content-item .img {
+  border: 1px solid red;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 
 .container-aritclePage {
   height: fit-content;

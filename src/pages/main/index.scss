@@ -84,6 +84,12 @@
           z-index: 0;
           flex-direction: column;
           overflow: hidden;
+          .img {
+            border: 1px solid red;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
@@ -112,7 +118,7 @@
           font-size: larger;
         }
       }
-  
+
       .header-info {
         display: flex;
         flex-direction: row;
@@ -135,11 +141,10 @@
       height: 5px; /* 设置阴影的高度 */
       background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
     }
-    .MdCatalog{
+    .MdCatalog {
       font-size: small;
     }
   }
-  
 
   .comment {
     margin-top: 5%;

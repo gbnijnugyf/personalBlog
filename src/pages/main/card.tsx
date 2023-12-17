@@ -20,11 +20,7 @@ export function CardArray(props: ICardArray) {
                 cover={
                   <div style={{ overflow: "hidden", height: "100%" }}>
                     <img
-                      style={{
-                        objectFit: "contain",
-                        width: "100%",
-                        height: "100%",
-                      }}
+                    className="img"
                       alt="example"
                       src={card.cover}
                     />
