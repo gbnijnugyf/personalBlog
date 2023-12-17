@@ -99,7 +99,7 @@ function CommentEdit(props: IArticleEdit) {
   return (
     <>
       {/* TODO:打开新标签页并传参 */}
-      <Link to="/main/article" replace={true} state={{id:props.ID}}>ww</Link>
+      {/* <Link to="/main/article" replace={true} state={{id:props.ID}}>ww</Link> */}
       <div
         onClick={() =>
           navigate("/main/article", { replace: true, state: { id: props.ID }})

@@ -17,12 +17,13 @@ export function ArticlePage() {
   const articleId = useLocation().state.id;
   const [articleText, setArticleText] = useState(""); //正文
   const [articleBody, setArticleBody] = useState<IArticle>(articleInit);
-  // const [md, setMd] = useState("");
+  const [id] = useState('preview-only');
+  const [md, setMd] = useState("");
   useEffect(() => {
-    // const testmd = require("./test.md");
-    // fetch(testmd)
-    //   .then((res) => res.text())
-    //   .then((text) => setMd(text));
+    const testmd = require("./test.md");
+    fetch(testmd)
+      .then((res) => res.text())
+      .then((text) => setMd(text));
 
     Service.getArticleDetail(articleId).then((res) => {
       console.log(res.data.data)
@@ -41,7 +42,9 @@ export function ArticlePage() {
             <Sider className="markdown-nav">
               {/* <div> */}
               {/* //TODO：目录失效 */}
-              <MarkNav source={articleText /*md*/} ordered={true} />
+              {/* <MarkNav source={articleText} ordered={true} /> */}
+              {/* <MarkNav source={md} ordered={true} /> */}
+              <MdCatalog className="MdCatalog" editorId={id} scrollElement={scrollElement} />
               {/* </div> */}
             </Sider>
             <div className="article-content">
@@ -61,7 +64,8 @@ export function ArticlePage() {
                   src={articleBody.cover as string}
                 />
               </Header>
-              <MdPreview modelValue={articleText /*md*/} />
+              <MdPreview editorId={id} modelValue={articleText} />
+              {/* <MdPreview editorId={id} modelValue={md} /> */}
             </div>
           </Layout>
           <div className="comment">
