@@ -46,7 +46,7 @@ export interface IArticle {
   body: string;
   classification: string;
   cover: null | string;
-  ID: null | string;
+  ID: string;
   releaseTime: null | string;
   title: string;
 }
@@ -54,7 +54,7 @@ export const articleInit: IArticle = {
   body: "",
   classification: "",
   cover: null,
-  ID: null,
+  ID: "",
   releaseTime: null,
   title: "",
   visibility: 0,
@@ -77,7 +77,7 @@ export interface IComment {
   passageID: string;
   commentID: string | null;
   email: string;
-  isBlogger: null | string;
+  isBlogger: number;//1为博主
   nickname: string;
   preID: null | string;
   primary: number; //为0时，属于留言；为1时，属于文章

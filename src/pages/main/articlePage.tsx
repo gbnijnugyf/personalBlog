@@ -90,6 +90,7 @@ export function ArticlePage() {
                 <Image
                   width={900}
                   height={300}
+                  style={{objectFit:"cover"}}
                   src={articleBody.cover as string}
                 />
               </Header>
@@ -98,7 +99,7 @@ export function ArticlePage() {
             </div>
           </Layout>
           <div className="comment">
-            <CommentPage articleId={articleBody.ID} admin={false} />
+            <CommentPage articleId={articleId} admin={false} />
           </div>
         </div>
       )}

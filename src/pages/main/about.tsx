@@ -4,7 +4,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { Avatar, Button, Drawer, List,Image} from "antd";
-import { AddComment, ISetPreID } from "./comment";
+import { AddComment, CommentPage, ISetPreID } from "./comment";
 import "./css/about.css"
 
 const data = Array.from({ length: 1 }).map((_, i) => ({
@@ -64,6 +64,7 @@ export function About() {
           </List.Item>
         )}
       />
+      <CommentPage articleId={"-1"} admin={false} />
       <Drawer title={"留言"} placement="right" onClose={onClose} open={open}>
         <AddComment
           pre={preinit}
@@ -71,7 +72,7 @@ export function About() {
           setOpen={setOpen}
           display={display}
           setDisplay={setDisplay}
-          msgOrComment={0}
+          msgOrComment={1}
         />
       </Drawer>
     </>

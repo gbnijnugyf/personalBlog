@@ -122,15 +122,16 @@ function CommentEdit(props: IArticleEdit) {
 
 function Message() {
   const [msgList, setMsgList] = useState<IComment[]>();
-  useEffect(() => {
-    Service.getMessage().then((res) => {
-      const list: IComment[] = res.data.data;
-      setMsgList(list);
-    });
-  }, []);
+  // useEffect(() => {
+  //   Service.getMessage().then((res) => {
+  //     console.log(res)
+  //     const list: IComment[] = res.data.data;
+  //     setMsgList(list);
+  //   });
+  // }, []);
   return (
     <>
-      <List
+      {/* <List
         itemLayout="horizontal"
         dataSource={msgList}
         renderItem={(item, index) => (
@@ -148,7 +149,8 @@ function Message() {
             {item.body}
           </List.Item>
         )}
-      />
+      /> */}
+      <CommentPage articleId={"-1"} admin={true} />
     </>
   );
 }

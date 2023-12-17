@@ -1,6 +1,16 @@
 .comment-display {
   margin-left: 2%;
 }
+.comment-display .ant-comment-inner {
+  padding: 1;
+}
+.comment-display .ant-comment-inner .ant-comment-content {
+  border-bottom: 1px solid lightgray;
+}
+.comment-display .ant-comment-inner .ant-comment-content .ant-comment-actions {
+  margin-bottom: 1%;
+  margin-top: 0;
+}
 
 .comment-add {
   display: flex;

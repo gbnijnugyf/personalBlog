@@ -1,5 +1,5 @@
 import "./css/comment.css";
-import { Avatar, Drawer, Modal, message } from "antd";
+import { Avatar, Drawer, Modal, Popover, Tag, message } from "antd";
 import { Comment } from "@ant-design/compatible";
 import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
@@ -120,15 +120,18 @@ function ExampleComment(props: IExampleComment) {
         author={
           <div>
             {props.comment.rootComment.nickname}{" "}
+            {props.comment.rootComment.isBlogger === 1 ? <Tag>博主</Tag> : null}
             {props.comment.rootComment.time}
           </div>
         }
         avatar={
-          <Avatar
-            icon={<UserOutlined />}
-            src={props.comment.rootComment.avator_url}
-            alt={props.comment.rootComment.nickname}
-          />
+          <Popover content={props.comment.rootComment.email}>
+            <Avatar
+              icon={<UserOutlined />}
+              src={props.comment.rootComment.avator_url}
+              alt={props.comment.rootComment.nickname}
+            />
+          </Popover>
         }
         content={<p>{props.comment.rootComment.body}</p>}
       >
@@ -186,11 +189,14 @@ function ExampleComment(props: IExampleComment) {
                 </div>
               }
               avatar={
-                <Avatar
-                  icon={<UserOutlined />}
-                  src={props.comment.rootComment.avator_url}
-                  alt={props.comment.rootComment.nickname}
-                />
+                //展示邮箱
+                <Popover content={item.email}>
+                  <Avatar
+                    icon={<UserOutlined />}
+                    src={item.avator_url}
+                    alt={item.nickname}
+                  />
+                </Popover>
               }
               content={item.body}
             />
@@ -204,10 +210,7 @@ export interface ISetPreID {
   id: string;
   nickName: string;
 }
-export function CommentPage(props: {
-  articleId: string | null;
-  admin: boolean;
-}) {
+export function CommentPage(props: { articleId: string; admin: boolean }) {
   const preIDInit: ISetPreID = {
     id: "",
     nickName: "",
@@ -219,17 +222,35 @@ export function CommentPage(props: {
   const onClose = () => {
     setOpen(false);
   };
-  const articleId_ = props.articleId === null ? "" : props.articleId;
+  const [articleId_] = useState<string>(props.articleId);
+
+  // const articleId_ = props.articleId === null ? "" : props.articleId;
   useEffect(() => {
-    Service.getComment(articleId_).then((res) => {
-      setRootComment(res.data.data);
-    });
+    console.log(articleId_);
+    if (articleId_ === "-1") {
+      //获取留言
+      Service.getMessage().then((res) => {
+        console.log(res);
+        setRootComment(res.data.data);
+      });
+    } else {
+      //获取文章评论
+      Service.getComment(articleId_).then((res) => {
+        console.log(res);
+        setRootComment(res.data.data);
+      });
+    }
   }, [articleId_, display]);
 
   return (
     <>
       <div className="comment-display">
-        {rootComment === undefined || !Array.isArray(rootComment)? (
+        {props.admin === true ? null : props.articleId === "-1" ? (
+          <p>留言区</p>
+        ) : (
+          <p>评论区</p>
+        )}
+        {rootComment === undefined || !Array.isArray(rootComment) ? (
           <div style={{ fontSize: "medium" }}>暂无评论</div>
         ) : (
           rootComment.map((aRootComment) => {
@@ -251,14 +272,16 @@ export function CommentPage(props: {
         )}
       </div>
       <div className="comment-add">
-        <Button
-          onClick={() => {
-            setPreId(preIDInit);
-            setOpen(true);
-          }}
-        >
-          发表评论
-        </Button>
+        {props.articleId !== "-1" ? (
+          <Button
+            onClick={() => {
+              setPreId(preIDInit);
+              setOpen(true);
+            }}
+          >
+            发表评论
+          </Button>
+        ) : null}
       </div>
       <Drawer
         title={preId.id !== "" ? `回复${preId.nickName}` : "发表评论"}
@@ -272,7 +295,7 @@ export function CommentPage(props: {
           setOpen={setOpen}
           display={display}
           setDisplay={setDisplay}
-          msgOrComment={1}
+          msgOrComment={0}
         />
       </Drawer>
     </>
@@ -309,7 +332,7 @@ export function AddComment(props: IAddComment) {
       avator_url: null,
       commentID: null,
       email: values.email,
-      isBlogger: null,
+      isBlogger: 0,
       nickname: values.nickname,
       preID: props.pre.id !== "" ? props.pre.id : null,
       primary: props.msgOrComment,
@@ -317,9 +340,11 @@ export function AddComment(props: IAddComment) {
       time: "",
       body: values.comment,
     };
+    console.log(commentValue);
     Service.publishComment(commentValue)
       .then((res) => {
-        if (props.msgOrComment === 1) {
+        console.log(res);
+        if (props.msgOrComment === 0) {
           success();
         } else {
           success("留言成功");
@@ -327,7 +352,7 @@ export function AddComment(props: IAddComment) {
         props.setOpen(false);
       })
       .catch(() => {
-        if (props.msgOrComment === 1) {
+        if (props.msgOrComment === 0) {
           error();
         } else {
           error("留言失败，请重试");
@@ -374,7 +399,7 @@ export function AddComment(props: IAddComment) {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="你的邮箱将会展示！" />
         </Form.Item>
         <Form.Item name="nickname" label="昵称" rules={[{ required: true }]}>
           <Input />

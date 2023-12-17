@@ -1,8 +1,18 @@
-.comment-display{
-    margin-left: 2%;
+.comment-display {
+  margin-left: 2%;
+  .ant-comment-inner {
+    padding: 1;
+    .ant-comment-content {
+      border-bottom: 1px solid lightgray;
+      .ant-comment-actions {
+        margin-bottom: 1%;
+        margin-top: 0;
+      }
+    }
+  }
 }
-.comment-add{
-    display: flex;
-    justify-content: center;
-    margin: 1%;
+.comment-add {
+  display: flex;
+  justify-content: center;
+  margin: 1%;
 }

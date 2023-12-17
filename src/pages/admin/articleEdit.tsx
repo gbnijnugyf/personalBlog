@@ -265,11 +265,12 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       ID: props.id,
       releaseTime: null,
       title: values.title,
-      visibility: 0,
+      visibility: 0,//即使发送给后端也不应该获取
     };
     Service.publishArticle(articleInfo)
       .then((res) => {
         props.successFunc("发布成功");
+        console.log(res)
         setTimeout(() => {
           navigate("edit", {
             replace: true,

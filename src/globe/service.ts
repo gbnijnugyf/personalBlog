@@ -139,7 +139,7 @@ export const Service = {
   },
   //获取留言
   getMessage() {
-    return GlobalAxios<IComment[]>(
+    return GlobalAxios<IRootComment[]>(
       "get",
       appendParams2Path("/comment/message", {})
     );
