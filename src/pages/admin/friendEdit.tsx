@@ -13,7 +13,7 @@ import {
 } from "antd";
 import "./css/friendEdit.css";
 import { useEffect, useState } from "react";
-import { IFriendLink } from "../../globe/inter";
+import { IDeleteFriOrClas, IFriendLink } from "../../globe/inter";
 import { Service } from "../../globe/service";
 import { UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -78,7 +78,6 @@ export function FriendEditPage() {
   const [open, setOpen] = useState(false);
   const [display, setDisplay] = useState<boolean>(false);
 
-
   function success(text: string = "编辑成功") {
     messageApi.open({
       type: "success",
@@ -119,7 +118,20 @@ export function FriendEditPage() {
   const cancel = () => {
     setEditingKey("");
   };
-
+  const handleDelete = (key: React.Key) => {
+    console.log(key.toString());
+    const delTemp: IDeleteFriOrClas = {
+      name: key.toString(),
+      type: "2", //表示友链
+    };
+    Service.deleteFriOrClas(delTemp)
+      .then(() => {
+        success("删除成功");
+        const newData = data.filter((item) => item.key !== key);
+        setData(newData);
+      })
+      .catch(() => error("删除失败"));
+  };
   const save = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as Item; //as key实际上不包含key，即没有索引值,从这获取更新值
@@ -204,6 +216,19 @@ export function FriendEditPage() {
         );
       },
     },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (_: any, record: { key: React.Key }) =>
+        data.length >= 1 ? (
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(record.key)}
+          >
+            <div>Delete</div>
+          </Popconfirm>
+        ) : null,
+    },
   ];
 
   const mergedColumns = columns.map((col) => {
@@ -250,26 +275,25 @@ export function FriendEditPage() {
         />
       </Form>
       <Drawer
-            title="添加友情链接"
-            placement="right"
-            onClose={() => setOpen(false)}
-            open={open}
-          >
-            <FriendPublishForm
-              successFunc={success}
-              failFunc={error}
-              setDisplay={setDisplay}
-              dispaly={display}
-            />
-          </Drawer>
+        title="添加友情链接"
+        placement="right"
+        onClose={() => setOpen(false)}
+        open={open}
+      >
+        <FriendPublishForm
+          successFunc={success}
+          failFunc={error}
+          setDisplay={setDisplay}
+          dispaly={display}
+        />
+      </Drawer>
     </>
   );
 }
 
-
 interface IFriendPublishFormProps {
-  successFunc: (text:string) => void;
-  failFunc: (text:string) => void;
+  successFunc: (text: string) => void;
+  failFunc: (text: string) => void;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   dispaly: boolean;
 }

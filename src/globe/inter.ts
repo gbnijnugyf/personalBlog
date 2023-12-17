@@ -88,3 +88,7 @@ export interface IClassEdit {
   name: string;
   description: string;
 }
+export interface IDeleteFriOrClas {
+  name: string;
+  type: string; //"1"表示分类、"2"表示友链
+}

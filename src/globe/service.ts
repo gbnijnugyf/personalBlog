@@ -13,7 +13,9 @@ import {
   IFriendLink,
   ISaveArticle,
   IClassEdit,
+  IDeleteFriOrClas,
 } from "./inter";
+import { createExportDefault } from "typescript";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -165,5 +167,12 @@ export const Service = {
   //分类编辑保存
   saveClassEdit(props: IClassEdit) {
     return axios.put(BASEURL + "/info/editC", props);
+  },
+  //删除友情/分类链接
+  deleteFriOrClas(props: IDeleteFriOrClas) {
+    return GlobalAxios(
+      "delete",
+      appendParams2Path("/info/delete", { name: props.name, type: props.type })
+    );
   },
 };
