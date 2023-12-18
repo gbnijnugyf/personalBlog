@@ -10,7 +10,7 @@
   position: fixed;
   justify-content: center;
   width: 100%;
-  background-color: #3498db;
+  background-color: rgba(52, 152, 219, 0.8);
   z-index: 1;
 }
 .admin-layout .admin-content {
