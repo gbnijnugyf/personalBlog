@@ -25,8 +25,6 @@ export interface IGlobalResponse<T> {
   status: number;
 }
 
-
-
 async function GlobalAxios<T = any, D = any>(
   method: "post" | "get" | "delete" | "put",
   url: string,
@@ -40,6 +38,7 @@ async function GlobalAxios<T = any, D = any>(
   const params = new URLSearchParams(parsedURL.searchParams || "");
 
   config.params = params;
+  config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
 
   let response;
   if (method === "post" || method === "put") {
@@ -50,9 +49,10 @@ async function GlobalAxios<T = any, D = any>(
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
 
-  if (response.statusText === "OK") {
+  if (response.data.msg !== "登录信息失效") {
     return response;
   } else {
+    localStorage.removeItem("token");
     alert(response.data.msg);
   }
   return response;

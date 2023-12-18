@@ -1,17 +1,26 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Layout, Modal, Tabs, message } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Layout,
+  Modal,
+  Tabs,
+  message,
+} from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/adminLogin.css";
 import { useState } from "react";
-import { ILoginProps } from "../../globe/inter";
+import { COOKIETOKEN, ILoginProps } from "../../globe/inter";
 import { Service } from "../../globe/service";
 import { useNavigate } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 function AdminLogin() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //管理员登录
   const [messageApi, contextHolder] = message.useMessage();
-
+  const [cookies, setCookie, removeCookie] = useCookies([COOKIETOKEN]);
   function error(text: string = "账号或密码错误") {
     messageApi.open({
       type: "error",
@@ -20,59 +29,67 @@ function AdminLogin() {
   }
   function onFinish(values: ILoginProps) {
     Service.adminLogin(values).then((res) => {
-      if(res.data.status===0){
+      console.log(res);
+      if (res.data.status === 0) {
         error();
-        return
-      }
-      if (res.data.data !== undefined) {
-        localStorage.setItem("token", res.data.data);
-        navigate("/admin/main/article")
+        return;
+      } else {
+        //bloggerLoginCheck
+        // console.log(res);
+        const token = res.data.data;
+        localStorage.setItem("token", token);
+        // setCookie(COOKIETOKEN, token, { path: '/' });
+        // console.log(cookies)
+        navigate("/admin/main/article");
       }
     });
   }
 
   return (
     <>
-    {contextHolder}
-    <Form
-      name="normal_login"
-      className="stud-login-form"
-      initialValues={{ remember: false }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="personID"
-        rules={[{ required: true, message: "Please input your Username!" }]}
+      {contextHolder}
+      <Form
+        name="normal_login"
+        className="stud-login-form"
+        initialValues={{ remember: false }}
+        onFinish={onFinish}
       >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="请输入管理员帐号"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="请输入密码"
-        />
-      </Form.Item>
+        <Form.Item
+          name="userName"
+          rules={[{ required: true, message: "Please input your Username!" }]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="请输入管理员帐号"
+          />
+        </Form.Item>
+        <Form.Item
+          name="passWord"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="请输入密码"
+          />
+        </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          登录
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            登录
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 }
 
 export function LoginPage() {
-  function callback(key: string) {
-  }
+  function callback(key: string) {}
   return (
     <>
       <Tabs
