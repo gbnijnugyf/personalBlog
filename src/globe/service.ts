@@ -17,6 +17,7 @@ import {
   appendParams2Path,
 } from "./inter";
 import { createExportDefault } from "typescript";
+import { useNavigate } from "react-router-dom";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -30,6 +31,7 @@ async function GlobalAxios<T = any, D = any>(
   url: string,
   data?: D
 ): Promise<AxiosResponse<IGlobalResponse<T>, any>> {
+  // const navigate = useNavigate();
   let config: AxiosRequestConfig<D> = {};
   config.baseURL = BASEURL;
 
@@ -53,6 +55,12 @@ async function GlobalAxios<T = any, D = any>(
     return response;
   } else {
     localStorage.removeItem("token");
+    // 重定向到根目录，重新登录
+    let redirectpos = window.location.href;
+    console.log(redirectpos)
+    redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
+    console.log(redirectpos)
+    window.location.href = redirectpos;
     alert(response.data.msg);
   }
   return response;

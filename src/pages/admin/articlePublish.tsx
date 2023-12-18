@@ -106,6 +106,7 @@ export function ArticleManagerPage() {
       const classifyArr = res.data.data.map((item) => item.name);
       const promises = classifyArr.map((classify) =>
         Service.getArticleListByClassify(classify).then((res) => {
+          // if (res.data.status === 1) {
           const list: articleMemuItem[] = res.data.data.map((aitem) => {
             const temp: articleMemuItem = {
               key: aitem.ID,
@@ -123,6 +124,7 @@ export function ArticleManagerPage() {
             label: classify,
             children: list,
           };
+          // }
         })
       );
 

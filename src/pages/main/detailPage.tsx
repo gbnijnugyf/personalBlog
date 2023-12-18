@@ -1,5 +1,5 @@
 import { Carousel } from "antd";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import "./css/index.css";
 import { useEffect, useState } from "react";
@@ -28,15 +28,19 @@ export function DetailPage() {
   useEffect(() => {
     if (location.state.className === "") {
       Service.getArticleList("all").then((res) => {
-        console.log(res)
-        const dataArr = convertTo2DArray(res.data.data, maxNum);
-        setCardArr(dataArr);
+        if (res.data.status === 1) {
+          console.log(res);
+          const dataArr = convertTo2DArray(res.data.data, maxNum);
+          setCardArr(dataArr);
+        }
       });
     } else {
       Service.getArticleList(location.state.className).then((res) => {
-        console.log(location.state.className)
-        const dataArr = convertTo2DArray(res.data.data, maxNum);
-        setCardArr(dataArr);
+        if (res.data.status === 1) {
+          console.log(location.state.className);
+          const dataArr = convertTo2DArray(res.data.data, maxNum);
+          setCardArr(dataArr);
+        }
       });
     }
   }, [location]);

@@ -12,7 +12,7 @@
   position: fixed;
   justify-content: center;
   width: 100%;
-  background-color: rgba(98, 235, 160, 0.8);
+  background-color: #3498db;
   z-index: 2;
   justify-content: flex-end;
 }
@@ -27,6 +27,15 @@
   background: none;
   border-bottom: 0;
   font-size: 50%;
+}
+.layout .menu .ant-menu-item-active {
+  color: white;
+}
+.layout .menu .ant-menu-item-selected {
+  color: white;
+}
+.layout .menu ::after {
+  color: white;
 }
 .layout .content {
   margin-left: 15vw;

@@ -185,6 +185,7 @@ function ExampleComment(props: IExampleComment) {
                 <div>
                   {item.nickname}
                   {preNickName !== "" ? ` 回复 ${preNickName}` : null}{" "}
+                  {item.isBlogger === 1 ? <Tag>博主</Tag> : null}
                   {item.time}
                 </div>
               }
@@ -216,29 +217,43 @@ export function CommentPage(props: { articleId: string; admin: boolean }) {
     nickName: "",
   };
   const [open, setOpen] = useState(false);
-  const [rootComment, setRootComment] = useState<IRootComment[]>();
+  const [rootComment, setRootComment] = useState<IRootComment[]>([]);
   const [preId, setPreId] = useState<ISetPreID>(preIDInit);
   const [display, setDisplay] = useState<boolean>(false);
   const onClose = () => {
     setOpen(false);
   };
-  console.log(props.articleId)
+  console.log(props.articleId);
   // const articleId_ = props.articleId === null ? "" : props.articleId;
   useEffect(() => {
     if (props.articleId === "-1") {
       //获取留言
       Service.getMessage().then((res) => {
-        console.log(res);
-        setRootComment(res.data.data);
+        if (res.data.status === 1) {
+          console.log(res);
+          res.data.data.sort((a, b) => {
+            const timeA = new Date(a.rootComment.time).getTime();
+            const timeB = new Date(b.rootComment.time).getTime();
+            return timeB - timeA; // 时间晚的在前面
+          });
+          setRootComment(res.data.data);
+        }
       });
     } else {
       //获取文章评论
       Service.getComment(props.articleId).then((res) => {
-        console.log(res);
-        setRootComment(res.data.data);
+        if (res.data.status === 1) {
+          console.log(res);
+          res.data.data.sort((a, b) => {
+            const timeA = new Date(a.rootComment.time).getTime();
+            const timeB = new Date(b.rootComment.time).getTime();
+            return timeB - timeA; // 时间晚的在前面
+          });
+          setRootComment(res.data.data);
+        }
       });
     }
-  }, [display,props.articleId]);
+  }, [display, props.articleId]);
 
   return (
     <>
