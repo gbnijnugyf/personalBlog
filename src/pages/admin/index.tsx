@@ -35,7 +35,9 @@ export function AdminMainPage() {
                   if (props.key === "loginout") {
                     await Service.adminLoginout().then(() =>
                       localStorage.removeItem("token")
-                    );
+                    ).catch(()=>{
+                      // error("登出失败！")
+                    });
                   }
                   navigate("main/" + props.key, { replace: true });
                 }

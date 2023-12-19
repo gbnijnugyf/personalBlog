@@ -211,7 +211,7 @@ export interface ISetPreID {
   id: string;
   nickName: string;
 }
-export function CommentPage(props: { articleId: string; admin: boolean }) {
+export function CommentPage(props: {flush?:boolean, articleId: string; admin: boolean }) {
   const preIDInit: ISetPreID = {
     id: "",
     nickName: "",
@@ -253,7 +253,7 @@ export function CommentPage(props: { articleId: string; admin: boolean }) {
         }
       });
     }
-  }, [display, props.articleId]);
+  }, [display, props.articleId,props.flush]);
 
   return (
     <>

@@ -1,5 +1,5 @@
-// export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
-export const BASEURL = "http://10.83.113.143:5000";
+export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
+// export const BASEURL = "http://10.83.113.143:5000";
 export const COOKIETOKEN = "bloggerLoginCheck"
 export function appendParams2Path(
   path: string,

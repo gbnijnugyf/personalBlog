@@ -57,9 +57,9 @@ async function GlobalAxios<T = any, D = any>(
     localStorage.removeItem("token");
     // 重定向到根目录，重新登录
     let redirectpos = window.location.href;
-    console.log(redirectpos)
+    console.log(redirectpos);
     redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
-    console.log(redirectpos)
+    console.log(redirectpos);
     window.location.href = redirectpos;
     alert(response.data.msg);
   }
@@ -177,5 +177,9 @@ export const Service = {
       "delete",
       appendParams2Path("/info/delete", { name: props.name, type: props.type })
     );
+  },
+  //订阅
+  subscribeBlog(props: { email: string }) {
+    return GlobalAxios<undefined>("post", "/func/subscribe", props);
   },
 };

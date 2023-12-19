@@ -31,10 +31,16 @@
 .layout .menu .ant-menu-item-active {
   color: white;
 }
+.layout .menu ::after {
+  color: white;
+}
 .layout .menu .ant-menu-item-selected {
   color: white;
 }
 .layout .menu ::after {
+  color: white;
+}
+.layout .menu .ant-menu-title-content::after {
   color: white;
 }
 .layout .content {

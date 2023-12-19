@@ -27,13 +27,19 @@
       border-bottom: 0;
       font-size: 50%;
     }
+    //至今没找到这个伪元素作用在哪
     .ant-menu-item-active {
+      color: white;
+    }::after {
       color: white;
     }
     .ant-menu-item-selected {
       color: white;
     }
     ::after {
+      color: white;
+    }
+    .ant-menu-title-content::after {
       color: white;
     }
   }
