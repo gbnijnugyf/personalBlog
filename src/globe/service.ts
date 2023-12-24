@@ -16,6 +16,7 @@ import {
   IDeleteFriOrClas,
   appendParams2Path,
   IData,
+  ITotalNum,
 } from "./inter";
 import { createExportDefault } from "typescript";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -196,5 +197,9 @@ export const Service = {
   //获取统计数据
   getStatData() {
     return GlobalAxios<IData>("get", appendParams2Path("/func/stat", {}));
+  },
+  //获取统计总数
+  getTotalData() {
+    return GlobalAxios<ITotalNum>("get", appendParams2Path("/func/total", {}));
   },
 };

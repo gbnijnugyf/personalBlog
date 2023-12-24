@@ -108,3 +108,7 @@ export interface IData {
     viewNum: number[];
   };
 }
+export interface ITotalNum{
+  totalComment:number,
+  totalView:number, 
+}

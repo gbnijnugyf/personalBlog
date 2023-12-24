@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import { Service } from "../../globe/service";
-import { IData } from "../../globe/inter";
+import { IData, ITotalNum } from "../../globe/inter";
 
 function RealTimeChart(props: IData) {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -93,6 +93,7 @@ export function BlogData() {
     },
   };
   const [data, setData] = useState<IData>(datainit);
+  const [totalNum, setTotalNum] = useState<ITotalNum | null>();
 
   useEffect(() => {
     // 从后端获取数据
@@ -106,6 +107,13 @@ export function BlogData() {
       .catch((res) => {
         console.error("Failed to fetch data:", res);
       });
+    Service.getTotalData()
+      .then((res) => {
+        if (res.data.status !== 0) {
+          setTotalNum(res.data.data);
+        }
+      })
+      .catch(() => setTotalNum(null));
   }, []);
 
   return (
@@ -117,6 +125,11 @@ export function BlogData() {
           viewNum: data.ydata.viewNum,
         }}
       />
+      {totalNum !== null ? (
+        <div style={{fontSize:"small"}}>
+          总浏览数:{totalNum?.totalView}；总评论数:{totalNum?.totalComment}
+        </div>
+      ) : null}
     </div>
   );
 }
