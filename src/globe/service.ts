@@ -15,9 +15,10 @@ import {
   IClassEdit,
   IDeleteFriOrClas,
   appendParams2Path,
+  IData,
 } from "./inter";
 import { createExportDefault } from "typescript";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -38,6 +39,21 @@ async function GlobalAxios<T = any, D = any>(
   const params = new URLSearchParams(parsedURL.searchParams || "");
   config.params = params;
   config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
+
+  const regex = /\/\/(.*)/;
+  const match = window.location.href.match(regex);
+  let afterDoubleSlash: string[] = [];
+  if (match && match.length > 1) {
+    afterDoubleSlash = match[1].split("/");
+  } else {
+    console.log("无法截取 // 之后的字符串");
+  }
+  if (afterDoubleSlash[1] === "admin" && afterDoubleSlash[2] === "main") {
+    config.headers = { adminCheck: true };
+  } else {
+    config.headers = { adminCheck: false };
+  }
+
   let response;
   if (method === "post" || method === "put") {
     //axios将data自动序列化为json格式
@@ -55,7 +71,7 @@ async function GlobalAxios<T = any, D = any>(
     console.log(redirectpos);
     redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
     console.log(redirectpos);
-    window.location.href = redirectpos+"admin/login";
+    window.location.href = redirectpos + "admin/login";
     alert(response.data.msg);
   }
   return response;
@@ -176,5 +192,9 @@ export const Service = {
   //订阅
   subscribeBlog(props: { email: string }) {
     return GlobalAxios<undefined>("post", "/func/subscribe", props);
+  },
+  //获取统计数据
+  getStatData() {
+    return GlobalAxios<IData>("get", appendParams2Path("/func/stat", {}));
   },
 };

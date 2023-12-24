@@ -1,5 +1,5 @@
-// export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
-export const BASEURL = "http://10.79.140.249:5000";
+export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
+// export const BASEURL = "http://10.79.140.249:5000";
 export const COOKIETOKEN = "bloggerLoginCheck"
 export function appendParams2Path(
   path: string,
@@ -99,4 +99,12 @@ export interface IClassEdit {
 export interface IDeleteFriOrClas {
   name: string;
   type: string; //"1"表示分类、"2"表示友链
+}
+
+export interface IData {
+  xdata: string[];
+  ydata: {
+    commentNum: number[];
+    viewNum: number[];
+  };
 }

@@ -1,257 +1,122 @@
-import React, { useState, useEffect } from "react";
-import { Line } from "@ant-design/charts";
-export function BlogData() {
-  const data = [
-    {
-      date: "2018/8/1",
-      type: "download",
-      value: 4623,
-    },
-    {
-      date: "2018/8/1",
-      type: "register",
-      value: 2208,
-    },
-    {
-      date: "2018/8/1",
-      type: "bill",
-      value: 182,
-    },
-    {
-      date: "2018/8/2",
-      type: "download",
-      value: 6145,
-    },
-    {
-      date: "2018/8/2",
-      type: "register",
-      value: 2016,
-    },
-    {
-      date: "2018/8/2",
-      type: "bill",
-      value: 257,
-    },
-    {
-      date: "2018/8/3",
-      type: "download",
-      value: 508,
-    },
-    {
-      date: "2018/8/3",
-      type: "register",
-      value: 2916,
-    },
-    {
-      date: "2018/8/3",
-      type: "bill",
-      value: 289,
-    },
-    {
-      date: "2018/8/4",
-      type: "download",
-      value: 6268,
-    },
-    {
-      date: "2018/8/4",
-      type: "register",
-      value: 4512,
-    },
-    {
-      date: "2018/8/4",
-      type: "bill",
-      value: 428,
-    },
-    {
-      date: "2018/8/5",
-      type: "download",
-      value: 6411,
-    },
-    {
-      date: "2018/8/5",
-      type: "register",
-      value: 8281,
-    },
-    {
-      date: "2018/8/5",
-      type: "bill",
-      value: 619,
-    },
-    {
-      date: "2018/8/6",
-      type: "download",
-      value: 1890,
-    },
-    {
-      date: "2018/8/6",
-      type: "register",
-      value: 2008,
-    },
-    {
-      date: "2018/8/6",
-      type: "bill",
-      value: 87,
-    },
-    {
-      date: "2018/8/7",
-      type: "download",
-      value: 4251,
-    },
-    {
-      date: "2018/8/7",
-      type: "register",
-      value: 1963,
-    },
-    {
-      date: "2018/8/7",
-      type: "bill",
-      value: 706,
-    },
-    {
-      date: "2018/8/8",
-      type: "download",
-      value: 2978,
-    },
-    {
-      date: "2018/8/8",
-      type: "register",
-      value: 2367,
-    },
-    {
-      date: "2018/8/8",
-      type: "bill",
-      value: 387,
-    },
-    {
-      date: "2018/8/9",
-      type: "download",
-      value: 3880,
-    },
-    {
-      date: "2018/8/9",
-      type: "register",
-      value: 2956,
-    },
-    {
-      date: "2018/8/9",
-      type: "bill",
-      value: 488,
-    },
-    {
-      date: "2018/8/10",
-      type: "download",
-      value: 3606,
-    },
-    {
-      date: "2018/8/10",
-      type: "register",
-      value: 678,
-    },
-    {
-      date: "2018/8/10",
-      type: "bill",
-      value: 507,
-    },
-    {
-      date: "2018/8/11",
-      type: "download",
-      value: 4311,
-    },
-    {
-      date: "2018/8/11",
-      type: "register",
-      value: 3188,
-    },
-    {
-      date: "2018/8/11",
-      type: "bill",
-      value: 548,
-    },
-    {
-      date: "2018/8/12",
-      type: "download",
-      value: 4116,
-    },
-    {
-      date: "2018/8/12",
-      type: "register",
-      value: 3491,
-    },
-    {
-      date: "2018/8/12",
-      type: "bill",
-      value: 456,
-    },
-    {
-      date: "2018/8/13",
-      type: "download",
-      value: 6419,
-    },
-    {
-      date: "2018/8/13",
-      type: "register",
-      value: 2852,
-    },
-    {
-      date: "2018/8/13",
-      type: "bill",
-      value: 689,
-    },
-    {
-      date: "2018/8/14",
-      type: "download",
-      value: 1643,
-    },
-    {
-      date: "2018/8/14",
-      type: "register",
-      value: 4788,
-    },
-    {
-      date: "2018/8/14",
-      type: "bill",
-      value: 280,
-    },
-    {
-      date: "2018/8/15",
-      type: "download",
-      value: 445,
-    },
-    {
-      date: "2018/8/15",
-      type: "register",
-      value: 4319,
-    },
-    {
-      date: "2018/8/15",
-      type: "bill",
-      value: 176,
-    },
-  ];
-  const config = {
-    title: {
-      visible: true,
-      text: "多折线图",
-    },
-    description: {
-      visible: true,
-      text: "指定折线颜色",
-    },
-    padding: "auto",
-    forceFit: true,
-    data,
-    xField: "date",
-    yField: "value",
-    yAxis: {
-      label: {
-        formatter: (v: any) =>
-          `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+import React, { useEffect, useRef, useState } from "react";
+import * as echarts from "echarts";
+import { Service } from "../../globe/service";
+import { IData } from "../../globe/inter";
+
+function RealTimeChart(props: IData) {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstance = useRef<echarts.ECharts | null>(null);
+
+  useEffect(() => {
+    // 创建图表实例
+    chartInstance.current = echarts.init(chartRef.current as HTMLDivElement);
+
+    // 配置图表选项
+    //TODO:若设为echarts.EChartOption类型，series全红但是能运行。。无语子
+    const options: any = {
+      title: { text: "博客每日评论数及浏览数" },
+      tooltip: {
+        trigger: "axis",
       },
+      legend: {
+        data: ["评论数", "浏览数"],
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ["bar", "line"] },
+          restore: { show: true },
+          saveAsImage: {
+            show: true,
+            type: "jpg",
+          },
+        },
+      },
+      xAxis: {
+        type: "category",
+        data: props.xdata,
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          name: "评论数",
+          type: "line",
+          data: props.ydata.commentNum,
+          markPoint: {
+            data: [
+              { type: "max", name: "最大值" },
+              { type: "min", name: "最小值" },
+            ],
+          },
+          markLine: {
+            data: [{ type: "average", name: "平均值" }],
+          },
+        },
+        {
+          name: "浏览数",
+          type: "line",
+          data: props.ydata.viewNum,
+          markPoint: {
+            data: [
+              { type: "max", name: "最大值" },
+              { type: "min", name: "最小值" },
+            ],
+          },
+          markLine: {
+            data: [{ type: "average", name: "平均值" }],
+          },
+        },
+      ],
+    };
+
+    // 设置图表选项
+    chartInstance.current.setOption(options);
+
+    // 在组件卸载时销毁图表实例
+    return () => {
+      chartInstance.current?.dispose();
+    };
+  }, [props]);
+
+  return <div ref={chartRef} style={{ height: "83vh", width: "100%" }} />;
+}
+
+export function BlogData() {
+  const datainit: IData = {
+    xdata: [],
+    ydata: {
+      commentNum: [],
+      viewNum: [],
     },
-    legend: { position: "right-top" },
-    seriesField: "type",
-    color: ["#1979C9", "#D62A0D", "#FAA219"],
-    responsive: true,
   };
-  return <Line {...config} />;
+  const [data, setData] = useState<IData>(datainit);
+
+  useEffect(() => {
+    // 从后端获取数据
+    Service.getStatData()
+      .then((res) => {
+        // if (res.status === 1) {
+        console.log(res);
+        setData(res.data.data);
+        // }
+      })
+      .catch((res) => {
+        console.error("Failed to fetch data:", res);
+      });
+  }, []);
+
+  return (
+    <div>
+      <RealTimeChart
+        xdata={data.xdata}
+        ydata={{
+          commentNum: data.ydata.commentNum,
+          viewNum: data.ydata.viewNum,
+        }}
+      />
+    </div>
+  );
 }
