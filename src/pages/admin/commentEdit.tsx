@@ -41,7 +41,11 @@ export function CommentManagerPage() {
       );
 
       Promise.all(promises).then((res) => {
-        let menuList: articleMenu[] = res;
+        console.log(res)
+        let menuList: articleMenu[] = res.filter((item) => {
+          console.log(item.children.length)
+          return item.children.length > 0;
+        });
         menuList.push({
           key: "unique-message",
           label: "留言",
