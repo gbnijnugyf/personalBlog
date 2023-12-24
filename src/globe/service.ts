@@ -34,14 +34,10 @@ async function GlobalAxios<T = any, D = any>(
   // const navigate = useNavigate();
   let config: AxiosRequestConfig<D> = {};
   config.baseURL = BASEURL;
-
   const parsedURL = new URL(BASEURL + url);
-
   const params = new URLSearchParams(parsedURL.searchParams || "");
-
   config.params = params;
   config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
-
   let response;
   if (method === "post" || method === "put") {
     //axios将data自动序列化为json格式
@@ -50,7 +46,6 @@ async function GlobalAxios<T = any, D = any>(
     // params.set("time", new Date().getTime().toString());
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
-
   if (response.data.msg !== "登录信息失效") {
     return response;
   } else {
@@ -60,7 +55,7 @@ async function GlobalAxios<T = any, D = any>(
     console.log(redirectpos);
     redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
     console.log(redirectpos);
-    window.location.href = redirectpos;
+    window.location.href = redirectpos+"admin/login";
     alert(response.data.msg);
   }
   return response;

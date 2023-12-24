@@ -46,7 +46,6 @@ export function Routers() {
           <Route path="friendLink" element={<FriendEditPage />} />
         </Route>
       </Route>
-      <Route path="setting" element={<>设置</>} />
     </Routes>
   );
 }
