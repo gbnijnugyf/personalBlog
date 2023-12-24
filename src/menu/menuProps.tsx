@@ -2,6 +2,7 @@ import {
   CopyOutlined,
   DownOutlined,
   HomeOutlined,
+  LineChartOutlined,
   LinkOutlined,
   LogoutOutlined,
   MessageOutlined,
@@ -149,6 +150,11 @@ export const menuAdminSider = [
     key: "friendLink",
     icon: <LinkOutlined />,
     label: "友情链接管理",
+  },
+  {
+    key: "blogData",
+    icon: <LineChartOutlined />,
+    label: "博客数据统计",
   },
   {
     key: "loginout",

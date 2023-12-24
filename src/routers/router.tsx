@@ -10,6 +10,7 @@ import { CommentManagerPage } from "../pages/admin/commentEdit";
 import { About } from "../pages/main/about";
 import { FriendPage } from "../pages/main/friend";
 import { FriendEditPage } from "../pages/admin/friendEdit";
+import { BlogData } from "../pages/admin/blogData";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ export function Routers() {
           <Route path="article/*" element={<ArticleManagerPage />} />
           <Route path="comment" element={<CommentManagerPage />} />
           <Route path="friendLink" element={<FriendEditPage />} />
+          <Route path="blogData" element={<BlogData />} />
         </Route>
       </Route>
     </Routes>
