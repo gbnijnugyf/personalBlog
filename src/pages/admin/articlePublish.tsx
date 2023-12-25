@@ -328,7 +328,6 @@ function ClassEdit(props: {
     setEditingKey("");
   };
   const handleDelete = (key: React.Key) => {
-    props.setDisplay(!props.display);
     console.log(key.toString());
     const delTemp: IDeleteFriOrClas = {
       name: key.toString(),
@@ -337,6 +336,7 @@ function ClassEdit(props: {
     Service.deleteFriOrClas(delTemp)
       .then(() => {
         props.successFunc("删除成功");
+        props.setDisplay(!props.display)
         const newData = data.filter((item) => item.key !== key);
         setData(newData);
       })

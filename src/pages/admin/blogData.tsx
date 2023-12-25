@@ -127,7 +127,7 @@ export function BlogData() {
       />
       {totalNum !== null ? (
         <div style={{fontSize:"small"}}>
-          总浏览数:{totalNum?.totalView}；总评论数:{totalNum?.totalComment}
+          总文章数:{totalNum?.totalPassage}；总浏览数:{totalNum?.totalView}；总评论数:{totalNum?.totalComment}
         </div>
       ) : null}
     </div>

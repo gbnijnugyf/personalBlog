@@ -157,6 +157,11 @@ export const menuAdminSider = [
     label: "博客数据统计",
   },
   {
+    key: "person",
+    icon: <RadarChartOutlined />,
+    label: "个人信息",
+  },
+  {
     key: "loginout",
     icon: <LogoutOutlined />,
     label: "登出",

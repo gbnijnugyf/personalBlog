@@ -46,6 +46,7 @@ export function Routers() {
           <Route path="comment" element={<CommentManagerPage />} />
           <Route path="friendLink" element={<FriendEditPage />} />
           <Route path="blogData" element={<BlogData />} />
+          <Route path="person" element={<></>} />
         </Route>
       </Route>
     </Routes>

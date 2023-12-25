@@ -39,7 +39,7 @@ async function GlobalAxios<T = any, D = any>(
   const parsedURL = new URL(BASEURL + url);
   const params = new URLSearchParams(parsedURL.searchParams || "");
   config.params = params;
-  config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
+  // config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
 
   const regex = /\/\/(.*)/;
   const match = window.location.href.match(regex);
@@ -50,9 +50,16 @@ async function GlobalAxios<T = any, D = any>(
     console.log("无法截取 // 之后的字符串");
   }
   if (afterDoubleSlash[1] === "admin" && afterDoubleSlash[2] === "main") {
-    config.headers = { adminCheck: true };
+    config.headers = {
+      adminCheck: "true",
+      bloggerLoginCheck: localStorage.getItem("token") || "",
+    };
   } else {
-    config.headers = { adminCheck: false };
+    console.log("afterDoubleSlash:", afterDoubleSlash);
+    config.headers = {
+      adminCheck: "false",
+      bloggerLoginCheck: localStorage.getItem("token") || "",
+    };
   }
 
   let response;
@@ -73,7 +80,7 @@ async function GlobalAxios<T = any, D = any>(
     redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
     console.log(redirectpos);
     window.location.href = redirectpos + "admin/login";
-    alert(response.data.msg);
+    // alert(response.data.msg);
   }
   return response;
 }
@@ -177,11 +184,13 @@ export const Service = {
   },
   //友情链接编辑保存
   saveFriendLinkEdit(props: IFriendLink) {
-    return axios.put(BASEURL + "/info/editF", props);
+    return GlobalAxios<undefined>("put", "/info/editF", props);
+    // return axios.put(BASEURL + "/info/editF", props);
   },
   //分类编辑保存
   saveClassEdit(props: IClassEdit) {
-    return axios.put(BASEURL + "/info/editC", props);
+    return GlobalAxios<undefined>("put", "/info/editC", props);
+    // return axios.put(BASEURL + "/info/editC", props);
   },
   //删除友情/分类链接
   deleteFriOrClas(props: IDeleteFriOrClas) {

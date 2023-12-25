@@ -15,7 +15,7 @@ import { ITotalNum } from "../../globe/inter";
 
 export function MainPage() {
   const [headerMenu, setHeaderMenu] = useState<IMenuProps[]>();
-  const [totalNum, setTotalNum] = useState<ITotalNum|null>();
+  const [totalNum, setTotalNum] = useState<ITotalNum | null>();
   const navigate = useNavigate();
   useEffect(() => {
     Service.getClassify().then((res) => {
@@ -30,11 +30,13 @@ export function MainPage() {
         setHeaderMenu(headerMenuTemp);
       });
     });
-    Service.getTotalData().then(res=>{
-      if(res.data.status !== 0){
-        setTotalNum(res.data.data)
-      }
-    }).catch(()=>setTotalNum(null))
+    Service.getTotalData()
+      .then((res) => {
+        if (res.data.status !== 0) {
+          setTotalNum(res.data.data);
+        }
+      })
+      .catch(() => setTotalNum(null));
   }, []);
 
   return (
@@ -82,7 +84,8 @@ export function MainPage() {
         <Footer className="footer">
           {totalNum !== null ? (
             <div>
-              总浏览数:{totalNum?.totalView}；总评论数:{totalNum?.totalComment}
+              总文章数:{totalNum?.totalPassage}；总浏览数:{totalNum?.totalView}
+              ；总评论数:{totalNum?.totalComment}
             </div>
           ) : null}
           <div>Personal Blog ©2023 Created by gbnijnugyf</div>

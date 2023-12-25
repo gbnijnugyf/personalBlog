@@ -106,7 +106,7 @@ export function FriendEditPage() {
         setData(res);
       });
     });
-  }, []);
+  }, [display]);
 
   const isEditing = (record: Item) => record.key === editingKey;
 
@@ -312,7 +312,7 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
   };
 
   interface IPublishForm {
-    linkName: string;
+    name: string;
     description: string;
     url: string;
     cover: any[];
@@ -327,9 +327,10 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
     const linkInfo: IFriendLink = {
       cover: fileBase64,
       description: values.description,
-      name: values.linkName,
+      name: values.name,
       url: values.url,
     };
+    console.log(linkInfo)
     Service.addFriendLink(linkInfo)
       .then((res) => {
         console.log(res);
@@ -347,14 +348,14 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
       onFinish={onFinish}
       style={{ maxWidth: 600 }}
     >
-      <Form.Item name="linkName" label="链接名" rules={[{ required: true }]}>
+      <Form.Item name="name" label="链接名" rules={[{ required: true }]}>
         <Input placeholder="请输入链接名" showCount maxLength={15} />
       </Form.Item>
-      <Form.Item name="linkUrl" label="链接地址" rules={[{ required: true }]}>
+      <Form.Item name="url" label="链接地址" rules={[{ required: true }]}>
         <Input placeholder="请输入链接地址" maxLength={9999} />
       </Form.Item>
       <Form.Item
-        name="linkDescribe"
+        name="description"
         label="链接描述"
         rules={[{ required: true }]}
       >
