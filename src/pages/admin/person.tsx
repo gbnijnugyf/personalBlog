@@ -21,7 +21,7 @@ import {
 } from "antd";
 import "./css/person.css";
 import { Service } from "../../globe/service";
-import { AddComment, CommentPage, ISetPreID } from "../main/comment";
+import { AddComment, ISetPreID } from "../main/comment";
 import { IArticle, ILoginProps, IPersonal } from "../../globe/inter";
 import { useNavigate } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
@@ -270,7 +270,7 @@ function PwdEditForm(props: IPwdEditForm) {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-
+const navigate = useNavigate();
   const onFinish = (values: ILoginProps) => {
     const pwdInfo: ILoginProps = {
       userName: values.userName,
@@ -279,8 +279,14 @@ function PwdEditForm(props: IPwdEditForm) {
     console.log(pwdInfo);
     Service.editPwd(pwdInfo)
       .then((res) => {
-        props.successFunc("编辑成功");
-        console.log(res);
+        if(res.data.status!==0){
+          
+          props.successFunc("编辑成功");
+          localStorage.removeItem("token")
+          navigate("/admin/login")
+          console.log(res);
+        }
+        
       })
       .catch(() => props.failFunc("编辑失败"));
   };

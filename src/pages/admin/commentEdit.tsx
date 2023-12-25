@@ -121,7 +121,7 @@ function CommentEdit(props: IArticleEdit) {
       >
         点我回到文章详情
       </div>
-      <CommentPage articleId={props.ID} admin={true} />
+      <CommentPage articleId={props.ID} admin={true} msgOrComment={0} />
     </>
   );
 }
@@ -156,7 +156,7 @@ function Message() {
           </List.Item>
         )}
       /> */}
-      <CommentPage articleId={"-1"} admin={true} />
+      <CommentPage articleId={"-1"} admin={true} msgOrComment={1} />
     </>
   );
 }

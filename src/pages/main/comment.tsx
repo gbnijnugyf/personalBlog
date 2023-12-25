@@ -211,7 +211,12 @@ export interface ISetPreID {
   id: string;
   nickName: string;
 }
-export function CommentPage(props: {flush?:boolean, articleId: string; admin: boolean }) {
+export function CommentPage(props: {
+  flush?: boolean;
+  articleId: string;
+  admin: boolean;
+  msgOrComment: number;
+}) {
   const preIDInit: ISetPreID = {
     id: "",
     nickName: "",
@@ -253,7 +258,7 @@ export function CommentPage(props: {flush?:boolean, articleId: string; admin: bo
         }
       });
     }
-  }, [display, props.articleId,props.flush]);
+  }, [display, props.articleId, props.flush]);
 
   return (
     <>
@@ -308,7 +313,7 @@ export function CommentPage(props: {flush?:boolean, articleId: string; admin: bo
           setOpen={setOpen}
           display={display}
           setDisplay={setDisplay}
-          msgOrComment={0}
+          msgOrComment={props.msgOrComment}
         />
       </Drawer>
     </>
@@ -362,7 +367,7 @@ export function AddComment(props: IAddComment) {
         } else {
           success("留言成功");
         }
-        props.setDisplay(!props.display)
+        props.setDisplay(!props.display);
         props.setOpen(false);
       })
       .catch(() => {

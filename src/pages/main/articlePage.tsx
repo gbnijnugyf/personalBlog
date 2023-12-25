@@ -99,7 +99,7 @@ export function ArticlePage() {
             </div>
           </Layout>
           <div className="comment">
-            <CommentPage articleId={articleId} admin={false} />
+            <CommentPage articleId={articleId} admin={false} msgOrComment={0} />
           </div>
         </div>
       )}

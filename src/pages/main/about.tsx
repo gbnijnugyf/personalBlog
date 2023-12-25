@@ -135,7 +135,7 @@ export function About() {
           </List.Item>
         )}
       />
-      <CommentPage articleId={"-1"} admin={false} flush={display} />
+      <CommentPage articleId={"-1"} admin={false} flush={display} msgOrComment={1} />
       <Modal
         title="订阅"
         open={subscribeDialog}
