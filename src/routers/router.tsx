@@ -11,6 +11,7 @@ import { About } from "../pages/main/about";
 import { FriendPage } from "../pages/main/friend";
 import { FriendEditPage } from "../pages/admin/friendEdit";
 import { BlogData } from "../pages/admin/blogData";
+import { Person } from "../pages/admin/person";
 
 export function Routers() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export function Routers() {
           <Route path="comment" element={<CommentManagerPage />} />
           <Route path="friendLink" element={<FriendEditPage />} />
           <Route path="blogData" element={<BlogData />} />
-          <Route path="person" element={<></>} />
+          <Route path="person" element={<Person />} />
         </Route>
       </Route>
     </Routes>

@@ -1,5 +1,5 @@
 import { MessageOutlined, UserOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -15,20 +15,34 @@ import {
 import { AddComment, CommentPage, ISetPreID } from "./comment";
 import "./css/about.css";
 import { Service } from "../../globe/service";
+import { IPersonal } from "../../globe/inter";
 
-const data = Array.from({ length: 1 }).map((_, i) => ({
-  title: `个人信息`,
-  avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
-  description: "苦逼",
-  content: "苦逼程序员一个",
+const datainit: IPersonal[] = Array.from({ length: 1 }).map((_, i) => ({
+  nickname: `个人信息`,
+  email: "!",
+  avator: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
+  description: "苦逼程序员一个",
 }));
 
 export function About() {
+  console.log(window.location.href)
   const [open, setOpen] = useState(false);
   const [subscribeDialog, setSubscribeDialog] = useState<boolean>(false);
   const [display, setDisplay] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [messageApi, contextHolder] = message.useMessage();
+  const [data, setData] = useState<IPersonal[]>(datainit);
+
+
+  useEffect(() => {
+    Service.getPersonInfo().then((res) => {
+      // if(res.data.status!==0){
+      const temp: IPersonal[] = [];
+      temp.push(res.data.data);
+      setData(temp);
+      // }
+    });
+  }, []);
 
   function success(text: string = "成功") {
     messageApi.open({
@@ -79,7 +93,7 @@ export function About() {
         dataSource={data}
         renderItem={(item) => (
           <List.Item
-            key={item.title}
+            key={item.nickname}
             actions={[
               <Popover content={"给博主留言"}>
                 <Button
@@ -113,11 +127,11 @@ export function About() {
             }
           >
             <List.Item.Meta
-              avatar={<Avatar icon={<UserOutlined />} src={item.avatar} />}
-              title={<div>{item.title}</div>}
-              description={item.description}
+              avatar={<Avatar icon={<UserOutlined />} src={item.avator} />}
+              title={<div>{item.nickname}</div>}
+              description={item.email}
             />
-            {item.content}
+            {item.description}
           </List.Item>
         )}
       />

@@ -325,7 +325,7 @@ const tailLayout = {
 };
 
 interface IAddComment {
-  msgOrComment: number; //评论还是留言。为0时，属于留言；为1时，属于文章评论
+  msgOrComment: number; //评论还是留言。为1时，属于留言；为0时，属于文章评论
   pre: ISetPreID;
   articleID: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -362,6 +362,7 @@ export function AddComment(props: IAddComment) {
         } else {
           success("留言成功");
         }
+        props.setDisplay(!props.display)
         props.setOpen(false);
       })
       .catch(() => {

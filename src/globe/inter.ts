@@ -1,5 +1,5 @@
 // export const BASEURL = "http://127.0.0.1:4523/m1/3692872-0-default";
-export const BASEURL = "http://10.133.15.15:5000";
+export const BASEURL = "http://10.79.140.249:5000";
 export const COOKIETOKEN = "bloggerLoginCheck"
 export function appendParams2Path(
   path: string,
@@ -112,4 +112,11 @@ export interface ITotalNum{
   totalComment:number,
   totalView:number, 
   totalPassage:number
+}
+
+export interface IPersonal {
+  avator: string|null;
+  description: string;
+  email: string;
+  nickname: string;
 }

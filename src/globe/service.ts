@@ -17,6 +17,7 @@ import {
   appendParams2Path,
   IData,
   ITotalNum,
+  IPersonal,
 } from "./inter";
 import { createExportDefault } from "typescript";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -51,13 +52,13 @@ async function GlobalAxios<T = any, D = any>(
   }
   if (afterDoubleSlash[1] === "admin" && afterDoubleSlash[2] === "main") {
     config.headers = {
-      adminCheck: "true",
+      adminCheck: "admin",
       bloggerLoginCheck: localStorage.getItem("token") || "",
     };
   } else {
     console.log("afterDoubleSlash:", afterDoubleSlash);
     config.headers = {
-      adminCheck: "false",
+      adminCheck: "visitor",
       bloggerLoginCheck: localStorage.getItem("token") || "",
     };
   }
@@ -210,5 +211,17 @@ export const Service = {
   //获取统计总数
   getTotalData() {
     return GlobalAxios<ITotalNum>("get", appendParams2Path("/func/total", {}));
+  },
+  //编辑个人信息
+  editPersonInfo(props: IPersonal) {
+    return GlobalAxios<undefined>("put", "/admin/edit", props);
+  },
+  //获取个人信息
+  getPersonInfo() {
+    return GlobalAxios<IPersonal>("get", appendParams2Path("/about/page", {}));
+  },
+  //修改账号密码
+  editPwd(props: ILoginProps) {
+    return GlobalAxios<undefined>("put", "/admin/change", props);
   },
 };
