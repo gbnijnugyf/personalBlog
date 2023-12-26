@@ -39,11 +39,11 @@ export function Person() {
   };
   useEffect(() => {
     Service.getPersonInfo().then((res) => {
-      // if(res.data.status!==0){
-      const temp: IPersonal[] = [];
-      temp.push(res.data.data);
-      setData(temp);
-      // }
+      if (res.data.status !== 0) {
+        const temp: IPersonal[] = [];
+        temp.push(res.data.data);
+        setData(temp);
+      }
     });
   }, [display]);
 
@@ -172,9 +172,12 @@ function PersonEditForm(props: IPersonEditFrom) {
     console.log(personInfo);
     Service.editPersonInfo(personInfo)
       .then((res) => {
-        props.successFunc("编辑成功");
-        props.setDisplay(!props.display);
-        console.log(res);
+        if (res.data.status !== 0) {
+          props.successFunc("编辑成功");
+          props.setDisplay(!props.display);
+        } else {
+          props.failFunc("编辑失败");
+        }
       })
       .catch(() => props.failFunc("编辑失败"));
   };
@@ -269,6 +272,8 @@ function PwdEditForm(props: IPwdEditForm) {
           localStorage.removeItem("token");
           navigate("/admin/login");
           console.log(res);
+        } else {
+          props.failFunc("编辑失败");
         }
       })
       .catch(() => props.failFunc("编辑失败"));

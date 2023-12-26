@@ -24,7 +24,7 @@ const datainit: IPersonal[] = Array.from({ length: 1 }).map((_, i) => ({
 }));
 
 export function About() {
-  console.log(window.location.href)
+  console.log(window.location.href);
   const [open, setOpen] = useState(false);
   const [subscribeDialog, setSubscribeDialog] = useState<boolean>(false);
   const [display, setDisplay] = useState<boolean>(false);
@@ -32,14 +32,13 @@ export function About() {
   const [messageApi, contextHolder] = message.useMessage();
   const [data, setData] = useState<IPersonal[]>(datainit);
 
-
   useEffect(() => {
     Service.getPersonInfo().then((res) => {
-      // if(res.data.status!==0){
-      const temp: IPersonal[] = [];
-      temp.push(res.data.data);
-      setData(temp);
-      // }
+      if (res.data.status !== 0) {
+        const temp: IPersonal[] = [];
+        temp.push(res.data.data);
+        setData(temp);
+      }
     });
   }, []);
 
@@ -134,7 +133,12 @@ export function About() {
           </List.Item>
         )}
       />
-      <CommentPage articleId={"-1"} admin={false} flush={display} msgOrComment={1} />
+      <CommentPage
+        articleId={"-1"}
+        admin={false}
+        flush={display}
+        msgOrComment={1}
+      />
       <Modal
         title="订阅"
         open={subscribeDialog}

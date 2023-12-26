@@ -125,10 +125,14 @@ export function FriendEditPage() {
       type: "2", //表示友链
     };
     Service.deleteFriOrClas(delTemp)
-      .then(() => {
-        success("删除成功");
-        const newData = data.filter((item) => item.key !== key);
-        setData(newData);
+      .then((res) => {
+        if (res.data.status !== 0) {
+          success("删除成功");
+          const newData = data.filter((item) => item.key !== key);
+          setData(newData);
+        } else {
+          error("删除失败");
+        }
       })
       .catch(() => error("删除失败"));
   };
@@ -329,8 +333,12 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
     };
     Service.addFriendLink(linkInfo)
       .then((res) => {
-        props.setDisplay(!props.dispaly);
-        props.successFunc("添加成功");
+        if (res.data.status !== 0) {
+          props.setDisplay(!props.dispaly);
+          props.successFunc("添加成功");
+        } else {
+          props.failFunc("添加失败");
+        }
       })
       .catch(() => {
         props.failFunc("添加失败");
