@@ -1,5 +1,5 @@
-import { Layout, Menu, Tabs } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Layout, Menu, message } from "antd";
+import { Content, Header } from "antd/es/layout/layout";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "./css/index.css";
 import Sider from "antd/es/layout/Sider";
@@ -10,6 +10,13 @@ import { Service } from "../../globe/service";
 export function AdminMainPage() {
   const localtion = useLocation();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  function error(text: string = "登出失败") {
+    messageApi.open({
+      type: "error",
+      content: text,
+    });
+  }
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
       navigate("/admin/login");
@@ -18,6 +25,7 @@ export function AdminMainPage() {
 
   return (
     <>
+      {contextHolder}
       <Layout className="admin-layout">
         <Header className="menu">个人博客后台管理</Header>
         {!localtion.pathname.startsWith("/admin/main") ? (
@@ -27,17 +35,16 @@ export function AdminMainPage() {
             <Menu
               mode="inline"
               defaultSelectedKeys={["article"]}
-              // defaultOpenKeys={["sub1"]}
               style={{ height: "92vh" }}
               items={menuAdminSider}
               onClick={async (props) => {
                 if (props.key.length !== 0) {
                   if (props.key === "loginout") {
-                    await Service.adminLoginout().then(() =>
-                      localStorage.removeItem("token")
-                    ).catch(()=>{
-                      // error("登出失败！")
-                    });
+                    await Service.adminLoginout()
+                      .then(() => localStorage.removeItem("token"))
+                      .catch(() => {
+                        error();
+                      });
                   }
                   navigate("main/" + props.key, { replace: true });
                 }

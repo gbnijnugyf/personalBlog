@@ -1,6 +1,5 @@
 import {
   CopyOutlined,
-  DownOutlined,
   HomeOutlined,
   LineChartOutlined,
   LinkOutlined,
@@ -9,9 +8,7 @@ import {
   RadarChartOutlined,
   SmileOutlined,
   UnorderedListOutlined,
-  UserSwitchOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
 interface ICreateInitMenu {
@@ -86,11 +83,6 @@ export const menuHeaderProps = [
     icon: <HomeOutlined />,
     label: "首页",
   },
-  // {
-  //   key: "filed",
-  //   icon: <DiffOutlined />,
-  //   label: "归档",
-  // },
   {
     key: "about",
     icon: <RadarChartOutlined />,
@@ -102,14 +94,6 @@ export const menuHeaderProps = [
     label: "友情链接",
   },
 ];
-//首页，分类，归档，关于，友情链接，搜索
-// export const menuHeaderPropsR = [
-//   {
-//     key: "setting",
-//     icon: <UserSwitchOutlined />,
-//     label: null,
-//   },
-// ];
 
 export const menuMainDetailSider = [
   {

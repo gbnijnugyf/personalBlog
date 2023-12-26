@@ -9,7 +9,6 @@ import {
   Popover,
   Modal,
   Input,
-  Form,
   message,
 } from "antd";
 import { AddComment, CommentPage, ISetPreID } from "./comment";

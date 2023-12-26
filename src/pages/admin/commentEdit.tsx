@@ -1,16 +1,15 @@
-import { Avatar, List, Menu } from "antd";
+import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Layout, { Content } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 
 import "./css/commentEdit.css";
 import { Service } from "../../globe/service";
-import { IComment, IMenuInfo, appendParams2Path } from "../../globe/inter";
+import { IMenuInfo } from "../../globe/inter";
 import { articleMemuItem, articleMenu } from "./articlePublish";
 import { IArticleEdit } from "./articleEdit";
 import { CommentPage } from "../main/comment";
-import { Link, useNavigate } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 export function CommentManagerPage() {
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
@@ -41,9 +40,9 @@ export function CommentManagerPage() {
       );
 
       Promise.all(promises).then((res) => {
-        console.log(res)
+        console.log(res);
         let menuList: articleMenu[] = res.filter((item) => {
-          console.log(item.children.length)
+          console.log(item.children.length);
           return item.children.length > 0;
         });
         menuList.push({
@@ -104,15 +103,6 @@ function CommentEdit(props: IArticleEdit) {
   const navigate = useNavigate();
   return (
     <>
-      {/* TODO:打开新标签页并传参 */}
-      {/* <Link
-        to={"/main/article"}
-        // to={appendParams2Path("/main/article", { id: props.ID })}
-        replace={true}
-        state={{ id: props.ID }}
-      >
-        ww
-      </Link> */}
       <div
         onClick={() =>
           navigate("/main/article", { replace: true, state: { id: props.ID } })
@@ -127,36 +117,5 @@ function CommentEdit(props: IArticleEdit) {
 }
 
 function Message() {
-  const [msgList, setMsgList] = useState<IComment[]>();
-  // useEffect(() => {
-  //   Service.getMessage().then((res) => {
-  //     console.log(res)
-  //     const list: IComment[] = res.data.data;
-  //     setMsgList(list);
-  //   });
-  // }, []);
-  return (
-    <>
-      {/* <List
-        itemLayout="horizontal"
-        dataSource={msgList}
-        renderItem={(item, index) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon={<UserOutlined />} src={""} />}
-              // title={<a href="https://ant.design">{item.title}</a>}
-              description={
-                <>
-                  <div>{item.nickname}</div>
-                  <div>{item.email}</div>
-                </>
-              }
-            />
-            {item.body}
-          </List.Item>
-        )}
-      /> */}
-      <CommentPage articleId={"-1"} admin={true} msgOrComment={1} />
-    </>
-  );
+  return <CommentPage articleId={"-1"} admin={true} msgOrComment={1} />;
 }

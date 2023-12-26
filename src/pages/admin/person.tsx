@@ -1,17 +1,10 @@
-import {
-  EditOutlined,
-  MessageOutlined,
-  UploadOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { SetStateAction, useEffect, useState } from "react";
+import { EditOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
-  Drawer,
   List,
   Image,
-  Popover,
   Modal,
   Input,
   Form,
@@ -21,8 +14,7 @@ import {
 } from "antd";
 import "./css/person.css";
 import { Service } from "../../globe/service";
-import { AddComment, ISetPreID } from "../main/comment";
-import { IArticle, ILoginProps, IPersonal } from "../../globe/inter";
+import { ILoginProps, IPersonal } from "../../globe/inter";
 import { useNavigate } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 
@@ -37,7 +29,6 @@ export function Person() {
   const [open, setOpen] = useState(false);
   const [openPwd, setOpenPwd] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [email, setEmail] = useState<string>("");
   const [messageApi, contextHolder] = message.useMessage();
   const [data, setData] = useState<IPersonal[]>(datainit);
   const handleCancel = () => {
@@ -68,11 +59,6 @@ export function Person() {
       content: text,
     });
   }
-
-  const preinit: ISetPreID = {
-    id: "",
-    nickName: "",
-  };
 
   return (
     <>
@@ -235,7 +221,6 @@ function PersonEditForm(props: IPersonEditFrom) {
           rows={4}
           placeholder="maxLength is 200"
           maxLength={200}
-          // onChange={handleEditClassifyDescribeChange}
         />
       </Form.Item>
       <Form.Item
@@ -270,7 +255,7 @@ function PwdEditForm(props: IPwdEditForm) {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const onFinish = (values: ILoginProps) => {
     const pwdInfo: ILoginProps = {
       userName: values.userName,
@@ -279,14 +264,12 @@ const navigate = useNavigate();
     console.log(pwdInfo);
     Service.editPwd(pwdInfo)
       .then((res) => {
-        if(res.data.status!==0){
-          
+        if (res.data.status !== 0) {
           props.successFunc("编辑成功");
-          localStorage.removeItem("token")
-          navigate("/admin/login")
+          localStorage.removeItem("token");
+          navigate("/admin/login");
           console.log(res);
         }
-        
       })
       .catch(() => props.failFunc("编辑失败"));
   };

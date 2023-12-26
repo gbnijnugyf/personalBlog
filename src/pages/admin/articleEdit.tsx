@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { MdEditor } from "md-editor-rt";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./css/articleEdit.css";
 import "md-editor-rt/lib/style.css";
 import axios from "axios";
@@ -39,8 +39,6 @@ export function ArticleEdit(props: IArticleEditNew) {
   const [isCancelPublishOpen, setIsCancelPublishOpen] = useState(false);
   const [articleDetail, setArticleDetail] = useState<IArticle>(articleInit);
   const handleOk = () => {
-    // const cancelId = articleDetail.ID === null ? "" : articleDetail.ID;
-    console.log(props.ID)
     Service.cancelPublisArticle(props.ID)
       .then((res) => {
         console.log(res);
@@ -241,7 +239,8 @@ interface IArticlePublishFormProps {
 
 function ArticlePublishForm(props: IArticlePublishFormProps) {
   //TODO:bug——title的值无法传进抽屉
-  const [lastTitle, setLastTitle] = useState(props.title);
+  const lastTitle = useRef<string>();
+  lastTitle.current = props.title
   const navigate = useNavigate();
   const formItemLayout = {
     labelCol: { span: 6 },

@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   BASEURL,
-  ClaOrFri,
   IAddClassify,
   IArticle,
   IArticleList,
@@ -19,8 +18,6 @@ import {
   ITotalNum,
   IPersonal,
 } from "./inter";
-import { createExportDefault } from "typescript";
-import { useLocation, useNavigate } from "react-router-dom";
 
 // 返回响应中data的类型
 export interface IGlobalResponse<T> {
@@ -34,13 +31,11 @@ async function GlobalAxios<T = any, D = any>(
   url: string,
   data?: D
 ): Promise<AxiosResponse<IGlobalResponse<T>, any>> {
-  // const navigate = useNavigate();
   let config: AxiosRequestConfig<D> = {};
   config.baseURL = BASEURL;
   const parsedURL = new URL(BASEURL + url);
   const params = new URLSearchParams(parsedURL.searchParams || "");
   config.params = params;
-  // config.headers = { bloggerLoginCheck: localStorage.getItem("token") || "" };
 
   const regex = /\/\/(.*)/;
   const match = window.location.href.match(regex);
@@ -68,7 +63,6 @@ async function GlobalAxios<T = any, D = any>(
     //axios将data自动序列化为json格式
     response = await axios[method]<IGlobalResponse<T>>(url, data, config);
   } else {
-    // params.set("time", new Date().getTime().toString());
     response = await axios[method]<IGlobalResponse<T>>(url, config);
   }
   if (response.data.msg !== "登录信息失效") {
@@ -81,7 +75,6 @@ async function GlobalAxios<T = any, D = any>(
     redirectpos = redirectpos.slice(0, redirectpos.indexOf("/", 10) + 1);
     console.log(redirectpos);
     window.location.href = redirectpos + "admin/login";
-    // alert(response.data.msg);
   }
   return response;
 }
@@ -186,12 +179,10 @@ export const Service = {
   //友情链接编辑保存
   saveFriendLinkEdit(props: IFriendLink) {
     return GlobalAxios<undefined>("put", "/info/editF", props);
-    // return axios.put(BASEURL + "/info/editF", props);
   },
   //分类编辑保存
   saveClassEdit(props: IClassEdit) {
     return GlobalAxios<undefined>("put", "/info/editC", props);
-    // return axios.put(BASEURL + "/info/editC", props);
   },
   //删除友情/分类链接
   deleteFriOrClas(props: IDeleteFriOrClas) {

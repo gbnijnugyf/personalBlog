@@ -1,26 +1,20 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import {
   Button,
-  Checkbox,
   Form,
   Input,
-  Layout,
-  Modal,
   Tabs,
   message,
 } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/adminLogin.css";
-import { useState } from "react";
-import { COOKIETOKEN, ILoginProps } from "../../globe/inter";
+import { ILoginProps } from "../../globe/inter";
 import { Service } from "../../globe/service";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 function AdminLogin() {
   const navigate = useNavigate();
   //管理员登录
   const [messageApi, contextHolder] = message.useMessage();
-  const [cookies, setCookie, removeCookie] = useCookies([COOKIETOKEN]);
   function error(text: string = "账号或密码错误") {
     messageApi.open({
       type: "error",
@@ -34,12 +28,8 @@ function AdminLogin() {
         error();
         return;
       } else {
-        //bloggerLoginCheck
-        // console.log(res);
         const token = res.data.data;
         localStorage.setItem("token", token);
-        // setCookie(COOKIETOKEN, token, { path: '/' });
-        // console.log(cookies)
         navigate("/admin/main/article");
       }
     });
@@ -105,110 +95,3 @@ export function LoginPage() {
     </>
   );
 }
-
-interface IRegister {
-  userId: string;
-  password: string;
-  email: string;
-}
-interface ICollectionCreateFormProps {
-  open: boolean;
-  onCreate: (values: IRegister) => void;
-  onCancel: () => void;
-}
-
-function CollectionCreateForm({
-  open,
-  onCreate,
-  onCancel,
-}: ICollectionCreateFormProps) {
-  const [form] = Form.useForm();
-  return (
-    <Modal
-      open={open}
-      title="开创你的博客"
-      okText="注册"
-      cancelText="取消"
-      onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log("Validate Failed:", info);
-          });
-      }}
-    >
-      <Form
-        form={form}
-        layout="vertical"
-        name="form_in_modal"
-        initialValues={{ modifier: "public" }}
-      >
-        <Form.Item
-          name="userId"
-          label="昵称"
-          rules={[{ required: true, message: "请输入昵称" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          label="密码"
-          rules={[{ required: true, message: "请输入密码" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          label="邮箱"
-          rules={[
-            {
-              type: "email",
-              message: "邮箱格式不正确",
-            },
-            {
-              required: true,
-              message: "请输入邮箱",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-      </Form>
-    </Modal>
-  );
-}
-
-const Temp: React.FC = () => {
-  const [open, setOpen] = useState(false);
-
-  const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        注册
-      </Button>
-      <CollectionCreateForm
-        open={open}
-        onCreate={onCreate}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      />
-    </div>
-  );
-};

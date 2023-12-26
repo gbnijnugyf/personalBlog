@@ -1,9 +1,8 @@
-import { Avatar, List, Image, Button } from "antd";
+import { List, Image, Button } from "antd";
 import "./css/friend.css";
 import { useEffect, useState } from "react";
 import { IFriendLink } from "../../globe/inter";
 import { Service } from "../../globe/service";
-import { UserOutlined } from "@ant-design/icons";
 
 interface IFriendPage {
   admin: boolean;
@@ -27,10 +26,9 @@ export function FriendPage(props: IFriendPage) {
         itemLayout="vertical"
         dataSource={friendLinkList}
         renderItem={(item, index) => (
-          <List.Item /*extra={<Image width={210} height={150} alt="logo" src={item.cover} />}*/>
+          <List.Item>
             <List.Item.Meta
-              avatar={/*<Avatar icon={<UserOutlined />} />*/<Image width={210} height={150} alt="logo" src={item.cover} />}
-              // title={<a href="https://ant.design">{item.title}</a>}
+              avatar={<Image width={210} height={150} alt="logo" src={item.cover} />}
               description={
                 <>
                   <p>{item.description}</p> <a href={item.url}>{item.url}</a>

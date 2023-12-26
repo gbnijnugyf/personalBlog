@@ -229,7 +229,6 @@ export function CommentPage(props: {
     setOpen(false);
   };
   console.log(props.articleId);
-  // const articleId_ = props.articleId === null ? "" : props.articleId;
   useEffect(() => {
     if (props.articleId === "-1") {
       //获取留言

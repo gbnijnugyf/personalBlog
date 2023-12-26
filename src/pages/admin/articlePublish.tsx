@@ -16,10 +16,8 @@ import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import "./css/articlePublish.css";
 import "markdown-navbar/dist/navbar.css";
 import "github-markdown-css/github-markdown-light.css";
-import { useNavigate } from "react-router-dom";
 import { Service } from "../../globe/service";
 import {
-  ClaOrFri,
   IAddClassify,
   IClassEdit,
   IDeleteFriOrClas,
@@ -40,7 +38,6 @@ export interface articleMenu {
 }
 
 export function ArticleManagerPage() {
-  // const [md, setMd] = useState("./test.md");
   const [listArr, setListdArr] = useState<articleMenu[]>([]);
   const [display, setDisplay] = useState<boolean>(false);
   const [isAddClassifyOpen, setIsAddClassifyOpen] = useState(false);
@@ -98,7 +95,6 @@ export function ArticleManagerPage() {
   const handleCancel1 = () => {
     setIsEditClassifyOpen(false);
   };
-  const navigate = useNavigate();
 
   useEffect(() => {
     Service.getClassify().then(async (res) => {

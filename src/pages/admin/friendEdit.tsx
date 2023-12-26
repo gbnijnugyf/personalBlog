@@ -303,7 +303,6 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
     wrapperCol: { span: 14 },
   };
   const normFile = (e: any) => {
-    // return fileToBase64(e.file)
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
@@ -319,10 +318,8 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
   }
   const onFinish = (values: IPublishForm) => {
     let fileBase64 = null;
-    console.log("Received values of form: ", values);
     if (values.cover !== undefined) {
       fileBase64 = values.cover[0].thumbUrl;
-      // console.log("image: ", values.cover[0].thumbUrl);
     }
     const linkInfo: IFriendLink = {
       cover: fileBase64,
@@ -330,10 +327,8 @@ function FriendPublishForm(props: IFriendPublishFormProps) {
       name: values.name,
       url: values.url,
     };
-    console.log(linkInfo)
     Service.addFriendLink(linkInfo)
       .then((res) => {
-        console.log(res);
         props.setDisplay(!props.dispaly);
         props.successFunc("添加成功");
       })
