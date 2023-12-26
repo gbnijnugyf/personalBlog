@@ -1,4 +1,3 @@
-import { message } from "antd";
 import "./css/App.css";
 import { Routers } from "./routers/router";
 function App() {
