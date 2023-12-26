@@ -27,9 +27,9 @@ export function FriendPage(props: IFriendPage) {
         itemLayout="vertical"
         dataSource={friendLinkList}
         renderItem={(item, index) => (
-          <List.Item extra={<Image width={272} alt="logo" src={item.cover} />}>
+          <List.Item /*extra={<Image width={210} height={150} alt="logo" src={item.cover} />}*/>
             <List.Item.Meta
-              avatar={<Avatar icon={<UserOutlined />} />}
+              avatar={/*<Avatar icon={<UserOutlined />} />*/<Image width={210} height={150} alt="logo" src={item.cover} />}
               // title={<a href="https://ant.design">{item.title}</a>}
               description={
                 <>
