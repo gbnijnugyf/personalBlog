@@ -82,9 +82,12 @@ export function ArticleManagerPage() {
     };
     Service.addClassify(tempForm)
       .then((res) => {
-        setDisplay(!display);
-        success();
-        console.log("添加分类接口响应:", res);
+        if (res.data.status !== 0) {
+          setDisplay(!display);
+          success();
+        } else {
+          error();
+        }
       })
       .catch(() => error());
     setIsAddClassifyOpen(false);
@@ -330,11 +333,15 @@ function ClassEdit(props: {
       type: "1", //表示分类
     };
     Service.deleteFriOrClas(delTemp)
-      .then(() => {
-        props.successFunc("删除成功");
-        props.setDisplay(!props.display)
-        const newData = data.filter((item) => item.key !== key);
-        setData(newData);
+      .then((res) => {
+        if (res.data.status !== 0) {
+          props.successFunc("删除成功");
+          props.setDisplay(!props.display);
+          const newData = data.filter((item) => item.key !== key);
+          setData(newData);
+        } else {
+          props.failFunc("删除失败");
+        }
       })
       .catch(() => props.failFunc("删除失败"));
   };

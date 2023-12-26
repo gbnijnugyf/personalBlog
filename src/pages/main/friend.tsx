@@ -28,19 +28,16 @@ export function FriendPage(props: IFriendPage) {
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Image width={210} height={150} alt="logo" src={item.cover} />}
+              avatar={
+                <Image width={210} height={150} alt="logo" src={item.cover} />
+              }
               description={
                 <>
                   <p>{item.description}</p> <a href={item.url}>{item.url}</a>
                 </>
               }
             />
-            {props.admin?<Button
-              onClick={() => {
-              }}
-            >
-              编辑
-            </Button>:null}
+            {props.admin ? <Button onClick={() => {}}>编辑</Button> : null}
           </List.Item>
         )}
       />

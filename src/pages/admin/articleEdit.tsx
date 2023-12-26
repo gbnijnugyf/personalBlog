@@ -41,9 +41,12 @@ export function ArticleEdit(props: IArticleEditNew) {
   const handleOk = () => {
     Service.cancelPublisArticle(props.ID)
       .then((res) => {
-        console.log(res);
-        success("取消发布成功");
-        setFlush(!flush);
+        if (res.data.status !== 0) {
+          success("取消发布成功");
+          setFlush(!flush);
+        } else {
+          error("取消发布失败");
+        }
       })
       .catch(() => {
         error("取消发布失败");
@@ -141,14 +144,18 @@ export function ArticleEdit(props: IArticleEditNew) {
     };
     Service.saveArticleEdit(temp)
       .then((res) => {
-        if (props.ID === "") {
-          const temp: IArticleEdit = {
-            classify: props.classify,
-            ID: res.data.data.id,
-          };
-          props.setNew(temp);
+        if (res.data.status !== 0) {
+          if (props.ID === "") {
+            const temp: IArticleEdit = {
+              classify: props.classify,
+              ID: res.data.data.id,
+            };
+            props.setNew(temp);
+          }
+          success();
+        } else {
+          error();
         }
-        success();
       })
       .catch(() => error());
   };
@@ -240,7 +247,7 @@ interface IArticlePublishFormProps {
 function ArticlePublishForm(props: IArticlePublishFormProps) {
   //TODO:bug——title的值无法传进抽屉
   const lastTitle = useRef<string>();
-  lastTitle.current = props.title
+  lastTitle.current = props.title;
   const navigate = useNavigate();
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -273,15 +280,19 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
     };
     Service.publishArticle(articleInfo)
       .then((res) => {
-        props.successFunc("发布成功");
-        props.setDisplay(!props.display)
-        console.log(res);
-        setTimeout(() => {
-          navigate("edit", {
-            replace: true,
-            state: { classify: props.classify },
-          });
-        }, 3000);
+        if (res.data.status !== 0) {
+          props.successFunc("发布成功");
+          props.setDisplay(!props.display);
+          console.log(res);
+          setTimeout(() => {
+            navigate("edit", {
+              replace: true,
+              state: { classify: props.classify },
+            });
+          }, 3000);
+        } else {
+          props.failFunc("发布失败");
+        }
       })
       .catch(() => props.failFunc("发布失败"));
   };

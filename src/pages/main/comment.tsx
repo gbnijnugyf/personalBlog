@@ -60,7 +60,11 @@ function ExampleComment(props: IExampleComment) {
   const confirnDelete = () => {
     Service.deleteComment(info.id)
       .then((res) => {
-        success();
+        if (res.data.status !== 0) {
+          success();
+        } else {
+          error();
+        }
         setIsDeleteCommentOpen(false);
       })
       .catch(() => {
@@ -360,14 +364,15 @@ export function AddComment(props: IAddComment) {
     console.log(commentValue);
     Service.publishComment(commentValue)
       .then((res) => {
-        console.log(res);
-        if (props.msgOrComment === 0) {
-          success();
-        } else {
-          success("留言成功");
+        if (res.data.status !== 0) {
+          if (props.msgOrComment === 0) {
+            success();
+          } else {
+            success("留言成功");
+          }
+          props.setDisplay(!props.display);
+          props.setOpen(false);
         }
-        props.setDisplay(!props.display);
-        props.setOpen(false);
       })
       .catch(() => {
         if (props.msgOrComment === 0) {

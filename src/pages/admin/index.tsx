@@ -41,7 +41,13 @@ export function AdminMainPage() {
                 if (props.key.length !== 0) {
                   if (props.key === "loginout") {
                     await Service.adminLoginout()
-                      .then(() => localStorage.removeItem("token"))
+                      .then((res) => {
+                        if (res.data.status !== 0) {
+                          localStorage.removeItem("token");
+                        } else {
+                          error();
+                        }
+                      })
                       .catch(() => {
                         error();
                       });

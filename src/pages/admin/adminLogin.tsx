@@ -23,7 +23,6 @@ function AdminLogin() {
   }
   function onFinish(values: ILoginProps) {
     Service.adminLogin(values).then((res) => {
-      console.log(res);
       if (res.data.status === 0) {
         error();
         return;
