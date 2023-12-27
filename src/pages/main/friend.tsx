@@ -33,7 +33,7 @@ export function FriendPage(props: IFriendPage) {
               }
               description={
                 <>
-                  <p>{item.description}</p> <a href={item.url}>{item.url}</a>
+                  <p>{item.description}</p> <a href={item.url} target="_blank" rel="noreferrer">{item.url}</a>
                 </>
               }
             />

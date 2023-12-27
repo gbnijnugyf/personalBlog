@@ -95,8 +95,12 @@ export function ArticleEdit(props: IArticleEditNew) {
               },
             })
             .then((res) => {
-              console.log("文章内上传图片", res);
-              rev(res);
+              if(res.data.status!==0){
+                console.log("文章内上传图片", res);
+                rev(res);
+              }else{
+                alert("上传出错，请稍后重试")
+              }
             })
             .catch((error) => rej(error));
         });
@@ -301,7 +305,7 @@ function ArticlePublishForm(props: IArticlePublishFormProps) {
       name="validate_other"
       {...formItemLayout}
       onFinish={onFinish}
-      initialValues={{ title: lastTitle }}
+      initialValues={{ title: lastTitle.current }}
       style={{ maxWidth: 600 }}
     >
       <Form.Item
