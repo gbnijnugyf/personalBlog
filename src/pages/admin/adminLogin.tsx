@@ -1,11 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Tabs,
-  message,
-} from "antd";
+import { Button, Form, Input, Tabs, message } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import "./css/adminLogin.css";
 import { ILoginProps } from "../../globe/inter";
@@ -22,16 +16,18 @@ function AdminLogin() {
     });
   }
   function onFinish(values: ILoginProps) {
-    Service.adminLogin(values).then((res) => {
-      if (res.data.status === 0) {
-        error();
-        return;
-      } else {
-        const token = res.data.data;
-        localStorage.setItem("token", token);
-        navigate("/admin/main/article");
-      }
-    });
+    Service.adminLogin(values)
+      .then((res) => {
+        if (res.data.status === 0) {
+          error();
+          return;
+        } else {
+          const token = res.data.data;
+          localStorage.setItem("token", token);
+          navigate("/admin/main/article");
+        }
+      })
+      .catch(() => error("服务器连接失败"));
   }
 
   return (

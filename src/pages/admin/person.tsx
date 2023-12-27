@@ -59,7 +59,7 @@ export function Person() {
       content: text,
     });
   }
-
+  console.log(data)
   return (
     <>
       {contextHolder}

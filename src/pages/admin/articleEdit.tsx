@@ -88,10 +88,13 @@ export function ArticleEdit(props: IArticleEditNew) {
         return new Promise((rev, rej) => {
           const form = new FormData();
           form.append("file", file);
+          const token = localStorage.getItem("token") || ""
           axios
             .post(BASEURL + "/article/imgUpload", form, {
               headers: {
                 "Content-Type": "multipart/form-data",
+                "adminCheck": "admin",
+                "bloggerLoginCheck": token,
               },
             })
             .then((res) => {

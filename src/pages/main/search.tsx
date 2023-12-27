@@ -65,8 +65,9 @@ const SearchInput: React.FC<{
       filterOption={false}
       onSearch={handleSearch}
       onChange={handleChange}
-      notFoundContent={null}
+      notFoundContent={<div>找不到相关信息捏</div>}
       allowClear={true}
+      loading={true}
       options={(data || []).map((d) => ({
         value: d.value,
         label: d.text,

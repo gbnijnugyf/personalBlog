@@ -367,16 +367,21 @@ function ClassEdit(props: {
         };
         Service.saveClassEdit(tempItem)
           .then((res) => {
-            props.setDisplay(!props.display);
-            console.log(res);
-            newData.splice(index, 1, {
-              ...item,
-              ...row,
-            });
-            setData(newData);
-            setEditingKey("");
+            if (res.data.status !== 0) {
+              props.setDisplay(!props.display);
+              console.log(res);
+              newData.splice(index, 1, {
+                ...item,
+                ...row,
+              });
+              setData(newData);
+              setEditingKey("");
+              props.successFunc("编辑成功");
+            } else {
+              props.failFunc("编辑失败");
+            }
           })
-          .catch(() => {});
+          .catch(() => props.failFunc("编辑失败"));
       }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
