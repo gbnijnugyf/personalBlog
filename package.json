@@ -2,6 +2,8 @@
   "name": "serouts",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
+  "homepage": ".",
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",
     "@ant-design/icons": "^4.8.0",
@@ -37,7 +39,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-start":"electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +63,7 @@
   "devDependencies": {
     "@types/echarts": "^4.9.22",
     "@types/lodash": "^4.14.202",
-    "@types/markdown-navbar": "^1.4.3"
+    "@types/markdown-navbar": "^1.4.3",
+    "electron": "^28.1.4"
   }
 }
