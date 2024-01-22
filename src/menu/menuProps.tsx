@@ -34,7 +34,7 @@ export const menuHeaderRItems: ItemType[] = [
   {
     key: "1",
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="/admin/login">
+      <a target="_blank" rel="noopener noreferrer" href="#/admin/login">
         管理员登录
       </a>
     ),
