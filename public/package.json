@@ -40,8 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-start": "electron .",
-    "electron-build": "electron-packager ./build MyBlog --platform=win32 --arch=x64 --out=./../MyBlogDesktop --app-version=0.0.1 --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
+    "electron-start":"electron ."
   },
   "eslintConfig": {
     "extends": [
